@@ -33,5 +33,6 @@ export const getStaticProps = async (ctx: GetStaticPropsContext) => {
 
   return {
     props: { estates },
+    revalidate: 2,
   };
 };
