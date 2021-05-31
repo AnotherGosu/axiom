@@ -16,7 +16,7 @@ const EstatePage: React.FC<Props> = ({ estate }) => {
     <>
       <Head title={`Kvarum • ${estate.title}`} />
       <Section headingTitle={estate.title}>
-        <Header address={estate.address} postDate={estate.publishedAt} />
+        <Header address={estate.address} postDate={estate.createdAt} />
       </Section>
       <Section headingTitle="Галерея" hiddenHeading>
         <Gallery title={estate.title} images={estate.images} />
