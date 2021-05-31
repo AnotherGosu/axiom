@@ -19,7 +19,7 @@ interface Props {
 
 const Info: React.FC<Props> = ({ estate }) => {
   const {
-    publishedAt,
+    createdAt,
     tags,
     id,
     title,
@@ -30,7 +30,7 @@ const Info: React.FC<Props> = ({ estate }) => {
   } = estate;
 
   const isBase = useBreakpointValue({ base: true, sm: false });
-  const publicationDate = new Date(publishedAt).toLocaleDateString("ru");
+  const publicationDate = new Date(createdAt).toLocaleDateString("ru");
 
   return (
     <Flex flexDir="column" flexGrow={1} minW="0" gridRowGap="10px">

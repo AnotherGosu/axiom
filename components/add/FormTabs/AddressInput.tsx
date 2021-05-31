@@ -33,16 +33,13 @@ const AddressInput: React.FC<Props> = ({ control }) => {
 
   return (
     <VStack spacing="20px" w="100%">
-      <FormControl
-        label="Адрес"
-        id="address"
-        isInvalid={invalid}
-        isRequired
-        isReadOnly
-      >
+      <FormControl label="Адрес" id="address" isInvalid={invalid} isRequired>
         <FormLabel>Адрес</FormLabel>
-        <Input {...fieldProps} />
-        <FormHelperText>Используйте карту</FormHelperText>
+        <Input
+          placeholder="Россия, Хабаровск, улица Дзержинского, 24"
+          onChange={onChange}
+          {...fieldProps}
+        />
         <FormErrorMessage>{error?.message}</FormErrorMessage>
       </FormControl>
 

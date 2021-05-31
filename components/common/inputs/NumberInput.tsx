@@ -10,6 +10,7 @@ import {
   useBreakpointValue,
   InputRightElement,
 } from "@chakra-ui/react";
+import { watch } from "node:fs";
 import { Control, useController } from "react-hook-form";
 import NumberFormat from "react-number-format";
 
@@ -25,6 +26,7 @@ type Props = InputProps & {
   rightChildren?: React.ReactNode;
   helperText?: string;
   isRawValue?: boolean;
+  watchMaxValue?: any;
 };
 
 const NumberInput: React.FC<Props> = ({
@@ -41,6 +43,7 @@ const NumberInput: React.FC<Props> = ({
   isInteger,
   isRequired,
   isRawValue,
+  watchMaxValue,
 }) => {
   const size = useBreakpointValue({ base: "md", md: "lg" });
 
@@ -51,7 +54,10 @@ const NumberInput: React.FC<Props> = ({
     name: id,
     control,
     defaultValue: null,
-    rules: { required: isRequired && "Это обязательное поле" },
+    rules: {
+      required: isRequired && "Это обязательное поле",
+      max: { value: watchMaxValue, message: "Проверьте введенные данные" },
+    },
   });
 
   const onFieldChange = ({ formattedValue, floatValue }) => {
@@ -70,6 +76,7 @@ const NumberInput: React.FC<Props> = ({
       <InputGroup size={size}>
         {leftChildren && <InputLeftElement children={leftChildren} />}
         <NumberFormat
+          autoComplete="off"
           format={format}
           mask="_"
           onValueChange={(value) => onFieldChange(value)}

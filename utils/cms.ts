@@ -37,12 +37,11 @@ export async function createEstate(data: CreateEstateFormFields) {
       $dealType: String
       $rentType: String
       $estateType: String
+      $apartmentType: String
       $agentName: String
       $agentPhone: String
-      $agentBonusType: String
-      $agentBonusPrice: Float
       $agencyServicePrice: Float
-      $rooms: Int
+      $rooms: String
       $commonSquare: Float
       $livingSquare: Float
       $kitchenSquare: Float
@@ -67,6 +66,7 @@ export async function createEstate(data: CreateEstateFormFields) {
       $isRestrictedArea: Boolean
       $isBargaining: Boolean
       $isMortgage: Boolean
+      $isReward: Boolean
     ) {
       createEstate(
         data: {
@@ -78,10 +78,9 @@ export async function createEstate(data: CreateEstateFormFields) {
           dealType: $dealType
           rentType: $rentType
           estateType: $estateType
+          apartmentType: $apartmentType
           agentName: $agentName
           agentPhone: $agentPhone
-          agentBonusType: $agentBonusType
-          agentBonusPrice: $agentBonusPrice
           agencyServicePrice: $agencyServicePrice
           rooms: $rooms
           commonSquare: $commonSquare
@@ -108,6 +107,7 @@ export async function createEstate(data: CreateEstateFormFields) {
           isRestrictedArea: $isRestrictedArea
           isBargaining: $isBargaining
           isMortgage: $isMortgage
+          isReward: $isReward
         }
       ) {
         id
@@ -127,7 +127,7 @@ export async function getEstates() {
     {
       estates {
         id
-        publishedAt
+        createdAt
         images {
           url
         }
@@ -141,10 +141,9 @@ export async function getEstates() {
         dealType
         rentType
         estateType
+        apartmentType
         agentName
         agentPhone
-        agentBonusType
-        agentBonusPrice
         agencyServicePrice
         rooms
         commonSquare
@@ -171,6 +170,7 @@ export async function getEstates() {
         isRestrictedArea
         isBargaining
         isMortgage
+        isReward
       }
     }
   `;
@@ -187,7 +187,7 @@ export async function getEstate(id: string) {
     query getEstate($id: ID!) {
       estate(where: { id: $id }) {
         id
-        publishedAt
+        createdAt
         images {
           url
         }
@@ -201,10 +201,9 @@ export async function getEstate(id: string) {
         dealType
         rentType
         estateType
+        apartmentType
         agentName
         agentPhone
-        agentBonusType
-        agentBonusPrice
         agencyServicePrice
         rooms
         commonSquare
@@ -231,6 +230,7 @@ export async function getEstate(id: string) {
         isRestrictedArea
         isBargaining
         isMortgage
+        isReward
       }
     }
   `;

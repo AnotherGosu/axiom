@@ -7,6 +7,7 @@ export enum DealType {
 export enum BathType {
   separated = "Раздельный",
   combined = "Совмещённый",
+  multiple = "Больше одного",
 }
 
 export enum RoomsType {
@@ -22,10 +23,10 @@ export enum WindowsType {
 }
 
 export enum State {
+  redecorationRequired = "Требуется ремонт",
+  redecorated = "Косметический ремонт",
   good = "Хорошее",
   excellent = "Отличное",
-  redecorated = "Косметический ремонт",
-  redecorationRequired = "Требуется ремонт",
 }
 
 export enum PlateType {
@@ -43,6 +44,12 @@ export enum MaterialType {
   monolith = "Монолит",
   panel = "Панель",
   brickMonolith = "Кирпич-монолит",
+}
+
+export enum ApartmentType {
+  flat = "Квартира",
+  share = "Доля в кваритре",
+  apartment = "Апартаменты",
 }
 
 export enum ParkingType {
@@ -64,11 +71,6 @@ export enum SuburbAreas {
   north = "Северное | Воронеж (1/2/3), Нагорное",
   east = "Восточное | Матвеевка, Сергеевка, Галкино",
   south = "Южное | Ильинка, Корсаково, Влад-ое Шоссе",
-}
-
-export enum AgentBonusType {
-  fixed = "Фиксированная сумма",
-  percent = "Процент от сделки",
 }
 
 export enum RentType {

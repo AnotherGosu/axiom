@@ -1,4 +1,4 @@
-import { Box, Button, VStack, createStandaloneToast } from "@chakra-ui/react";
+import { Box, VStack, useToast } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import FormTabs from "./FormTabs";
 import CardSelect from "./CardSelect";
@@ -15,7 +15,6 @@ import {
   IoStorefrontOutline,
 } from "react-icons/io5";
 import { createEstate } from "utils/cms";
-import Link from "components/common/Link";
 
 const estateTypeIcons = [
   BsBuilding,
@@ -43,14 +42,11 @@ const CreateEstateForm: React.FC = () => {
     mode: "all",
   });
 
-  const {
-    watch,
-    formState: { isDirty, isValid, isSubmitting },
-    control,
-  } = form;
+  const { watch, formState, control } = form;
+
+  const toast = useToast();
 
   const onSubmit = async (data: CreateEstateFormFields) => {
-    const toast = createStandaloneToast();
     toast({
       isClosable: false,
       duration: null,
@@ -59,8 +55,8 @@ const CreateEstateForm: React.FC = () => {
     });
 
     try {
-      const estateRes = await createEstate(data);
-      console.log(estateRes);
+      const res = await createEstate(data);
+      const { id } = res.createEstate;
 
       toast.closeAll();
       toast({
@@ -68,7 +64,6 @@ const CreateEstateForm: React.FC = () => {
         duration: 10000,
         status: "success",
         title: "Объект успешно добавлен",
-        description: <Link href="/" title="Просмотреть" />,
       });
     } catch (err) {
       console.error(err);
@@ -88,14 +83,7 @@ const CreateEstateForm: React.FC = () => {
       <VStack spacing="50px" align="flex-start">
         <CardSelect id="rentType" control={control} cards={rentTypeCards} />
         <CardSelect id="estateType" control={control} cards={estateTypeCards} />
-        <FormTabs control={control} watch={watch} />
-        <Button
-          type="submit"
-          isDisabled={!isDirty || !isValid}
-          isLoading={isSubmitting}
-        >
-          Добавить
-        </Button>
+        <FormTabs control={control} watch={watch} formState={formState} />
       </VStack>
     </Box>
   );

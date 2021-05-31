@@ -8,7 +8,7 @@ export type Estate = SystemFields &
 
 export interface SystemFields {
   id: string;
-  publishedAt: string;
+  createdAt: string;
 }
 
 export interface CommonFields {
@@ -22,8 +22,6 @@ export interface CommonFields {
   estateType: string;
   agentName: string;
   agentPhone: string;
-  agentBonusType: string;
-  agentBonusPrice: number;
   agencyServicePrice: number;
 }
 
@@ -59,6 +57,7 @@ export interface Building {
 export interface Tags {
   isBargaining: boolean;
   isMortgage: boolean;
+  isReward: boolean;
 }
 
 export type RawEstate = CommonFields &

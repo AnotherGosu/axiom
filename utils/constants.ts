@@ -11,9 +11,9 @@ import {
   RoomsType,
   State,
   WindowsType,
-  AgentBonusType,
   RentType,
   EstateType,
+  ApartmentType,
 } from "./localizations";
 
 export const headerNavLinks = [
@@ -24,11 +24,14 @@ export const headerNavLinks = [
 ];
 
 export const roomsOptions: Option[] = [
-  ["0", "Студия"],
+  ["freePlaning", "Свободная планировка"],
+  ["studio", "Студия"],
   ["1", "1"],
   ["2", "2"],
   ["3", "3"],
-  ["4", "4+"],
+  ["4", "4"],
+  ["5", "5"],
+  ["6", "6+"],
 ];
 
 export const areasGroups: MenuGroup[] = [
@@ -43,6 +46,8 @@ export const areasGroups: MenuGroup[] = [
 ];
 
 export const materialTypeOptions: Option[] = Object.entries(MaterialType);
+
+export const apartmentTypeOptions: Option[] = Object.entries(ApartmentType);
 
 export const parkingTypeOptions: Option[] = Object.entries(ParkingType);
 
@@ -60,8 +65,6 @@ export const dealTypeOptions: Option[] = Object.entries(DealType);
 
 export const windowsTypeOptions: Option[] = Object.entries(WindowsType);
 
-export const agentBonusOptions: Option[] = Object.entries(AgentBonusType);
-
 export const rentTypeOptions: Option[] = Object.entries(RentType);
 
 export const estateTypeOptions: Option[] = Object.entries(EstateType);
@@ -74,5 +77,9 @@ export const colorTags = {
   isMortgage: {
     title: "Возможна ипотека",
     color: "green",
+  },
+  isReward: {
+    title: "Встречное вознаграждение",
+    color: "yellow",
   },
 };

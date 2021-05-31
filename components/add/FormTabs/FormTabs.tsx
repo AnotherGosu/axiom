@@ -1,42 +1,46 @@
-import { Tabs, TabList, Tab, TabPanel, TabPanels } from "@chakra-ui/react";
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
 import BuildingTab from "./BuildingTab";
 import ApartmentTab from "./ApartmentTab";
 import MediaTab from "./MediaTab";
 import PriceTab from "./PriceTab";
 import ContactsTab from "./ContactsTab";
-import { Control, UseFormWatch } from "react-hook-form";
+import FormTab from "./FormTab";
+import { useState } from "react";
+import { Control, UseFormWatch, FormState } from "react-hook-form";
 
 interface Props {
   control: Control<any>;
   watch: UseFormWatch<any>;
+  formState: FormState<any>;
 }
 
-const FormTabs: React.FC<Props> = ({ control, watch }) => {
+const tabs = [BuildingTab, ApartmentTab, MediaTab, PriceTab, ContactsTab];
+
+const FormTabs: React.FC<Props> = ({ control, watch, formState }) => {
+  const [tabIndex, setTabIndex] = useState(0);
+
   return (
-    <Tabs variant="enclosed">
+    <Tabs variant="enclosed" index={tabIndex}>
       <TabList>
-        <Tab>Параметры дома</Tab>
-        <Tab>Параметры квартиры</Tab>
-        <Tab>Описание и медиа</Tab>
-        <Tab>Стоимость</Tab>
-        <Tab>Контакты</Tab>
+        <Tab cursor="auto">Параметры дома</Tab>
+        <Tab cursor="auto">Параметры квартиры</Tab>
+        <Tab cursor="auto">Описание и медиа</Tab>
+        <Tab cursor="auto">Стоимость</Tab>
+        <Tab cursor="auto">Контакты</Tab>
       </TabList>
       <TabPanels>
-        <TabPanel>
-          <BuildingTab control={control} />
-        </TabPanel>
-        <TabPanel>
-          <ApartmentTab control={control} />
-        </TabPanel>
-        <TabPanel>
-          <MediaTab control={control} />
-        </TabPanel>
-        <TabPanel>
-          <PriceTab control={control} watch={watch} />
-        </TabPanel>
-        <TabPanel>
-          <ContactsTab control={control} />
-        </TabPanel>
+        {tabs.map((Tab, idx) => (
+          <TabPanel key={idx}>
+            <FormTab
+              tabIndex={idx}
+              setTabIndex={setTabIndex}
+              formState={formState}
+              watch={watch}
+            >
+              <Tab control={control} watch={watch} />
+            </FormTab>
+          </TabPanel>
+        ))}
       </TabPanels>
     </Tabs>
   );

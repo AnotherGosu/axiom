@@ -4,10 +4,10 @@ import SearchBar from "components/common/SearchBar";
 import SearchResults from "components/search/SearchResults";
 import Options from "components/search/Options";
 
-import { InferGetStaticPropsType, GetStaticPropsContext } from "next";
+import { InferGetServerSidePropsType, GetServerSidePropsContext } from "next";
 import { getEstates } from "utils/cms";
 
-type Props = InferGetStaticPropsType<typeof getStaticProps>;
+type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 const Search: React.FC<Props> = ({ estates }) => {
   return (
@@ -28,11 +28,10 @@ const Search: React.FC<Props> = ({ estates }) => {
 
 export default Search;
 
-export const getStaticProps = async (ctx: GetStaticPropsContext) => {
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const estates = await getEstates();
 
   return {
     props: { estates },
-    revalidate: 2,
   };
 };
