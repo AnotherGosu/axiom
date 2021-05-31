@@ -1,4 +1,4 @@
-import { Grid, GridItem } from "@chakra-ui/react";
+import { Grid, GridItem, CircularProgress } from "@chakra-ui/react";
 import Head from "components/common/Head";
 import Section from "components/common/Section";
 import Header from "components/estate/Header";
@@ -6,12 +6,19 @@ import Gallery from "components/estate/Gallery";
 import { ApartmentSummary, BuildingSummary } from "components/estate/Summary";
 import Description from "components/estate/Description";
 import { getEstate, getPaths } from "utils/cms";
+import { useRouter } from "next/router";
 
 import { InferGetStaticPropsType, GetStaticPropsContext } from "next";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 const EstatePage: React.FC<Props> = ({ estate }) => {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <CircularProgress isIndeterminate />;
+  }
+
   return (
     <>
       <Head title={`Kvarum • ${estate.title}`} />
@@ -69,5 +76,5 @@ export const getStaticProps = async (ctx: GetStaticPropsContext) => {
 
 export const getStaticPaths = async () => {
   const paths = await getPaths();
-  return { paths, fallback: false };
+  return { paths, fallback: true };
 };
