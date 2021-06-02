@@ -3,14 +3,11 @@ import NumberInput from "components/common/inputs/NumberInput";
 import Switch from "components/common/inputs/Switch";
 import Select from "components/common/inputs/Select";
 import { dealTypeOptions } from "utils/constants";
-import { Control, UseFormWatch } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
-interface Props {
-  control: Control<any>;
-  watch?: UseFormWatch<any>;
-}
+const PriceTab: React.FC = () => {
+  const { control } = useFormContext();
 
-const PriceTab: React.FC<Props> = ({ control }) => {
   return (
     <>
       <Wrap spacing="20px" align="center">
@@ -50,13 +47,6 @@ const PriceTab: React.FC<Props> = ({ control }) => {
         </WrapItem>
         <WrapItem>
           <Switch id="isMortgage" label="Ипотека" control={control} />
-        </WrapItem>
-        <WrapItem>
-          <Switch
-            id="isReward"
-            label="Встечное вознаграждение"
-            control={control}
-          />
         </WrapItem>
       </Wrap>
     </>

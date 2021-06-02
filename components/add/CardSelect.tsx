@@ -1,15 +1,16 @@
 import { Wrap, WrapItem, Square, VStack, Text, Icon } from "@chakra-ui/react";
-import { Control, useController } from "react-hook-form";
+import { useFormContext, useController } from "react-hook-form";
 import { Option } from "utils/types";
 import { useState } from "react";
 
 interface Props {
   id: string;
   cards: Array<{ icon: any; option: Option }>;
-  control: Control<any>;
 }
 
-const EstateTypeCards: React.FC<Props> = ({ id, control, cards }) => {
+const EstateTypeCards: React.FC<Props> = ({ id, cards }) => {
+  const { control } = useFormContext();
+
   const {
     field: { onChange },
   } = useController({

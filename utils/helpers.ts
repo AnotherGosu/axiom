@@ -7,7 +7,6 @@ export function structureEstate(rawEstate: RawEstate) {
   const {
     isBargaining,
     isMortgage,
-    isReward,
     buildingType,
     materialType,
     builtYear,
@@ -34,7 +33,7 @@ export function structureEstate(rawEstate: RawEstate) {
     ...rest
   } = rawEstate;
 
-  const tags: Tags = { isBargaining, isMortgage, isReward };
+  const tags: Tags = { isBargaining, isMortgage };
 
   const building: Building = {
     buildingType,

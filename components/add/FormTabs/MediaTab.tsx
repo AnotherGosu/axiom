@@ -1,13 +1,12 @@
-import { Control, UseFormWatch } from "react-hook-form";
 import Textarea from "components/common/inputs/Textarea";
-import ImageUpload from "./ImageUpload";
+import ImageUpload from "components/common/inputs/ImageUpload";
+import PlanUpload from "components/common/inputs/PlanUpload";
+import TextInput from "components/common/inputs/TextInput";
+import { useFormContext } from "react-hook-form";
 
-interface Props {
-  control: Control<any>;
-  watch?: UseFormWatch<any>;
-}
+const MediaTab: React.FC = () => {
+  const { control } = useFormContext();
 
-const MediaTab: React.FC<Props> = ({ control }) => {
   return (
     <>
       <Textarea
@@ -16,8 +15,10 @@ const MediaTab: React.FC<Props> = ({ control }) => {
         control={control}
         placeholder="Расскажите об ососбенностях объекта недвижимости"
         size="lg"
-        h="200px"
+        h="150px"
       />
+      <TextInput id="videoUrl" label="Ссылка на видео" control={control} />
+      <PlanUpload control={control} />
       <ImageUpload control={control} />
     </>
   );

@@ -1,14 +1,11 @@
 import { Wrap, WrapItem } from "@chakra-ui/react";
 import NumberInput from "components/common/inputs/NumberInput";
 import TextInput from "components/common/inputs/TextInput";
-import { Control, UseFormWatch } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
-interface Props {
-  control: Control<any>;
-  watch?: UseFormWatch<any>;
-}
+const ContactsTab: React.FC = () => {
+  const { control } = useFormContext();
 
-const ContactsTab: React.FC<Props> = ({ control }) => {
   return (
     <Wrap spacing="20px">
       <WrapItem>
@@ -27,7 +24,7 @@ const ContactsTab: React.FC<Props> = ({ control }) => {
           control={control}
           format="+7 (###) ###-##-##"
           isRequired
-          isRawValue
+          isStringValue
         />
       </WrapItem>
     </Wrap>

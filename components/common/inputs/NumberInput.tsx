@@ -10,7 +10,6 @@ import {
   useBreakpointValue,
   InputRightElement,
 } from "@chakra-ui/react";
-import { watch } from "node:fs";
 import { Control, useController } from "react-hook-form";
 import NumberFormat from "react-number-format";
 
@@ -21,19 +20,16 @@ type Props = InputProps & {
   isInteger?: boolean;
   thousandSeparator?: boolean;
   format?: string;
-  isDisabled?: boolean;
   leftChildren?: React.ReactNode;
   rightChildren?: React.ReactNode;
   helperText?: string;
-  isRawValue?: boolean;
-  watchMaxValue?: any;
+  isStringValue?: boolean;
 };
 
 const NumberInput: React.FC<Props> = ({
   id,
   label,
   placeholder,
-  isDisabled,
   leftChildren,
   rightChildren,
   helperText,
@@ -42,8 +38,7 @@ const NumberInput: React.FC<Props> = ({
   control,
   isInteger,
   isRequired,
-  isRawValue,
-  watchMaxValue,
+  isStringValue,
 }) => {
   const size = useBreakpointValue({ base: "md", md: "lg" });
 
@@ -56,12 +51,11 @@ const NumberInput: React.FC<Props> = ({
     defaultValue: null,
     rules: {
       required: isRequired && "Это обязательное поле",
-      max: { value: watchMaxValue, message: "Проверьте введенные данные" },
     },
   });
 
-  const onFieldChange = ({ formattedValue, floatValue }) => {
-    isRawValue ? onChange(formattedValue) : onChange(floatValue);
+  const onValueChange = ({ formattedValue, floatValue }) => {
+    isStringValue ? onChange(formattedValue) : onChange(floatValue);
   };
 
   return (
@@ -70,7 +64,6 @@ const NumberInput: React.FC<Props> = ({
       id={id}
       isInvalid={invalid}
       isRequired={isRequired}
-      isDisabled={isDisabled}
     >
       <FormLabel>{label}</FormLabel>
       <InputGroup size={size}>
@@ -79,7 +72,7 @@ const NumberInput: React.FC<Props> = ({
           autoComplete="off"
           format={format}
           mask="_"
-          onValueChange={(value) => onFieldChange(value)}
+          onValueChange={onValueChange}
           thousandSeparator={thousandSeparator && " "}
           allowEmptyFormatting
           decimalScale={isInteger ? 0 : 2}
@@ -95,5 +88,4 @@ const NumberInput: React.FC<Props> = ({
     </FormControl>
   );
 };
-
 export default NumberInput;

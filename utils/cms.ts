@@ -20,16 +20,24 @@ export async function uploadAsset(file) {
 }
 
 export async function createEstate(data: CreateEstateFormFields) {
-  const { images, ...rest } = data;
+  const { images, plan, ...rest } = data;
 
-  const uploadedAssets = await Promise.all(
+  const uploadedImages = await Promise.all(
     images.map((image) => uploadAsset(image))
   );
-  const assets = uploadedAssets.map((asset) => ({ id: asset.id }));
+  const imagesAssets = uploadedImages.map((img) => ({ id: img.id }));
+
+  let planAsset = null;
+  if (plan) {
+    const uploadedPlan = await uploadAsset(plan);
+    planAsset = { id: uploadedPlan.id };
+  }
 
   const CREATE_ESTATE = gql`
     mutation createEstate(
-      $assets: [AssetWhereUniqueInput!]
+      $images: [AssetWhereUniqueInput!]
+      $plan: AssetWhereUniqueInput
+      $videoUrl: String
       $description: String
       $address: String
       $location: LocationInput
@@ -66,11 +74,12 @@ export async function createEstate(data: CreateEstateFormFields) {
       $isRestrictedArea: Boolean
       $isBargaining: Boolean
       $isMortgage: Boolean
-      $isReward: Boolean
     ) {
       createEstate(
         data: {
-          images: { connect: $assets }
+          images: { connect: $images }
+          plan: { connect: $plan }
+          videoUrl: $videoUrl
           description: $description
           address: $address
           location: $location
@@ -107,7 +116,6 @@ export async function createEstate(data: CreateEstateFormFields) {
           isRestrictedArea: $isRestrictedArea
           isBargaining: $isBargaining
           isMortgage: $isMortgage
-          isReward: $isReward
         }
       ) {
         id
@@ -117,7 +125,7 @@ export async function createEstate(data: CreateEstateFormFields) {
 
   return client.request(
     CREATE_ESTATE,
-    { ...rest, assets },
+    { ...rest, images: imagesAssets, plan: planAsset },
     { authorization: `Bearer ${process.env.NEXT_PUBLIC_MUTATION_TOKEN}` }
   );
 }
@@ -131,6 +139,10 @@ export async function getEstates() {
         images {
           url
         }
+        plan {
+          id
+        }
+        videoUrl
         description
         address
         location {
@@ -170,7 +182,6 @@ export async function getEstates() {
         isRestrictedArea
         isBargaining
         isMortgage
-        isReward
       }
     }
   `;
@@ -191,6 +202,10 @@ export async function getEstate(id: string) {
         images {
           url
         }
+        plan {
+          id
+        }
+        videoUrl
         description
         address
         location {
@@ -230,7 +245,6 @@ export async function getEstate(id: string) {
         isRestrictedArea
         isBargaining
         isMortgage
-        isReward
       }
     }
   `;

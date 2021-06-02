@@ -3,18 +3,14 @@ import {
   FormControl,
   FormLabel,
   Input,
-  FormHelperText,
   FormErrorMessage,
 } from "@chakra-ui/react";
 import Map from "components/common/Map";
-import { Control, useController } from "react-hook-form";
-import { CreateEstateFormFields } from "utils/types";
+import { useFormContext, useController } from "react-hook-form";
 
-interface Props {
-  control: Control<CreateEstateFormFields>;
-}
+const AddressInput: React.FC = () => {
+  const { control } = useFormContext();
 
-const AddressInput: React.FC<Props> = ({ control }) => {
   const {
     field: { onChange, ...fieldProps },
     fieldState: { invalid, error },
@@ -36,9 +32,9 @@ const AddressInput: React.FC<Props> = ({ control }) => {
       <FormControl label="Адрес" id="address" isInvalid={invalid} isRequired>
         <FormLabel>Адрес</FormLabel>
         <Input
-          placeholder="Россия, Хабаровск, улица Дзержинского, 24"
           onChange={onChange}
           {...fieldProps}
+          placeholder="Россия, Хабаровск, улица Дзержинского, 24"
         />
         <FormErrorMessage>{error?.message}</FormErrorMessage>
       </FormControl>

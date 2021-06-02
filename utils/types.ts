@@ -13,6 +13,8 @@ export interface SystemFields {
 
 export interface CommonFields {
   images: Array<{ url: string }>;
+  plan: { url: string };
+  videoUrl: string;
   description: string;
   address: string;
   location: { latitude: number; longitude: number };
@@ -57,7 +59,6 @@ export interface Building {
 export interface Tags {
   isBargaining: boolean;
   isMortgage: boolean;
-  isReward: boolean;
 }
 
 export type RawEstate = CommonFields &

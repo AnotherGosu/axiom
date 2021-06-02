@@ -5,39 +5,47 @@ import MediaTab from "./MediaTab";
 import PriceTab from "./PriceTab";
 import ContactsTab from "./ContactsTab";
 import FormTab from "./FormTab";
-import { useState } from "react";
-import { Control, UseFormWatch, FormState } from "react-hook-form";
+import { useState, useEffect, useRef } from "react";
 
-interface Props {
-  control: Control<any>;
-  watch: UseFormWatch<any>;
-  formState: FormState<any>;
-}
-
-const tabs = [BuildingTab, ApartmentTab, MediaTab, PriceTab, ContactsTab];
-
-const FormTabs: React.FC<Props> = ({ control, watch, formState }) => {
+const FormTabs: React.FC = () => {
   const [tabIndex, setTabIndex] = useState(0);
+  const [maxTabIndex, setMaxTabIndex] = useState(0);
+
+  const tabsRef = useRef(null);
+  const scrollToTabs = () => {
+    if (tabsRef?.current) {
+      const y =
+        tabsRef.current.getBoundingClientRect().top + window.pageYOffset - 150;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    if (tabIndex > maxTabIndex) setMaxTabIndex(tabIndex);
+  }, [tabIndex, maxTabIndex, setMaxTabIndex]);
 
   return (
-    <Tabs variant="enclosed" index={tabIndex}>
-      <TabList>
-        <Tab cursor="auto">Параметры дома</Tab>
-        <Tab cursor="auto">Параметры квартиры</Tab>
-        <Tab cursor="auto">Описание и медиа</Tab>
-        <Tab cursor="auto">Стоимость</Tab>
-        <Tab cursor="auto">Контакты</Tab>
+    <Tabs variant="enclosed" index={tabIndex} onChange={setTabIndex}>
+      <TabList ref={tabsRef}>
+        {tabs.map((label, idx) => (
+          <Tab
+            key={label}
+            isDisabled={idx > maxTabIndex}
+            _disabled={{ opacity: "0.5" }}
+          >
+            {label}
+          </Tab>
+        ))}
       </TabList>
       <TabPanels>
-        {tabs.map((Tab, idx) => (
+        {tabPanel.map((Tab, idx) => (
           <TabPanel key={idx}>
             <FormTab
               tabIndex={idx}
               setTabIndex={setTabIndex}
-              formState={formState}
-              watch={watch}
+              scrollToTabs={scrollToTabs}
             >
-              <Tab control={control} watch={watch} />
+              <Tab />
             </FormTab>
           </TabPanel>
         ))}
@@ -47,3 +55,13 @@ const FormTabs: React.FC<Props> = ({ control, watch, formState }) => {
 };
 
 export default FormTabs;
+
+const tabs = [
+  "Параметры дома",
+  "Параметры квартиры",
+  "Описание и медиа",
+  "Стоимость",
+  "Контакты",
+];
+
+const tabPanel = [BuildingTab, ApartmentTab, MediaTab, PriceTab, ContactsTab];

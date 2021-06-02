@@ -8,18 +8,14 @@ import {
   materialTypeOptions,
   parkingTypeOptions,
 } from "utils/constants";
-import { Control, UseFormWatch } from "react-hook-form";
-import React from "react";
+import { useFormContext } from "react-hook-form";
 
-interface Props {
-  control: Control<any>;
-  watch?: UseFormWatch<any>;
-}
+const BuildingTab: React.FC = () => {
+  const { control } = useFormContext();
 
-const BuildingTab: React.FC<Props> = ({ control }) => {
   return (
     <>
-      <AddressInput control={control} />
+      <AddressInput />
 
       <Wrap spacing="20px">
         <WrapItem>

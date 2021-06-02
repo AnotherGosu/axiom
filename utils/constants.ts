@@ -78,8 +78,4 @@ export const colorTags = {
     title: "Возможна ипотека",
     color: "green",
   },
-  isReward: {
-    title: "Встречное вознаграждение",
-    color: "yellow",
-  },
 };

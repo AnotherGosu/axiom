@@ -97,11 +97,13 @@ const ImageUpload: React.FC<Props> = ({ control }) => {
           borderRadius: "md",
           borderStyle: "dashed",
           cursor: "pointer",
-          position: "relative",
         })}
       >
         <input {...getInputProps()} />
-        <Text>Нажмите или перетащите изображения</Text>
+        <Box textAlign="center">
+          <Text>Нажмите или перетащите изображения</Text>
+          <Text>(первое изображение будет использовано для предпросмотра)</Text>
+        </Box>
       </Center>
       <Wrap>{thumbs}</Wrap>
     </FormControl>

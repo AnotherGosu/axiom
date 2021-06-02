@@ -1,24 +1,32 @@
 import { Box, VStack, HStack, Button } from "@chakra-ui/react";
 import { Dispatch, SetStateAction } from "react";
-import { FormState, UseFormWatch } from "react-hook-form";
-import { CreateEstateFormFields } from "utils/types";
+import { useFormContext } from "react-hook-form";
 
 interface Props {
+  scrollToTabs: () => void;
   tabIndex: number;
   setTabIndex: Dispatch<SetStateAction<number>>;
-  formState: FormState<CreateEstateFormFields>;
-  watch: UseFormWatch<CreateEstateFormFields>;
 }
 
 const FormTab: React.FC<Props> = ({
   tabIndex,
   setTabIndex,
-  formState,
-  watch,
+  scrollToTabs,
   children,
 }) => {
-  const nextTab = () => setTabIndex(tabIndex + 1);
-  const prevTab = () => setTabIndex(tabIndex - 1);
+  const nextTab = () => {
+    setTabIndex(tabIndex + 1);
+    scrollToTabs();
+  };
+  const prevTab = () => {
+    setTabIndex(tabIndex - 1);
+    scrollToTabs();
+  };
+
+  const {
+    watch,
+    formState: { isDirty, isValid, isSubmitting },
+  } = useFormContext();
 
   let isNextTab;
 
@@ -40,8 +48,6 @@ const FormTab: React.FC<Props> = ({
       break;
     }
   }
-
-  const { isDirty, isValid, isSubmitting } = formState;
 
   return (
     <Box p="30px" borderWidth="1px" borderRadius="md" borderTopRadius={0}>
