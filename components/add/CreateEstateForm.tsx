@@ -21,6 +21,9 @@ const CreateEstateForm: React.FC = () => {
     mode: "all",
   });
 
+  const isRentType = form.watch("rentType");
+  const isEstateType = form.watch("estateType");
+
   const toast = useToast();
 
   const onSubmit = async (data: CreateEstateFormFields) => {
@@ -59,8 +62,8 @@ const CreateEstateForm: React.FC = () => {
       <Box as="form" onSubmit={form.handleSubmit(onSubmit)}>
         <VStack spacing="50px" align="flex-start">
           <CardSelect id="rentType" cards={rentTypeCards} />
-          <CardSelect id="estateType" cards={estateTypeCards} />
-          <FormTabs />
+          {isRentType && <CardSelect id="estateType" cards={estateTypeCards} />}
+          {isEstateType && <FormTabs />}
         </VStack>
       </Box>
     </FormProvider>

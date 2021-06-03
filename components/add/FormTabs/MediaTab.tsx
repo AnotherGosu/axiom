@@ -1,5 +1,5 @@
 import Textarea from "components/common/inputs/Textarea";
-import ImageUpload from "components/common/inputs/ImageUpload";
+import ImageUpload from "components/common/ImageUpload";
 import PlanUpload from "components/common/inputs/PlanUpload";
 import TextInput from "components/common/inputs/TextInput";
 import { useFormContext } from "react-hook-form";

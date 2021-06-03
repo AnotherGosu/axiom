@@ -1,18 +1,15 @@
 import {
   Box,
   Center,
-  WrapItem,
   Text,
   VStack,
-  Wrap,
-  IconButton,
   FormControl,
   FormLabel,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { DeleteIcon } from "@chakra-ui/icons";
 import { Control, useController } from "react-hook-form";
+import Sortable from "../Sortable";
 
 interface Props {
   control: Control<any>;
@@ -20,56 +17,40 @@ interface Props {
 
 const ImageUpload: React.FC<Props> = ({ control }) => {
   const {
-    field: { onChange },
+    field: { onChange: setFiles, value: files },
   } = useController({ name: "images", control, defaultValue: [] });
 
-  const [files, setFiles] = useState([]);
+  const [previews, setPreviews] = useState([]);
   const { getRootProps, getInputProps, isDragActive, isFileDialogActive } =
     useDropzone({
       accept: "image/*",
-      onDrop: (acceptedFiles) => {
+      onDrop: async (acceptedFiles) => {
         const previewFiles = acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
           })
         );
-        const newFiles = [...files, ...previewFiles];
-        setFiles(newFiles);
-        onChange(newFiles);
+        const newPreviews = previewFiles.map((file) => file.preview);
+        setPreviews([...previews, ...newPreviews]);
+        setFiles([...files, ...previewFiles]);
       },
     });
 
-  const onDeleteButtonClick = (deletedFileName: string) => {
-    setFiles(files.filter((file) => file.name !== deletedFileName));
+  const handleDelete = (deletedPreview: string) => {
+    console.log;
+    setFiles(files.filter((file) => file.preview !== deletedPreview));
+    setPreviews(previews.filter((preview) => preview !== deletedPreview));
   };
 
-  const thumbs = files.map((file, idx) => (
-    <WrapItem key={file.name + idx}>
-      <VStack>
-        <Box
-          boxSize="150px"
-          bgImage={`url("${file.preview}")`}
-          bgPosition="center"
-          bgRepeat="no-repeat"
-          bgSize="contain"
-          borderRadius="md"
-          borderWidth={1}
-        />
-        <IconButton
-          icon={<DeleteIcon />}
-          colorScheme="red"
-          variant="outline"
-          aria-label="delete image"
-          size="sm"
-          onClick={() => onDeleteButtonClick(file.name)}
-        />
-      </VStack>
-    </WrapItem>
-  ));
+  const setFormState = (items: string[]) => {
+    const reorderedFiles = items.map((url) =>
+      files.find((file) => file.preview === url)
+    );
+    setFiles(reorderedFiles);
+  };
 
   useEffect(
     () => () => {
-      // Make sure to revoke the data uris to avoid memory leaks
       files.forEach((file) => URL.revokeObjectURL(file.preview));
     },
     [files]
@@ -81,7 +62,6 @@ const ImageUpload: React.FC<Props> = ({ control }) => {
       as={VStack}
       spacing="10px"
       w="100%"
-      maxW="800px"
       align="flex-start"
     >
       <FormLabel>Изображения</FormLabel>
@@ -105,7 +85,12 @@ const ImageUpload: React.FC<Props> = ({ control }) => {
           <Text>(первое изображение будет использовано для предпросмотра)</Text>
         </Box>
       </Center>
-      <Wrap>{thumbs}</Wrap>
+      <Sortable
+        items={previews}
+        setItems={setPreviews}
+        setFormState={setFormState}
+        handleDelete={handleDelete}
+      />
     </FormControl>
   );
 };

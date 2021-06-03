@@ -15,18 +15,36 @@ const SquareInputs: React.FC = () => {
   const commonSquare = +watch("commonSquare");
   const livingSquare = +watch("livingSquare");
   const kitchenSquare = +watch("kitchenSquare");
-  const error = errors?.commonSquare?.message;
+  const livingSquareError = errors?.livingSquare?.message;
+  const kitchenSquareError = errors?.kitchenSquare?.message;
 
   useEffect(() => {
-    if (commonSquare < livingSquare + kitchenSquare) {
-      setError("commonSquare", {
-        type: "min",
-        message: "Значение слишком мало",
+    if (commonSquare < livingSquare) {
+      setError("livingSquare", {
+        type: "max",
+        message: "Значение больше общей площади",
       });
-    } else if (error) {
-      clearErrors("commonSquare");
+    } else if (livingSquareError && commonSquare > livingSquare) {
+      clearErrors("livingSquare");
     }
-  }, [commonSquare, livingSquare, kitchenSquare, error, setError]);
+
+    if (livingSquare < kitchenSquare) {
+      setError("kitchenSquare", {
+        type: "max",
+        message: "Значение больше жилой площади",
+      });
+    } else if (kitchenSquareError && livingSquare > kitchenSquare) {
+      clearErrors("kitchenSquare");
+    }
+  }, [
+    commonSquare,
+    livingSquare,
+    kitchenSquare,
+    livingSquareError,
+    kitchenSquareError,
+    setError,
+    clearErrors,
+  ]);
 
   return (
     <Wrap spacing="20px">

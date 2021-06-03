@@ -24,7 +24,7 @@ const AddressInput: React.FC = () => {
   const locationControl = useController({
     name: "location",
     control,
-    defaultValue: { latitude: "", longitude: "" },
+    defaultValue: { latitude: null, longitude: null },
   });
 
   return (
