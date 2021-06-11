@@ -1,11 +1,4 @@
-import {
-  Box,
-  Center,
-  Text,
-  VStack,
-  FormControl,
-  FormLabel,
-} from "@chakra-ui/react";
+import { Center, Text, VStack, FormControl, FormLabel } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Control, useController } from "react-hook-form";
@@ -57,18 +50,12 @@ const ImageUpload: React.FC<Props> = ({ control }) => {
   );
 
   return (
-    <FormControl
-      id="images"
-      as={VStack}
-      spacing="10px"
-      w="100%"
-      align="flex-start"
-    >
-      <FormLabel>Изображения</FormLabel>
+    <FormControl id="images" as={VStack} spacing="10px" align="flex-start">
+      <FormLabel>Фотографии объекта</FormLabel>
       <Center
         {...getRootProps({
           w: "100%",
-          h: "150px",
+          h: "100px",
           borderWidth: 1,
           borderColor:
             isDragActive || isFileDialogActive
@@ -80,10 +67,7 @@ const ImageUpload: React.FC<Props> = ({ control }) => {
         })}
       >
         <input {...getInputProps()} />
-        <Box textAlign="center">
-          <Text>Нажмите или перетащите изображения</Text>
-          <Text>(первое изображение будет использовано для предпросмотра)</Text>
-        </Box>
+        <Text textAlign="center">Нажмите или перетащите изображения</Text>
       </Center>
       <Sortable
         items={previews}

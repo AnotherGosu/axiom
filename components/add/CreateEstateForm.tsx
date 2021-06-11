@@ -1,7 +1,7 @@
-import { Box, VStack, useToast } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { useForm, FormProvider } from "react-hook-form";
 import FormTabs from "./FormTabs";
-import CardSelect from "./CardSelect";
+import SelectMenu from "./SelectMenu";
 import { CreateEstateFormFields } from "utils/types";
 import { rentTypeOptions, estateTypeOptions } from "utils/constants";
 import { BsBuilding } from "react-icons/bs";
@@ -14,57 +14,28 @@ import {
   IoTimeOutline,
   IoStorefrontOutline,
 } from "react-icons/io5";
-import { createEstate } from "utils/cms";
 
 const CreateEstateForm: React.FC = () => {
-  const form = useForm<CreateEstateFormFields>({
-    mode: "all",
-  });
+  const form = useForm<CreateEstateFormFields>();
 
-  const isRentType = form.watch("rentType");
-  const isEstateType = form.watch("estateType");
-
-  const toast = useToast();
-
-  const onSubmit = async (data: CreateEstateFormFields) => {
-    toast({
-      isClosable: false,
-      duration: null,
-      status: "info",
-      title: "Добавляем объект...",
-    });
-
-    try {
-      const res = await createEstate(data);
-
-      toast.closeAll();
-      toast({
-        isClosable: true,
-        duration: 10000,
-        status: "success",
-        title: "Объект успешно добавлен",
-      });
-    } catch (err) {
-      console.error(err);
-
-      toast.closeAll();
-      toast({
-        isClosable: true,
-        duration: 5000,
-        status: "error",
-        title: "Возникла ошибка",
-      });
-    }
-  };
+  const isTabsVisible = form.watch("rentType") && form.watch("estateType");
 
   return (
     <FormProvider {...form}>
-      <Box as="form" onSubmit={form.handleSubmit(onSubmit)}>
-        <VStack spacing="50px" align="flex-start">
-          <CardSelect id="rentType" cards={rentTypeCards} />
-          {isRentType && <CardSelect id="estateType" cards={estateTypeCards} />}
-          {isEstateType && <FormTabs />}
-        </VStack>
+      <Box as="form" w="100%" maxW="3xl">
+        <Flex flexDir={["column", "row"]} gridGap="25px" mb="25px">
+          <SelectMenu
+            id="rentType"
+            label="Тип сделки"
+            menuItems={rentTypeMenuItems}
+          />
+          <SelectMenu
+            id="estateType"
+            label="Тип объекта"
+            menuItems={estateTypeMenuItems}
+          />
+        </Flex>
+        {isTabsVisible && <FormTabs />}
       </Box>
     </FormProvider>
   );
@@ -83,12 +54,14 @@ const estateTypeIcons = [
 
 const rentTypeIcons = [IoKey, IoCalendarOutline, IoTimeOutline];
 
-const estateTypeCards = estateTypeOptions.map((option, idx) => ({
-  icon: estateTypeIcons[idx],
-  option,
+const rentTypeMenuItems = rentTypeOptions.map((option, idx) => ({
+  icon: rentTypeIcons[idx],
+  value: option[0],
+  label: option[1],
 }));
 
-const rentTypeCards = rentTypeOptions.map((option, idx) => ({
-  icon: rentTypeIcons[idx],
-  option,
+const estateTypeMenuItems = estateTypeOptions.map((option, idx) => ({
+  icon: estateTypeIcons[idx],
+  value: option[0],
+  label: option[1],
 }));

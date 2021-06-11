@@ -2,7 +2,7 @@ import { Wrap, WrapItem } from "@chakra-ui/react";
 import NumberInput from "components/common/inputs/NumberInput";
 import Select from "components/common/inputs/Select";
 import Switch from "components/common/inputs/Switch";
-import AddressInput from "./AddressInput";
+import AddressInput from "../AddressInput";
 import {
   apartmentTypeOptions,
   materialTypeOptions,

@@ -1,4 +1,13 @@
-import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
+import {
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+  VisuallyHidden,
+  Box,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import BuildingTab from "./BuildingTab";
 import ApartmentTab from "./ApartmentTab";
 import MediaTab from "./MediaTab";
@@ -10,6 +19,7 @@ import { useState, useEffect, useRef } from "react";
 const FormTabs: React.FC = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const [maxTabIndex, setMaxTabIndex] = useState(0);
+  const isTabsPanelVisible = useBreakpointValue({ base: false, md: true });
 
   const tabsRef = useRef(null);
   const scrollToTabs = () => {
@@ -20,13 +30,50 @@ const FormTabs: React.FC = () => {
     }
   };
 
+  const nextTab = () => {
+    setTabIndex(tabIndex + 1);
+    scrollToTabs();
+  };
+
+  const prevTab = () => {
+    setTabIndex(tabIndex - 1);
+    scrollToTabs();
+  };
+
+  const switchToErrorTab = (errors) => {
+    const errorFields = Object.keys(errors);
+    if (errorFields.includes("address")) {
+      setTabIndex(0);
+    } else if (
+      errorFields.some((field) =>
+        [
+          "commonSquare",
+          "livingSquare",
+          "kitchenSquare",
+          "floor",
+          "allFloors",
+        ].includes(field)
+      )
+    ) {
+      setTabIndex(1);
+    } else if (errorFields.includes("price")) {
+      setTabIndex(3);
+    } else if (
+      errorFields.includes("agentName") ||
+      errorFields.includes("agentPhone")
+    ) {
+      setTabIndex(4);
+    }
+    scrollToTabs();
+  };
+
   useEffect(() => {
     if (tabIndex > maxTabIndex) setMaxTabIndex(tabIndex);
   }, [tabIndex, maxTabIndex, setMaxTabIndex]);
 
   return (
     <Tabs variant="enclosed" index={tabIndex} onChange={setTabIndex}>
-      <TabList ref={tabsRef}>
+      <Box ref={tabsRef} as={isTabsPanelVisible ? TabList : VisuallyHidden}>
         {tabs.map((label, idx) => (
           <Tab
             key={label}
@@ -36,14 +83,16 @@ const FormTabs: React.FC = () => {
             {label}
           </Tab>
         ))}
-      </TabList>
+      </Box>
       <TabPanels>
-        {tabPanel.map((Tab, idx) => (
+        {tabPanels.map((Tab, idx) => (
           <TabPanel key={idx}>
             <FormTab
               tabIndex={idx}
-              setTabIndex={setTabIndex}
-              scrollToTabs={scrollToTabs}
+              nextTab={nextTab}
+              prevTab={prevTab}
+              switchToErrorTab={switchToErrorTab}
+              maxTabIndex={maxTabIndex}
             >
               <Tab />
             </FormTab>
@@ -64,4 +113,4 @@ const tabs = [
   "Контакты",
 ];
 
-const tabPanel = [BuildingTab, ApartmentTab, MediaTab, PriceTab, ContactsTab];
+const tabPanels = [BuildingTab, ApartmentTab, MediaTab, PriceTab, ContactsTab];

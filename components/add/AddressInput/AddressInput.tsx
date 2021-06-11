@@ -5,14 +5,14 @@ import {
   Input,
   FormErrorMessage,
 } from "@chakra-ui/react";
-import Map from "components/common/Map";
+import Map from "components/add/AddressInput/Map";
 import { useFormContext, useController } from "react-hook-form";
 
 const AddressInput: React.FC = () => {
   const { control } = useFormContext();
 
   const {
-    field: { onChange, ...fieldProps },
+    field: { onChange: setAddress, ...fieldProps },
     fieldState: { invalid, error },
   } = useController({
     name: "address",
@@ -21,33 +21,40 @@ const AddressInput: React.FC = () => {
     rules: { required: "Это обязательное поле" },
   });
 
-  const locationControl = useController({
+  const {
+    field: { onChange: setLocation },
+  } = useController({
     name: "location",
     control,
     defaultValue: { latitude: null, longitude: null },
   });
 
+  const suggestStyle = {
+    'ymaps[class*="search__suggest"]': {
+      marginTop: "10px",
+      borderRadius: "0.375rem",
+      fontFamily: "system-ui, sans-serif",
+      fontSize: "0.875rem",
+      fontWeight: 400,
+    },
+    'ymaps[class*="suggest-item"]': {
+      margin: "5px 0",
+      borderRadius: 0,
+    },
+    'ymaps[class*="suggest-item_selected_yes"]': {
+      background: "#B794F4",
+    },
+  };
+
   return (
-    <VStack spacing="20px" w="100%">
+    <VStack spacing="20px" w="100%" maxW="3xl" sx={suggestStyle}>
       <FormControl label="Адрес" id="address" isInvalid={invalid} isRequired>
         <FormLabel>Адрес</FormLabel>
-        <Input
-          onChange={onChange}
-          {...fieldProps}
-          placeholder="Россия, Хабаровск, улица Дзержинского, 24"
-        />
+        <Input id="suggest" onChange={setAddress} {...fieldProps} />
         <FormErrorMessage>{error?.message}</FormErrorMessage>
       </FormControl>
 
-      <Map
-        setAddress={onChange}
-        setLocation={(coords: [number, number]) =>
-          locationControl.field.onChange({
-            latitude: coords[0],
-            longitude: coords[1],
-          })
-        }
-      />
+      <Map setAddress={setAddress} setLocation={setLocation} />
     </VStack>
   );
 };

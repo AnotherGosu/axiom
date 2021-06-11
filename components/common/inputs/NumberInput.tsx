@@ -7,10 +7,9 @@ import {
   InputGroup,
   InputLeftElement,
   FormHelperText,
-  useBreakpointValue,
   InputRightElement,
 } from "@chakra-ui/react";
-import { Control, useController } from "react-hook-form";
+import { Control, useController, RegisterOptions } from "react-hook-form";
 import NumberFormat from "react-number-format";
 
 type Props = InputProps & {
@@ -24,6 +23,10 @@ type Props = InputProps & {
   rightChildren?: React.ReactNode;
   helperText?: string;
   isStringValue?: boolean;
+  rules?: Exclude<
+    RegisterOptions,
+    "valueAsNumber" | "valueAsDate" | "setValueAs"
+  >;
 };
 
 const NumberInput: React.FC<Props> = ({
@@ -39,9 +42,8 @@ const NumberInput: React.FC<Props> = ({
   isInteger,
   isRequired,
   isStringValue,
+  rules,
 }) => {
-  const size = useBreakpointValue({ base: "md", md: "lg" });
-
   const {
     field: { onChange, ...fieldProps },
     fieldState: { invalid, error },
@@ -50,6 +52,7 @@ const NumberInput: React.FC<Props> = ({
     control,
     defaultValue: null,
     rules: {
+      ...rules,
       required: isRequired && "Это обязательное поле",
     },
   });
@@ -66,8 +69,10 @@ const NumberInput: React.FC<Props> = ({
       isRequired={isRequired}
     >
       <FormLabel>{label}</FormLabel>
-      <InputGroup size={size}>
-        {leftChildren && <InputLeftElement children={leftChildren} />}
+      <InputGroup>
+        {leftChildren && (
+          <InputLeftElement pointerEvents="none" children={leftChildren} />
+        )}
         <NumberFormat
           autoComplete="off"
           format={format}
@@ -81,7 +86,13 @@ const NumberInput: React.FC<Props> = ({
           placeholder={placeholder}
           {...fieldProps}
         />
-        {rightChildren && <InputRightElement children={rightChildren} />}
+        {rightChildren && (
+          <InputRightElement
+            zIndex={-1}
+            pointerEvents="none"
+            children={rightChildren}
+          />
+        )}
       </InputGroup>
       <FormHelperText>{helperText}</FormHelperText>
       <FormErrorMessage>{error?.message}</FormErrorMessage>

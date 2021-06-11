@@ -8,7 +8,6 @@ import {
   InputLeftElement,
   InputRightElement,
   FormHelperText,
-  useBreakpointValue,
 } from "@chakra-ui/react";
 import { Control, useController } from "react-hook-form";
 
@@ -34,8 +33,6 @@ const TextInput: React.FC<Props> = ({
   isRequired,
   ...rest
 }) => {
-  const size = useBreakpointValue({ base: "md", md: "lg" });
-
   const {
     field,
     fieldState: { invalid, error },
@@ -56,9 +53,9 @@ const TextInput: React.FC<Props> = ({
       placeholder={placeholder}
     >
       <FormLabel>{label}</FormLabel>
-      <InputGroup size={size}>
+      <InputGroup>
         {leftChildren && <InputLeftElement children={leftChildren} />}
-        <Input {...field} {...rest} />
+        <Input {...field} {...rest} required={false} />
         {rightChildren && <InputRightElement children={rightChildren} />}
       </InputGroup>
       <FormHelperText>{helperText}</FormHelperText>

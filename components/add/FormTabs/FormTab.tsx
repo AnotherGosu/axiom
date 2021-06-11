@@ -1,78 +1,99 @@
-import { Box, VStack, HStack, Button } from "@chakra-ui/react";
-import { Dispatch, SetStateAction } from "react";
+import {
+  Box,
+  Wrap,
+  WrapItem,
+  VStack,
+  HStack,
+  Button,
+  useToast,
+} from "@chakra-ui/react";
 import { useFormContext } from "react-hook-form";
+import { createEstate } from "utils/cms";
+import { CreateEstateFormFields } from "utils/types";
 
 interface Props {
-  scrollToTabs: () => void;
   tabIndex: number;
-  setTabIndex: Dispatch<SetStateAction<number>>;
+  maxTabIndex: number;
+  switchToErrorTab: (errors) => void;
+  nextTab: () => void;
+  prevTab: () => void;
 }
 
 const FormTab: React.FC<Props> = ({
   tabIndex,
-  setTabIndex,
-  scrollToTabs,
+  switchToErrorTab,
+  maxTabIndex,
+  nextTab,
+  prevTab,
   children,
 }) => {
-  const nextTab = () => {
-    setTabIndex(tabIndex + 1);
-    scrollToTabs();
+  const { formState, handleSubmit } = useFormContext();
+  const toast = useToast();
+
+  const onSubmit = async (data: CreateEstateFormFields) => {
+    toast({
+      isClosable: false,
+      duration: null,
+      status: "info",
+      title: "Добавляем объект...",
+    });
+
+    try {
+      const res = await createEstate(data);
+
+      toast.closeAll();
+      toast({
+        isClosable: true,
+        duration: 10000,
+        status: "success",
+        title: "Объект успешно добавлен",
+      });
+    } catch (err) {
+      console.error(err);
+
+      toast.closeAll();
+      toast({
+        isClosable: true,
+        duration: 5000,
+        status: "error",
+        title: "Возникла ошибка",
+      });
+    }
   };
-  const prevTab = () => {
-    setTabIndex(tabIndex - 1);
-    scrollToTabs();
+
+  const onError = (errors) => {
+    switchToErrorTab(errors);
   };
-
-  const {
-    watch,
-    formState: { isDirty, isValid, isSubmitting },
-  } = useFormContext();
-
-  let isNextTab;
-
-  switch (tabIndex) {
-    case 0: {
-      isNextTab = watch("address");
-      break;
-    }
-    case 1: {
-      isNextTab = watch("rooms") && watch("commonSquare");
-      break;
-    }
-    case 2: {
-      isNextTab = true;
-      break;
-    }
-    case 3: {
-      isNextTab = watch("dealType") && watch("price");
-      break;
-    }
-  }
 
   return (
     <Box p="30px" borderWidth="1px" borderRadius="md" borderTopRadius={0}>
       <VStack spacing="50px" align="flex-start">
         {children}
-        <HStack>
+        <Wrap>
           {tabIndex !== 0 && (
-            <Button variant="outline" onClick={prevTab}>
-              Назад
-            </Button>
+            <WrapItem>
+              <Button variant="outline" onClick={prevTab}>
+                Назад
+              </Button>
+            </WrapItem>
           )}
-          {tabIndex === 4 ? (
+          {tabIndex !== 4 && (
+            <WrapItem>
+              <Button variant="outline" onClick={nextTab}>
+                Далее
+              </Button>
+            </WrapItem>
+          )}
+          <WrapItem>
             <Button
-              type="submit"
-              isDisabled={!isDirty || !isValid}
-              isLoading={isSubmitting}
+              onClick={handleSubmit(onSubmit, onError)}
+              isDisabled={maxTabIndex !== 4}
+              isLoading={formState.isSubmitting}
             >
-              Добавить
+              Добавить объект
             </Button>
-          ) : (
-            <Button variant="outline" isDisabled={!isNextTab} onClick={nextTab}>
-              Далее
-            </Button>
-          )}
-        </HStack>
+          </WrapItem>
+        </Wrap>
       </VStack>
     </Box>
   );

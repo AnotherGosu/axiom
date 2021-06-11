@@ -32,7 +32,7 @@ const Select: React.FC<Props> = ({
   } = useController({
     name: id,
     control,
-    defaultValue: "",
+    defaultValue: isRequired ? options[0][0] : "",
     rules: { required: isRequired && "Это обязательное поле" },
   });
 
@@ -44,8 +44,8 @@ const Select: React.FC<Props> = ({
       isInvalid={invalid}
     >
       <FormLabel>{label}</FormLabel>
-      <ChakraSelect {...field} {...rest} size="lg">
-        <option value=""></option>
+      <ChakraSelect {...field} {...rest}>
+        {!isRequired && <option value=""></option>}
         {options.map(([value, title]) => (
           <option key={value} value={value}>
             {title}

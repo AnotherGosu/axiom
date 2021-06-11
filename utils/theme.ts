@@ -5,7 +5,6 @@ const theme = extendTheme({
     Button: {
       defaultProps: {
         colorScheme: "purple",
-        size: "lg",
       },
     },
     Input: {

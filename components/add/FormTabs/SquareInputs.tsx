@@ -4,47 +4,42 @@ import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
 const SquareInputs: React.FC = () => {
-  const {
-    control,
-    watch,
-    setError,
-    formState: { errors },
-    clearErrors,
-  } = useFormContext();
+  const { control, getValues, formState, clearErrors } = useFormContext();
 
-  const commonSquare = +watch("commonSquare");
-  const livingSquare = +watch("livingSquare");
-  const kitchenSquare = +watch("kitchenSquare");
-  const livingSquareError = errors?.livingSquare?.message;
-  const kitchenSquareError = errors?.kitchenSquare?.message;
+  const inputs = [
+    { id: "commonSquare", label: "Общая площадь", isRequired: true },
+    {
+      id: "livingSquare",
+      label: "Жилая площадь",
+      isRequired: false,
+      rules: {
+        max: {
+          value: getValues("commonSquare"),
+          message: "Значение больше общей площади",
+        },
+      },
+    },
+    {
+      id: "kitchenSquare",
+      label: "Площадь кухни",
+      isRequired: false,
+      rules: {
+        max: {
+          value: getValues("livingSquare"),
+          message: "Значение больше жилой площади",
+        },
+      },
+    },
+  ];
 
   useEffect(() => {
-    if (commonSquare < livingSquare) {
-      setError("livingSquare", {
-        type: "max",
-        message: "Значение больше общей площади",
-      });
-    } else if (livingSquareError && commonSquare > livingSquare) {
-      clearErrors("livingSquare");
+    if (formState.errors.livingSquare || formState.errors.kitchenSquare) {
+      const timer = setTimeout(() => {
+        clearErrors(["livingSquare", "kitchenSquare"]);
+      }, 1500);
+      return () => clearTimeout(timer);
     }
-
-    if (livingSquare < kitchenSquare) {
-      setError("kitchenSquare", {
-        type: "max",
-        message: "Значение больше жилой площади",
-      });
-    } else if (kitchenSquareError && livingSquare > kitchenSquare) {
-      clearErrors("kitchenSquare");
-    }
-  }, [
-    commonSquare,
-    livingSquare,
-    kitchenSquare,
-    livingSquareError,
-    kitchenSquareError,
-    setError,
-    clearErrors,
-  ]);
+  }, [formState]);
 
   return (
     <Wrap spacing="20px">
@@ -66,9 +61,3 @@ const SquareInputs: React.FC = () => {
 };
 
 export default SquareInputs;
-
-const inputs = [
-  { id: "commonSquare", label: "Общая площадь", isRequired: true },
-  { id: "livingSquare", label: "Жилая площадь", isRequired: false },
-  { id: "kitchenSquare", label: "Площадь кухни", isRequired: false },
-];

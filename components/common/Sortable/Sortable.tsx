@@ -1,10 +1,8 @@
-import { useState } from "react";
 import {
   DndContext,
   closestCenter,
   MouseSensor,
   TouchSensor,
-  DragOverlay,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
@@ -13,9 +11,8 @@ import {
   SortableContext,
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
-import Grid from "./Grid";
+import { Wrap, WrapItem } from "@chakra-ui/react";
 import SortablePhoto from "./SortablePhoto";
-import Photo from "./Photo";
 
 interface Props {
   items: string[];
@@ -30,45 +27,29 @@ const Sortable: React.FC<Props> = ({
   setFormState,
   handleDelete,
 }) => {
-  const [activeId, setActiveId] = useState(null);
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
 
   return (
     <DndContext
       sensors={sensors}
       collisionDetection={closestCenter}
-      onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
-      onDragCancel={handleDragCancel}
     >
       <SortableContext items={items} strategy={rectSortingStrategy}>
-        <Grid columns={4}>
+        <Wrap>
           {items.map((preview, index) => (
-            <SortablePhoto
-              key={preview}
-              preview={preview}
-              handleDelete={handleDelete}
-              index={index}
-            />
+            <WrapItem key={preview}>
+              <SortablePhoto
+                preview={preview}
+                handleDelete={handleDelete}
+                index={index}
+              />
+            </WrapItem>
           ))}
-        </Grid>
+        </Wrap>
       </SortableContext>
-
-      <DragOverlay adjustScale={true}>
-        {activeId ? (
-          <Photo
-            preview={activeId}
-            handleDelete={handleDelete}
-            index={items.indexOf(activeId)}
-          />
-        ) : null}
-      </DragOverlay>
     </DndContext>
   );
-
-  function handleDragStart(event) {
-    setActiveId(event.active.id);
-  }
 
   function handleDragEnd(event) {
     const { active, over } = event;
@@ -84,12 +65,6 @@ const Sortable: React.FC<Props> = ({
         return movedItems;
       });
     }
-
-    setActiveId(null);
-  }
-
-  function handleDragCancel() {
-    setActiveId(null);
   }
 };
 

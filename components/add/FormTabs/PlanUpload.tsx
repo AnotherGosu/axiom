@@ -37,7 +37,6 @@ const PlanUpload: React.FC<Props> = ({ control }) => {
 
   useEffect(
     () => () => {
-      // Make sure to revoke the data uris to avoid memory leaks
       if (plan) URL.revokeObjectURL(plan.preview);
     },
     [plan]
@@ -48,18 +47,17 @@ const PlanUpload: React.FC<Props> = ({ control }) => {
       id="images"
       as={VStack}
       spacing="10px"
-      w="100%"
-      maxW="800px"
+      w="3xs"
       align="flex-start"
     >
-      <FormLabel>План</FormLabel>
+      <FormLabel>План объекта</FormLabel>
       <Center
         {...getRootProps({
-          w: "200px",
+          w: "100%",
           h: "200px",
           borderWidth: 1,
           borderColor:
-            isDragActive || isFileDialogActive
+            isDragActive || isFileDialogActive || plan
               ? "purple.500"
               : "blackAlpha.400",
           borderRadius: "md",
@@ -84,6 +82,7 @@ const PlanUpload: React.FC<Props> = ({ control }) => {
       </Center>
       {plan && (
         <IconButton
+          alignSelf="center"
           icon={<DeleteIcon />}
           colorScheme="red"
           variant="outline"
