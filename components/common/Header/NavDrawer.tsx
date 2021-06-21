@@ -13,16 +13,15 @@ import {
 import { HamburgerIcon } from "@chakra-ui/icons";
 import Nav from "./Nav";
 
-const NavDrawer: React.FC = () => {
+export default function NavDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const size = useBreakpointValue({ base: "sm", sm: "md" });
 
   return (
     <Box display={{ base: "block", lg: "none" }}>
       <IconButton
         aria-label="Open navigation"
-        colorScheme="green"
+        colorScheme="purple"
         size={size}
         fontSize="2xl"
         icon={<HamburgerIcon />}
@@ -42,6 +41,4 @@ const NavDrawer: React.FC = () => {
       </Drawer>
     </Box>
   );
-};
-
-export default NavDrawer;
+}

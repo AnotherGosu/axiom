@@ -6,7 +6,7 @@ interface Props {
   onClose?: () => void;
 }
 
-const Nav: React.FC<Props> = ({ onClose }) => {
+export default function Nav({ onClose }: Props) {
   return (
     <Stack
       as="nav"
@@ -22,6 +22,4 @@ const Nav: React.FC<Props> = ({ onClose }) => {
       ))}
     </Stack>
   );
-};
-
-export default Nav;
+}

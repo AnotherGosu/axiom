@@ -20,7 +20,8 @@
     "**/*.ts",
     "**/*.tsx",
     "utils/constants.ts",
-    "next.config.js"
+    "next.config.js",
+    "utils/auth-cookieыts"
   ],
   "exclude": ["node_modules"]
 }

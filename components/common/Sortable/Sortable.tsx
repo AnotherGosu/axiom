@@ -21,12 +21,12 @@ interface Props {
   handleDelete: (deletedPreview: string) => void;
 }
 
-const Sortable: React.FC<Props> = ({
+export default function Sortable({
   items,
   setItems,
   setFormState,
   handleDelete,
-}) => {
+}: Props) {
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
 
   return (
@@ -66,6 +66,4 @@ const Sortable: React.FC<Props> = ({
       });
     }
   }
-};
-
-export default Sortable;
+}

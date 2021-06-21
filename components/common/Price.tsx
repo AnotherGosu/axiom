@@ -1,36 +1,10 @@
-import { Text, Divider, Box, BoxProps } from "@chakra-ui/react";
+import { Text, TextProps } from "@chakra-ui/react";
 
-interface Props {
+interface Props extends TextProps {
   price: number;
-  commonSquare: number;
-  priceFontSize?: BoxProps["fontSize"];
-  squarePriceFontSize?: BoxProps["fontSize"];
 }
 
-const EstateCardPrice: React.FC<Props> = ({
-  price,
-  commonSquare,
-  priceFontSize,
-  squarePriceFontSize,
-}) => {
-  const squarePrice = Math.floor(price / commonSquare);
+export default function EstateCardPrice({ price, ...rest }: Props) {
   const formatedPrice = new Intl.NumberFormat("ru-RU").format(price);
-  const formatedSquarePrice = new Intl.NumberFormat("ru-RU").format(
-    squarePrice
-  );
-  return (
-    <Box w="max-content">
-      <Text
-        fontWeight="bold"
-        fontSize={priceFontSize}
-      >{`${formatedPrice} ₽`}</Text>
-      <Divider borderColor="blackAlpha.700" />
-      <Text fontSize={squarePriceFontSize}>
-        {`${formatedSquarePrice} ₽/м`}
-        <sup>2</sup>
-      </Text>
-    </Box>
-  );
-};
-
-export default EstateCardPrice;
+  return <Text {...rest}>{`${formatedPrice} ₽`}</Text>;
+}

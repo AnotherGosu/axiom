@@ -1,9 +1,9 @@
 import { Grid, GridItem, Button, useBreakpointValue } from "@chakra-ui/react";
-import InputGroup from "../inputs/InputGroup";
-import Menu from "../inputs/Menu";
+import InputGroup from "components/inputs/InputGroup";
+import Menu from "components/inputs/Menu";
 import { areasGroups, roomsOptions } from "utils/constants";
 
-const SearchBar: React.FC = () => {
+export default function SearchBar() {
   const size = useBreakpointValue({ base: "md", md: "lg" });
 
   return (
@@ -38,6 +38,4 @@ const SearchBar: React.FC = () => {
       </GridItem>
     </Grid>
   );
-};
-
-export default SearchBar;
+}

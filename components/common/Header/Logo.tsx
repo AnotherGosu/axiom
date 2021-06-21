@@ -2,7 +2,7 @@ import { LinkBox, LinkOverlay, Text, HStack } from "@chakra-ui/react";
 import Image from "next/image";
 import NLink from "next/link";
 
-const Logo: React.FC = () => {
+export default function Logo() {
   return (
     <LinkBox as={HStack} spacing="10px">
       <Image src="/logo.svg" width={75} height={75} />
@@ -13,6 +13,4 @@ const Logo: React.FC = () => {
       </Text>
     </LinkBox>
   );
-};
-
-export default Logo;
+}

@@ -1,4 +1,4 @@
-import { MenuGroup, Option } from "./types";
+import { MenuGroup, Option } from "./types/common";
 import {
   UrbAreas,
   SuburbAreas,

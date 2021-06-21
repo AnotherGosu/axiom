@@ -1,35 +1,32 @@
-import Head from "components/common/Head";
+import PageLayout from "components/layouts/PageLayout";
 import Section from "components/common/Section";
 import SearchBar from "components/common/SearchBar";
-import SearchResults from "components/search/SearchResults";
-import Options from "components/search/Options";
+import SearchResults from "components/pages/search/SearchResults";
+import Options from "components/pages/search/Options";
 
 import { InferGetServerSidePropsType, GetServerSidePropsContext } from "next";
-import { getEstates } from "utils/cms";
+import { getSearchedEstates } from "utils/cms/requests";
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
-const Search: React.FC<Props> = ({ estates }) => {
+export default function Search({ estates }: Props) {
   return (
-    <>
-      <Head title="Axiom • Поиск" />
-      <Section headingTitle="Поиск жилья">
+    <PageLayout headTitle="Поиск">
+      <Section heading="Поиск жилья">
         <SearchBar />
       </Section>
-      <Section headingTitle="Дополнительные опции поиска" hiddenHeading>
+      <Section heading="Дополнительные опции поиска" isHiddenHeading>
         <Options />
       </Section>
-      <Section headingTitle="Результаты поиска" hiddenHeading>
+      <Section heading="Результаты поиска" isHiddenHeading>
         <SearchResults estates={estates} />
       </Section>
-    </>
+    </PageLayout>
   );
-};
-
-export default Search;
+}
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  const estates = await getEstates();
+  const estates = await getSearchedEstates();
 
   return {
     props: { estates },

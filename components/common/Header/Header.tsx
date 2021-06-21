@@ -3,8 +3,12 @@ import Logo from "./Logo";
 import Nav from "./Nav";
 import ProfileMenu from "./ProfileMenu";
 import NavDrawer from "./NavDrawer";
+import Auth from "./Auth";
+import useUser from "utils/auth/useUser";
 
-const Header: React.FC = () => {
+export default function Header() {
+  const user = useUser();
+
   return (
     <Grid
       as="header"
@@ -33,12 +37,10 @@ const Header: React.FC = () => {
       </GridItem>
       <GridItem gridArea="profile" justifySelf="flex-end">
         <HStack spacing="25px">
-          <ProfileMenu />
+          {user ? <ProfileMenu /> : <Auth />}
           <NavDrawer />
         </HStack>
       </GridItem>
     </Grid>
   );
-};
-
-export default Header;
+}

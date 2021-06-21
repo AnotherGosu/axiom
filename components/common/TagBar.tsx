@@ -1,12 +1,8 @@
 import { Wrap, Tag } from "@chakra-ui/react";
 import { colorTags } from "utils/constants";
-import { Tags } from "utils/types";
+import { Tags } from "utils/types/estate";
 
-interface Props {
-  tags: Tags;
-}
-
-const TagBar: React.FC<Props> = ({ tags }) => {
+export default function TagBar(tags: Tags) {
   const currentTags = Object.entries(colorTags).filter(([key]) => tags[key]);
   const isTags = !!currentTags.length;
 
@@ -23,6 +19,4 @@ const TagBar: React.FC<Props> = ({ tags }) => {
       )}
     </Wrap>
   );
-};
-
-export default TagBar;
+}

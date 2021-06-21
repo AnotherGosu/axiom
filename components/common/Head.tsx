@@ -4,10 +4,10 @@ interface Props {
   title: string;
 }
 
-const Head: React.FC<Props> = ({ title }) => {
+export default function Head({ title }: Props) {
   return (
     <NHead>
-      <title>{title}</title>
+      <title>{`${title} • Axiom`}</title>
       <link
         rel="icon"
         type="image/png"
@@ -30,6 +30,4 @@ const Head: React.FC<Props> = ({ title }) => {
       <meta name="theme-color" content="#ffffff" />
     </NHead>
   );
-};
-
-export default Head;
+}

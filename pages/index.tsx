@@ -1,31 +1,28 @@
-import Head from "components/common/Head";
+import PageLayout from "components/layouts/PageLayout";
 import Section from "components/common/Section";
 import SearchBar from "components/common/SearchBar";
-import Actuals from "components/main/Actuals";
+import Actuals from "components/pages/main/Actuals";
 
 import { InferGetStaticPropsType, GetStaticPropsContext } from "next";
-import { getEstates } from "utils/cms";
+import { getActualEstates } from "utils/cms/requests";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
-const Main: React.FC<Props> = ({ estates }) => {
+export default function Main({ estates }: Props) {
   return (
-    <>
-      <Head title="Axiom" />
-      <Section headingTitle="Поиск жилья">
+    <PageLayout headTitle="Главная">
+      <Section heading="Поиск жилья">
         <SearchBar />
       </Section>
-      <Section headingTitle="Актуальные предложения">
+      <Section heading="Актуальные предложения">
         <Actuals estates={estates} />
       </Section>
-    </>
+    </PageLayout>
   );
-};
-
-export default Main;
+}
 
 export const getStaticProps = async (ctx: GetStaticPropsContext) => {
-  const estates = await getEstates();
+  const estates = await getActualEstates();
 
   return {
     props: { estates },

@@ -1,70 +1,52 @@
-import { Grid, GridItem, CircularProgress } from "@chakra-ui/react";
-import Head from "components/common/Head";
+import { CircularProgress } from "@chakra-ui/react";
+import PageLayout from "components/layouts/PageLayout";
 import Section from "components/common/Section";
-import Header from "components/estate/Header";
-import Gallery from "components/estate/Gallery";
-import { ApartmentSummary, BuildingSummary } from "components/estate/Summary";
-import Description from "components/estate/Description";
-import { getEstate, getPaths } from "utils/cms";
+import Header from "components/pages/estate/Header";
+import Gallery from "components/pages/estate/Gallery";
+import {
+  ApartmentSummary,
+  BuildingSummary,
+} from "components/pages/estate/Summary";
+import Description from "components/pages/estate/Description";
+import { getApartmentAndBuildingProps } from "utils/helpers";
+import { getEstate, getPaths } from "utils/cms/requests";
 import { useRouter } from "next/router";
 
 import { InferGetStaticPropsType, GetStaticPropsContext } from "next";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
-const EstatePage: React.FC<Props> = ({ estate }) => {
+export default function EstatePage({ estate }: Props) {
   const router = useRouter();
 
   if (router.isFallback) {
     return <CircularProgress isIndeterminate />;
   }
 
-  return (
-    <>
-      <Head title={`Kvarum • ${estate.title}`} />
-      <Section headingTitle={estate.title}>
-        <Header address={estate.address} postDate={estate.createdAt} />
-      </Section>
-      <Section headingTitle="Галерея" hiddenHeading>
-        <Gallery title={estate.title} images={estate.images} />
-      </Section>
-      <Grid
-        gridTemplateColumns={{ base: "1fr", xl: "1fr max-content" }}
-        gridTemplateAreas={{
-          base: `"aside" "details" "building"`,
-          md: `"details aside" "building aside"`,
-        }}
-        gridGap="50px"
-      >
-        <GridItem gridArea="details">
-          <Section headingTitle="Описание квартиры">
-            <ApartmentSummary apartment={estate.apartment} />
-          </Section>
-        </GridItem>
-        <GridItem gridArea="building">
-          <Section headingTitle="Описание дома">
-            <BuildingSummary building={estate.building} />
-          </Section>
-        </GridItem>
-        <GridItem gridArea="aside">
-          {/* <Section headingTitle="Дополнительная информация" hiddenHeading>
-            <Aside
-              price={estate.price}
-              commonSquare={estate.apartment.commonSquare}
-              agent={agent}
-              agencyName={agency.name}
-            />
-          </Section> */}
-        </GridItem>
-      </Grid>
-      <Section headingTitle="Комментарий продавца">
-        <Description description={estate.description} />
-      </Section>
-    </>
-  );
-};
+  const { title, address, createdAt, images, preview, description } = estate;
 
-export default EstatePage;
+  const { apartment, building } = getApartmentAndBuildingProps(estate);
+
+  return (
+    <PageLayout headTitle={title}>
+      <Section heading={title}>
+        <Header address={address} createdAt={createdAt} />
+      </Section>
+      <Section heading="Галерея" isHiddenHeading>
+        <Gallery title={title} images={images} preview={preview} />
+      </Section>
+      <Section heading="Описание квартиры">
+        <ApartmentSummary {...apartment} />
+      </Section>
+      <Section heading="Описание дома">
+        <BuildingSummary {...building} />
+      </Section>
+      <Section heading="Комментарий продавца">
+        <Description description={description} />
+      </Section>
+    </PageLayout>
+  );
+}
 
 export const getStaticProps = async (ctx: GetStaticPropsContext) => {
   const { id } = ctx.params;

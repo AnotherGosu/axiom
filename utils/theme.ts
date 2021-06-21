@@ -2,6 +2,11 @@ import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
   components: {
+    Container: {
+      baseStyle: {
+        p: 0,
+      },
+    },
     Button: {
       defaultProps: {
         colorScheme: "purple",

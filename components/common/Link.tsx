@@ -1,17 +1,14 @@
 import { Link as ChakraLink, LinkProps } from "@chakra-ui/react";
 import NextLink from "next/link";
 
-interface Props {
+interface Props extends LinkProps {
   title: string;
-  href: string;
 }
 
-const Link: React.FC<Props & LinkProps> = ({ href, title, ...rest }) => {
+export default function Link({ title, href, ...rest }: Props) {
   return (
     <NextLink href={href} passHref>
       <ChakraLink {...rest}>{title}</ChakraLink>
     </NextLink>
   );
-};
-
-export default Link;
+}

@@ -1,27 +1,23 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Flex, Heading, BoxProps } from "@chakra-ui/react";
 
-interface Props {
-  headingTitle: string;
-  hiddenHeading?: boolean;
+interface Props extends BoxProps {
+  heading: string;
+  isHiddenHeading?: boolean;
+  isCenteredHeading?: boolean;
 }
 
-const Section: React.FC<Props> = ({
-  headingTitle,
-  hiddenHeading,
+export default function Section({
+  heading,
+  isHiddenHeading = false,
   children,
-}) => {
+  ...rest
+}: Props) {
   return (
-    <Box as="section">
-      <Heading
-        mb={["20px", "30px"]}
-        fontSize={["2xl", "3xl", "4xl"]}
-        hidden={hiddenHeading}
-      >
-        {headingTitle}
+    <Flex w="100%" as="section" flexDir="column" {...rest}>
+      <Heading mb="20px" size="lg" hidden={isHiddenHeading}>
+        {heading}
       </Heading>
       {children}
-    </Box>
+    </Flex>
   );
-};
-
-export default Section;
+}

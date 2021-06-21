@@ -1,80 +1,93 @@
-import { RawEstate, Estate, Tags, Building, Apartment } from "./types";
+import { CMSEstate, Estate, Apartment, Building } from "./types/estate";
 import { EstateType } from "./localizations";
 
-export function structureEstate(rawEstate: RawEstate) {
-  const title = getEstateTitle(rawEstate.rooms, rawEstate.estateType);
+export function structureEstate(estate: CMSEstate): Estate {
+  const { images = [], rooms = "", estateType = "Объект" } = estate;
 
-  const {
-    isBargaining,
-    isMortgage,
-    buildingType,
-    materialType,
-    builtYear,
-    parkingType,
-    isElevator,
-    isServiceElevator,
-    isRestrictedArea,
-    commonSquare,
-    livingSquare,
-    kitchenSquare,
-    floor,
-    allFloors,
-    balconies,
-    loggias,
-    windowsType,
-    state,
-    plateType,
-    bathType,
-    isRemodeled,
-    isRoomsFurniture,
-    isKitchenFurniture,
-    rooms,
-    roomsType,
-    ...rest
-  } = rawEstate;
+  const title = getEstateTitle({ rooms, estateType });
 
-  const tags: Tags = { isBargaining, isMortgage };
+  const firstImage = images[0];
+  const defaultPreview = { url: "/logo.svg" };
+  const preview = firstImage ? firstImage : defaultPreview;
 
-  const building: Building = {
-    buildingType,
-    materialType,
-    builtYear,
-    parkingType,
-    isElevator,
-    isServiceElevator,
-    isRestrictedArea,
-  };
-
-  const apartment: Apartment = {
-    rooms,
-    roomsType,
-    commonSquare,
-    livingSquare,
-    kitchenSquare,
-    floor,
-    allFloors,
-    balconies,
-    loggias,
-    windowsType,
-    state,
-    plateType,
-    bathType,
-    isRemodeled,
-    isRoomsFurniture,
-    isKitchenFurniture,
-  };
-
-  const estate: Estate = { title, tags, apartment, building, ...rest };
-
-  return estate;
+  return { ...estate, title, preview };
 }
 
-function getEstateTitle(rooms: number, estateType: string) {
-  if (estateType !== "apartment") {
-    return EstateType[estateType];
-  } else if (rooms === 0) {
-    return "Студия";
-  } else {
-    return `${rooms}-комнатная квартира`;
+function getEstateTitle({
+  rooms,
+  estateType,
+}: {
+  rooms: string;
+  estateType: string;
+}) {
+  switch (estateType) {
+    case "apartment": {
+      if (rooms === "freePlaning") {
+        return "Свободная планировка";
+      } else if (rooms === "studio") {
+        return "Студия";
+      } else {
+        return `${rooms}-комнатная квартира`;
+      }
+    }
+    default: {
+      return EstateType[estateType];
+    }
   }
+}
+
+export function getApartmentAndBuildingProps(estate: Estate) {
+  const {
+    rooms,
+    commonSquare,
+    livingSquare,
+    kitchenSquare,
+    floor,
+    allFloors,
+    balconies,
+    loggias,
+    roomsType,
+    windowsType,
+    state,
+    plateType,
+    bathType,
+    isRemodeled,
+    isRoomsFurniture,
+    isKitchenFurniture,
+    builtYear,
+    buildingType,
+    materialType,
+    parkingType,
+    isElevator,
+    isServiceElevator,
+    isRestrictedArea,
+  } = estate;
+  const apartment: Apartment = {
+    rooms,
+    commonSquare,
+    livingSquare,
+    kitchenSquare,
+    floor,
+    allFloors,
+    balconies,
+    loggias,
+    roomsType,
+    windowsType,
+    state,
+    plateType,
+    bathType,
+    isRemodeled,
+    isRoomsFurniture,
+    isKitchenFurniture,
+  };
+  const building: Building = {
+    builtYear,
+    buildingType,
+    materialType,
+    parkingType,
+    isElevator,
+    isServiceElevator,
+    isRestrictedArea,
+  };
+  return { apartment, building };
 }
