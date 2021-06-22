@@ -18,8 +18,18 @@ export default function ProfileMenu() {
   const size = useBreakpointValue({ base: "sm", sm: "md" });
 
   const handleSignOut = async () => {
-    const res = await fetch("/api/sign-out");
-    reload();
+    try {
+      const res = await fetch("/api/sign-out");
+      const data = await res.json();
+
+      if (res.ok) {
+        reload();
+      } else {
+        console.log(data.error);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
