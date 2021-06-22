@@ -14,6 +14,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.send({ issuer: metadata.issuer });
   } catch (error) {
-    res.status(error.status || 500).send({ isLoggedIn: false, error });
+    res.status(error.status || 500).end(error.message);
   }
 };

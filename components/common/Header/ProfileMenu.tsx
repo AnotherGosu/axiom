@@ -38,7 +38,7 @@ export default function ProfileMenu() {
         >
           Мои объекты
         </MenuItem>
-        <MenuItem icon={<VscSignOut />} onClick={signOutUser}>
+        <MenuItem icon={<VscSignOut />} onClick={() => push("/api/sign-out")}>
           Выйти
         </MenuItem>
       </MenuList>
