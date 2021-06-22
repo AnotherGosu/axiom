@@ -7,7 +7,6 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import useUser from "utils/auth/useUser";
 import { AddIcon } from "@chakra-ui/icons";
 import { VscSignOut } from "react-icons/vsc";
 import { CgProfile } from "react-icons/cg";
@@ -25,7 +24,7 @@ export default function ProfileMenu() {
       if (res.ok) {
         reload();
       } else {
-        console.log(data.error);
+        console.log(data);
       }
     } catch (err) {
       console.log(err);

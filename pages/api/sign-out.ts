@@ -11,6 +11,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       await magic.users.logoutByIssuer(session.issuer);
       removeTokenCookie(res);
       res.send({ isLoggedOut: true });
+    } else {
+      res.send({ isLoggedOut: null });
     }
   } catch (error) {
     console.error(error);
