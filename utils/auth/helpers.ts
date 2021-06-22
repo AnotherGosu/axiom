@@ -81,3 +81,18 @@ export async function signInUser(data: CreateUserFormFields) {
     toast(errorToast);
   }
 }
+
+export async function signOutUser() {
+  try {
+    const res = await fetch("/api/sign-out");
+    const data = await res.json();
+
+    if (res.ok) {
+      Router.reload();
+    } else {
+      console.log(data.error);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}

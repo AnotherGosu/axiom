@@ -1,4 +1,4 @@
-import { setCookie, parseCookies, destroyCookie } from "nookies";
+import { setCookie, parseCookies } from "nookies";
 import type { NextApiResponse } from "next";
 
 export const MAX_AGE = 60 * 60 * 24 * 7; // 7 days
@@ -16,7 +16,11 @@ export function setTokenCookie(res: NextApiResponse, token: string) {
 }
 
 export function removeTokenCookie(res: NextApiResponse) {
-  destroyCookie({ res }, TOKEN_NAME, { path: "/" });
+  const options = {
+    maxAge: -1,
+    path: "/",
+  };
+  setCookie({ res }, TOKEN_NAME, "", options);
 }
 
 export function getTokenCookie(req) {

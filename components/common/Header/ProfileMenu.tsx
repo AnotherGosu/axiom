@@ -6,30 +6,16 @@ import {
   Avatar,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import { AddIcon } from "@chakra-ui/icons";
 import { VscSignOut } from "react-icons/vsc";
 import { CgProfile } from "react-icons/cg";
 import { BsListUl } from "react-icons/bs";
+import { useRouter } from "next/router";
+import { signOutUser } from "utils/auth/helpers";
 
 export default function ProfileMenu() {
-  const { push, reload } = useRouter();
+  const { push } = useRouter();
   const size = useBreakpointValue({ base: "sm", sm: "md" });
-
-  const handleSignOut = async () => {
-    try {
-      const res = await fetch("/api/sign-out");
-      const data = await res.json();
-
-      if (res.ok) {
-        reload();
-      } else {
-        console.log(data);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   return (
     <Menu>
@@ -52,7 +38,7 @@ export default function ProfileMenu() {
         >
           Мои объекты
         </MenuItem>
-        <MenuItem icon={<VscSignOut />} onClick={handleSignOut}>
+        <MenuItem icon={<VscSignOut />} onClick={signOutUser}>
           Выйти
         </MenuItem>
       </MenuList>
