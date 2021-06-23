@@ -7,7 +7,17 @@ export default function SquareInputs() {
   const { control, getValues, formState, clearErrors } = useFormContext();
 
   const inputs = [
-    { id: "commonSquare", label: "Общая площадь", isRequired: true },
+    {
+      id: "commonSquare",
+      label: "Общая площадь",
+      isRequired: true,
+      rules: {
+        min: {
+          value: getValues("livingSquare") + getValues("kitchenSquare"),
+          message: "Значение меньше суммы площадей",
+        },
+      },
+    },
     {
       id: "livingSquare",
       label: "Жилая площадь",
@@ -33,9 +43,13 @@ export default function SquareInputs() {
   ];
 
   useEffect(() => {
-    if (formState.errors.livingSquare || formState.errors.kitchenSquare) {
+    if (
+      formState.errors.commonSquare ||
+      formState.errors.livingSquare ||
+      formState.errors.kitchenSquare
+    ) {
       const timer = setTimeout(() => {
-        clearErrors(["livingSquare", "kitchenSquare"]);
+        clearErrors(["commonSquare", "livingSquare", "kitchenSquare"]);
       }, 1500);
       return () => clearTimeout(timer);
     }

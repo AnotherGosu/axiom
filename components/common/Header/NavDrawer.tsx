@@ -1,5 +1,4 @@
 import {
-  Box,
   Drawer,
   DrawerBody,
   DrawerHeader,
@@ -8,22 +7,25 @@ import {
   DrawerCloseButton,
   IconButton,
   useDisclosure,
-  useBreakpointValue,
+  VStack,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import Nav from "./Nav";
+import Auth from "./Auth";
+import ProfileMenu from "./ProfileMenu";
+import useUser from "utils/auth/useUser";
 
 export default function NavDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const size = useBreakpointValue({ base: "sm", sm: "md" });
+  const user = useUser();
 
   return (
-    <Box display={{ base: "block", lg: "none" }}>
+    <>
       <IconButton
         aria-label="Open navigation"
         colorScheme="purple"
-        size={size}
-        fontSize="2xl"
+        size="sm"
+        fontSize="xl"
         icon={<HamburgerIcon />}
         onClick={onOpen}
       />
@@ -33,12 +35,13 @@ export default function NavDrawer() {
             <DrawerCloseButton />
             <DrawerHeader></DrawerHeader>
 
-            <DrawerBody py="50px">
-              <Nav onClose={onClose} />
+            <DrawerBody as={VStack} spacing="50px" py="50px">
+              {user ? <ProfileMenu /> : <Auth direction="column-reverse" />}
+              <Nav direction="column" onClose={onClose} />
             </DrawerBody>
           </DrawerContent>
         </DrawerOverlay>
       </Drawer>
-    </Box>
+    </>
   );
 }

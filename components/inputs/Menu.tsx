@@ -6,7 +6,6 @@ import {
   MenuOptionGroup,
   MenuDivider,
   Button,
-  useBreakpointValue,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { MenuGroup, Option } from "utils/types/common";
@@ -30,8 +29,6 @@ type Props = WithOptions | WithGroups;
 const isGroups = (props: Props): props is WithGroups => "groups" in props;
 
 const Menu: React.FC<Props> = (props) => {
-  const size = useBreakpointValue({ base: "md", md: "lg" });
-
   const [value, setInnerValue] = useState([]);
 
   const handleCheckbox = (newValue: string[]) => {
@@ -96,7 +93,6 @@ const Menu: React.FC<Props> = (props) => {
         borderColor={props.isRequired && !value[0] ? "red.500" : "purple.500"}
         variant="outline"
         w="100%"
-        size={size}
       >
         {props.title}
       </MenuButton>

@@ -1,19 +1,15 @@
-import { Container, Flex, Icon, Text, TextProps } from "@chakra-ui/react";
+import { Flex, Icon, Text, FlexProps } from "@chakra-ui/react";
 import { IoLocationSharp } from "react-icons/io5";
 
-interface Props extends TextProps {
+interface Props extends FlexProps {
   address: string;
 }
 
 export default function Location({ address, ...rest }: Props) {
   return (
-    <Flex gridColumnGap="5px" align="center">
+    <Flex gridColumnGap="5px" align="center" {...rest}>
       <Icon as={IoLocationSharp} />
-      <Container>
-        <Text isTruncated {...rest}>
-          {address}
-        </Text>
-      </Container>
+      <Text isTruncated>{address}</Text>
     </Flex>
   );
 }

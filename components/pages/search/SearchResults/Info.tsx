@@ -1,17 +1,10 @@
-import {
-  Box,
-  Text,
-  Flex,
-  Spacer,
-  Button,
-  useBreakpointValue,
-} from "@chakra-ui/react";
+import { Box, Heading, Text, Flex, Button } from "@chakra-ui/react";
 import TagBar from "components/common/TagBar";
-import LocationMarker from "components/common/Location";
-import Price from "components/common/SquarePrice";
-import LinkTitle from "./LinkTitle";
-import Features from "./Features";
+import Location from "components/common/Location";
+import Price from "components/common/Price";
+import PublicationDate from "components/common/PublicationDate";
 import type { SearchedEstate } from "utils/types/estate";
+import { useRouter } from "next/router";
 
 export default function Info({
   id,
@@ -24,41 +17,40 @@ export default function Info({
   isBargaining,
   isMortgage,
 }: SearchedEstate) {
-  const isBase = useBreakpointValue({ base: true, sm: false });
-  const publicationDate = new Date(createdAt).toLocaleDateString("ru");
+  const tags = { isMortgage, isBargaining };
+  const { push } = useRouter();
 
   return (
-    <Flex flexDir="column" flexGrow={1} minW="0" gridRowGap="10px">
-      <Flex justifyContent="space-between" gridColumnGap="20px">
-        <LinkTitle id={id} title={title} commonSquare={commonSquare} />
-        <Box minW="max-content">
-          <Price
-            price={price}
-            commonSquare={commonSquare}
-            priceFontSize={{ base: "md", md: "lg", lg: "xl" }}
-            squarePriceFontSize={{ base: "sm", md: "md", lg: "lg" }}
-          />
-        </Box>
+    <Box p="20px">
+      <TagBar tags={tags} mb="10px" />
+      <Flex
+        flexDir={{ base: "column", md: "row" }}
+        justify="space-between"
+        align={{ base: "flex-start", md: "center" }}
+        mb="20px"
+      >
+        <Heading
+          as="h3"
+          fontSize={{ base: "lg", md: "xl" }}
+          mb={{ base: "10px", md: "0" }}
+        >
+          {`${title}, ${commonSquare} м`}
+          <sup>2</sup>
+        </Heading>
+        <Price
+          price={price}
+          fontWeight="semibold"
+          fontSize={{ base: "lg", md: "xl" }}
+        />
       </Flex>
-      <TagBar isBargaining={isBargaining} isMortgage={isMortgage} />
-      <LocationMarker
-        address={address}
-        fontSize={{ base: "sm", md: "md", lg: "lg" }}
-        isTruncated
-      />
-      {/* {!isBase && <Features features={rest} />} */}
-      {!isBase && (
-        <Text noOfLines={2} fontSize={{ base: "sm", md: "md" }}>
-          {description}
-        </Text>
-      )}
-      <Spacer />
+      <Location address={address} mb="10px" />
+      <Text noOfLines={2} mb="20px">
+        {description}
+      </Text>
       <Flex align="center" justifyContent="space-between">
-        <Button size={isBase ? "md" : "lg"}>Показать телефон</Button>
-        <Text fontSize={{ base: "sm", md: "md", lg: "lg" }}>
-          {publicationDate}
-        </Text>
+        <Button onClick={() => push(`estates/${id}`)}>Подробнее</Button>
+        <PublicationDate createdAt={createdAt} />
       </Flex>
-    </Flex>
+    </Box>
   );
 }

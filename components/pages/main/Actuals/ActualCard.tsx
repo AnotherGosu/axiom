@@ -1,15 +1,12 @@
-import { Flex } from "@chakra-ui/react";
-import ActualCardInfo from "./ActualCardInfo";
-
-import Image from "next/image";
+import { Box } from "@chakra-ui/react";
 import { ActualEstate } from "utils/types/estate";
+import ActualCardInfo from "./ActualCardInfo";
+import Image from "next/image";
 
 export default function ActualCard({ preview, ...rest }: ActualEstate) {
   return (
-    <Flex
+    <Box
       as="article"
-      h="100%"
-      flexDir="column"
       boxShadow="md"
       borderWidth="1px"
       borderRadius="md"
@@ -19,10 +16,11 @@ export default function ActualCard({ preview, ...rest }: ActualEstate) {
         src={preview.url}
         alt={rest.title}
         width={400}
-        height={300}
+        height={250}
+        layout="responsive"
         objectFit="cover"
       />
       <ActualCardInfo {...rest} />
-    </Flex>
+    </Box>
   );
 }

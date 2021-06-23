@@ -1,4 +1,4 @@
-import { Flex, LinkBox } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import Info from "./Info";
 import Image from "next/image";
 import { SearchedEstate } from "utils/types/estate";
@@ -8,34 +8,23 @@ export default function SearchResultsCard({
   ...rest
 }: SearchedEstate) {
   return (
-    <LinkBox
+    <Box
       as="article"
-      display="flex"
-      w="100%"
-      maxW="6xl"
-      flexDir={{ base: "column", lg: "row" }}
-      p="15px"
-      gridGap="20px"
+      display="inline"
       borderWidth={1}
       boxShadow="md"
       borderRadius="md"
-      _hover={{ boxShadow: "xl", borderColor: "purple.500" }}
-      transition=".4s ease"
+      overflow="hidden"
     >
-      <Flex
-        w={{ base: "100%", lg: "400px" }}
-        minH="300px"
-        flexShrink={0}
-        pos="relative"
-      >
-        <Image
-          src={preview.url}
-          alt={rest.title}
-          layout="fill"
-          objectFit="cover"
-        />
-      </Flex>
+      <Image
+        src={preview.url}
+        alt={rest.title}
+        width={500}
+        height={300}
+        layout="responsive"
+        objectFit="cover"
+      />
       <Info {...rest} />
-    </LinkBox>
+    </Box>
   );
 }

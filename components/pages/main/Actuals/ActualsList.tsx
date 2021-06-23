@@ -1,4 +1,4 @@
-import { Wrap, WrapItem } from "@chakra-ui/react";
+import { Grid } from "@chakra-ui/react";
 import Card from "./ActualCard";
 
 import { ActualEstate } from "utils/types/estate";
@@ -9,12 +9,13 @@ interface Props {
 
 export default function ActualsList({ estates }: Props) {
   return (
-    <Wrap spacing="50px">
+    <Grid
+      templateColumns="repeat(auto-fit, minmax(300px, 400px))"
+      gridGap="30px"
+    >
       {estates.map((estate) => (
-        <WrapItem maxW="350px" h="100%" key={estate.id}>
-          <Card {...estate} />
-        </WrapItem>
+        <Card key={estate.id} {...estate} />
       ))}
-    </Wrap>
+    </Grid>
   );
 }

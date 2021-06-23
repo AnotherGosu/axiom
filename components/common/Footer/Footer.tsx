@@ -28,7 +28,7 @@ const rentLinks = [
 ];
 
 const newEstatesLinks = [
-  { title: "С чистой отделкой", href: "/" },
+  { title: "С чистовой отделкой", href: "/" },
   { title: "С отделкой под ключ", href: "/" },
   { title: "Рядом с метро", href: "/" },
   { title: "Эконом-класс", href: "/" },

@@ -5,8 +5,8 @@ import {
   FormErrorMessage,
   InputProps,
   InputGroup,
-  InputLeftElement,
   FormHelperText,
+  InputLeftAddon,
   InputRightElement,
 } from "@chakra-ui/react";
 import { Control, useController, RegisterOptions } from "react-hook-form";
@@ -14,8 +14,8 @@ import NumberFormat from "react-number-format";
 
 export interface Props extends InputProps {
   id: string;
-  label: string;
   control: Control<any>;
+  label?: string;
   isInteger?: boolean;
   thousandSeparator?: boolean;
   format?: string;
@@ -68,10 +68,10 @@ export default function NumberInput({
       isInvalid={invalid}
       isRequired={isRequired}
     >
-      <FormLabel>{label}</FormLabel>
+      {label && <FormLabel>{label}</FormLabel>}
       <InputGroup>
         {leftChildren && (
-          <InputLeftElement pointerEvents="none" children={leftChildren} />
+          <InputLeftAddon pointerEvents="none" children={leftChildren} />
         )}
         <NumberFormat
           autoComplete="off"
@@ -84,6 +84,7 @@ export default function NumberInput({
           allowNegative={false}
           customInput={Input}
           placeholder={placeholder}
+          borderLeftRadius={leftChildren && "none"}
           {...fieldProps}
         />
         {rightChildren && (
@@ -94,7 +95,7 @@ export default function NumberInput({
           />
         )}
       </InputGroup>
-      <FormHelperText>{helperText}</FormHelperText>
+      {helperText && <FormHelperText>{helperText}</FormHelperText>}
       <FormErrorMessage>{error?.message}</FormErrorMessage>
     </FormControl>
   );

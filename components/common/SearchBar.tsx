@@ -1,10 +1,15 @@
-import { Grid, GridItem, Button, useBreakpointValue } from "@chakra-ui/react";
-import InputGroup from "components/inputs/InputGroup";
+import { Grid, GridItem, Button } from "@chakra-ui/react";
 import Menu from "components/inputs/Menu";
+import { PriceInput } from "components/inputs/CustomNumberInputs";
 import { areasGroups, roomsOptions } from "utils/constants";
+import { useForm } from "react-hook-form";
 
 export default function SearchBar() {
-  const size = useBreakpointValue({ base: "md", md: "lg" });
+  const { control, handleSubmit } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
   return (
     <Grid
@@ -15,24 +20,25 @@ export default function SearchBar() {
         lg: `"rooms priceFrom priceTo area btn"`,
       }}
       gap="25px"
-      p="25px"
+      p="20px"
       borderWidth="1px"
       borderRadius="md"
+      onSubmit={handleSubmit(onSubmit)}
     >
       <GridItem gridArea="rooms">
         <Menu title="Комнаты" type="checkbox" options={roomsOptions} />
       </GridItem>
       <GridItem gridArea="priceFrom">
-        <InputGroup id="priceFrom" leftChildren="от" rightChildren="₽" />
+        <PriceInput id="priceFrom" control={control} leftChildren="От" />
       </GridItem>
       <GridItem gridArea="priceTo">
-        <InputGroup id="priceTo" leftChildren="до" rightChildren="₽" />
+        <PriceInput id="priceTo" control={control} leftChildren="До" />
       </GridItem>
       <GridItem gridArea="area">
         <Menu title="Район" type="checkbox" groups={areasGroups} />
       </GridItem>
       <GridItem gridArea="btn">
-        <Button w="100%" size={size}>
+        <Button w="100%" type="submit">
           Найти
         </Button>
       </GridItem>

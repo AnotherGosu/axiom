@@ -35,20 +35,30 @@ export default function SelectMenu({ id, label, menuItems }: Props) {
 
   return (
     <Menu>
-      <MenuButton
-        as={MenuIconButton}
-        leftIcon={<ButtonIcon />}
-        name={buttonLabel}
-      />
-      <MenuList>
-        <MenuOptionGroup value={value} onChange={onChange}>
-          {menuItems.map(({ value, label }) => (
-            <MenuItemOption key={value} value={value}>
-              {label}
-            </MenuItemOption>
-          ))}
-        </MenuOptionGroup>
-      </MenuList>
+      {({ onClose }) => (
+        <>
+          <MenuButton
+            as={MenuIconButton}
+            leftIcon={<ButtonIcon />}
+            name={buttonLabel}
+          />
+          <MenuList>
+            <MenuOptionGroup
+              value={value}
+              onChange={(value) => {
+                onClose();
+                onChange(value);
+              }}
+            >
+              {menuItems.map(({ value, label }) => (
+                <MenuItemOption key={value} value={value} closeOnSelect={true}>
+                  {label}
+                </MenuItemOption>
+              ))}
+            </MenuOptionGroup>
+          </MenuList>
+        </>
+      )}
     </Menu>
   );
 }

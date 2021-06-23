@@ -16,11 +16,15 @@ import {
   ApartmentType,
 } from "./localizations";
 
-export const headerNavLinks = [
-  { title: "Поиск", href: "/search" },
-  { title: "Агентства", href: "/agencies" },
-  { title: "Агенты", href: "/agents" },
-  { title: "Ипотека", href: "/calculators" },
+export const areasGroups: MenuGroup[] = [
+  {
+    title: "Город",
+    options: Object.entries(UrbAreas),
+  },
+  {
+    title: "Пригород",
+    options: Object.entries(SuburbAreas),
+  },
 ];
 
 export const roomsOptions: Option[] = [
@@ -32,17 +36,6 @@ export const roomsOptions: Option[] = [
   ["4", "4"],
   ["5", "5"],
   ["6", "6+"],
-];
-
-export const areasGroups: MenuGroup[] = [
-  {
-    title: "Город",
-    options: Object.entries(UrbAreas),
-  },
-  {
-    title: "Пригород",
-    options: Object.entries(SuburbAreas),
-  },
 ];
 
 export const materialTypeOptions: Option[] = Object.entries(MaterialType);
@@ -68,14 +61,3 @@ export const windowsTypeOptions: Option[] = Object.entries(WindowsType);
 export const rentTypeOptions: Option[] = Object.entries(RentType);
 
 export const estateTypeOptions: Option[] = Object.entries(EstateType);
-
-export const colorTags = {
-  isBargaining: {
-    title: "Торг",
-    color: "blue",
-  },
-  isMortgage: {
-    title: "Возможна ипотека",
-    color: "green",
-  },
-};

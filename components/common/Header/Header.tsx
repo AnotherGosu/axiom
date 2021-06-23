@@ -1,4 +1,4 @@
-import { Grid, GridItem, HStack } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import Logo from "./Logo";
 import Nav from "./Nav";
 import ProfileMenu from "./ProfileMenu";
@@ -10,37 +10,30 @@ export default function Header() {
   const user = useUser();
 
   return (
-    <Grid
+    <Flex
       as="header"
       pos="sticky"
       top="0px"
-      bg="white"
       zIndex="sticky"
-      gridTemplateAreas={{
-        base: `"logo logo profile profile"`,
-        lg: `"logo nav nav profile"`,
-      }}
-      alignItems="center"
-      px={{ base: "20px", md: "50px" }}
-      py="10px"
+      bg="white "
+      px={["20px", null, "50px"]}
+      py="5px"
       boxShadow="md"
+      justify="space-between"
+      align="center"
     >
-      <GridItem gridArea="logo" justifySelf="flex-start">
-        <Logo />
-      </GridItem>
-      <GridItem
-        gridArea="nav"
-        justifySelf="center"
-        display={{ base: "none", lg: "block" }}
-      >
+      <Logo />
+      <Box display={{ base: "none", lg: "block" }}>
         <Nav />
-      </GridItem>
-      <GridItem gridArea="profile" justifySelf="flex-end">
-        <HStack spacing="25px">
+      </Box>
+      <Flex>
+        <Box display={{ base: "none", lg: "block" }}>
           {user ? <ProfileMenu /> : <Auth />}
+        </Box>
+        <Box display={{ base: "block", lg: "none" }}>
           <NavDrawer />
-        </HStack>
-      </GridItem>
-    </Grid>
+        </Box>
+      </Flex>
+    </Flex>
   );
 }

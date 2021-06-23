@@ -1,12 +1,7 @@
-import {
-  Heading,
-  Flex,
-  Text,
-  Button,
-  useBreakpointValue,
-} from "@chakra-ui/react";
-import LocationMarker from "components/common/Location";
+import { Heading, Box, Flex, Spacer, Button } from "@chakra-ui/react";
 import TagBar from "components/common/TagBar";
+import Location from "components/common/Location";
+import Price from "components/common/Price";
 import { ActualEstate } from "utils/types/estate";
 import { useRouter } from "next/router";
 
@@ -19,30 +14,20 @@ export default function ActualCardInfo({
   isMortgage,
 }: ActualEstate) {
   const { push } = useRouter();
-  const size = useBreakpointValue({ base: "md", lg: "lg" });
-
-  const formatedPrice = new Intl.NumberFormat("ru-RU").format(price);
+  const tags = { isBargaining, isMortgage };
 
   return (
-    <Flex flexDir="column" gridRowGap="15px" mt="auto" p="15px" minW="0">
-      <TagBar isBargaining={isBargaining} isMortgage={isMortgage} />
-      <Heading
-        as="h3"
-        fontSize={["lg", "xl"]}
-        fontWeight="semibold"
-        isTruncated
-      >
+    <Box p="15px">
+      <TagBar tags={tags} mb="10px" />
+      <Heading as="h3" mb="10px" size="md" fontWeight="semibold" isTruncated>
         {title}
       </Heading>
-      <LocationMarker address={address} fontSize={["sm", "md"]} isTruncated />
-      <Flex justify="space-between" align="center">
-        <Text fontSize={["lg", "xl"]} fontWeight="semibold">
-          {`${formatedPrice} ₽`}
-        </Text>
-        <Button size={size} onClick={() => push(`/estates/${id}`)}>
-          Подробнее
-        </Button>
+      <Location address={address} mb="20px" />
+      <Flex align="center" mt="auto">
+        <Button onClick={() => push(`/estates/${id}`)}>Подробнее</Button>
+        <Spacer />
+        <Price price={price} fontSize="xl" fontWeight="semibold" />
       </Flex>
-    </Flex>
+    </Box>
   );
 }

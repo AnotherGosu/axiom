@@ -1,26 +1,17 @@
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Avatar,
-  useBreakpointValue,
-} from "@chakra-ui/react";
+import { Menu, MenuButton, MenuList, MenuItem, Avatar } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { VscSignOut } from "react-icons/vsc";
 import { CgProfile } from "react-icons/cg";
 import { BsListUl } from "react-icons/bs";
 import { useRouter } from "next/router";
-import { signOutUser } from "utils/auth/helpers";
 
 export default function ProfileMenu() {
   const { push } = useRouter();
-  const size = useBreakpointValue({ base: "sm", sm: "md" });
 
   return (
     <Menu>
       <MenuButton>
-        <Avatar size={size} bg="purple.500" cursor="pointer" />
+        <Avatar size="sm" bg="purple.500" cursor="pointer" />
       </MenuButton>
       <MenuList>
         <MenuItem icon={<CgProfile />} onClick={() => push("/profile")}>

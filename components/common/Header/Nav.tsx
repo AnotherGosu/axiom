@@ -1,25 +1,30 @@
-import { Stack, Link } from "@chakra-ui/react";
-import NextLink from "next/link";
-import { headerNavLinks as links } from "utils/constants";
+import { Stack, StackProps } from "@chakra-ui/react";
+import Link from "../Link";
 
-interface Props {
+interface Props extends StackProps {
   onClose?: () => void;
 }
 
-export default function Nav({ onClose }: Props) {
+export default function Nav({ onClose, ...rest }: Props) {
   return (
     <Stack
       as="nav"
-      direction={{ base: "column", lg: "row" }}
-      alignItems="center"
+      direction="row"
+      align="center"
       spacing="50px"
-      fontSize="2xl"
+      fontSize="xl"
+      {...rest}
     >
       {links.map(({ title, href }) => (
-        <NextLink href={href} key={title} passHref>
-          <Link onClick={onClose}>{title}</Link>
-        </NextLink>
+        <Link key={href} title={title} href={href} onClick={onClose} />
       ))}
     </Stack>
   );
 }
+
+const links = [
+  { title: "Поиск", href: "/search" },
+  { title: "Агентства", href: "/agencies" },
+  { title: "Агенты", href: "/agents" },
+  { title: "Ипотека", href: "/calculators" },
+];
