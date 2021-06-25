@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import Info from "./Info";
+import SearchResultsCardInfo from "./SearchResultsCardInfo";
 import Image from "next/image";
 import { SearchedEstate } from "utils/types/estate";
 
@@ -24,7 +24,7 @@ export default function SearchResultsCard({
         layout="responsive"
         objectFit="cover"
       />
-      <Info {...rest} />
+      <SearchResultsCardInfo {...rest} />
     </Box>
   );
 }

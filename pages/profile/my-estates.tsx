@@ -6,7 +6,7 @@ import { getLoginSession } from "utils/auth/session";
 import { getUserEstates } from "utils/cms/requests";
 import PageLayout from "components/layouts/PageLayout";
 import Section from "components/common/Section";
-import EstatesList from "components/pages/my-estates/EstatesList";
+import EstatesList from "components/pages/my-estates/MyEstatesList";
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 

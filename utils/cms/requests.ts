@@ -14,7 +14,7 @@ import {
 import type {
   ActualEstate,
   CMSEstate,
-  CreateEstateData,
+  FormEstate,
   SearchedEstate,
   UserEstate,
 } from "../types/estate";
@@ -44,7 +44,7 @@ export async function uploadAsset(file) {
   return res.json();
 }
 
-export async function createEstate(data: CreateEstateData) {
+export async function createEstate(data: FormEstate, issuer: string) {
   const { images, plan, ...rest } = data;
 
   const uploadedImages = await Promise.all(

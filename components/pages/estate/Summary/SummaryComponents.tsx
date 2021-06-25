@@ -1,4 +1,4 @@
-import { Flex, SimpleGrid, Text } from "@chakra-ui/react";
+import { Flex, Grid, Text } from "@chakra-ui/react";
 import { CheckIcon, SmallCloseIcon } from "@chakra-ui/icons";
 
 export const TextItem = ({
@@ -66,12 +66,14 @@ export const BooleanItem = ({
 };
 
 export const Container: React.FC = ({ children }) => (
-  <SimpleGrid
-    minChildWidth="300px"
-    spacingX="100px"
-    spacingY="20px"
-    fontSize={{ base: "md", md: "lg" }}
+  <Grid
+    templateColumns={{
+      base: "minmax(max-content, 350px)",
+      md: "repeat(2, minmax(max-content, 350px))",
+    }}
+    gridRowGap="10px"
+    gridColumnGap="30px"
   >
     {children}
-  </SimpleGrid>
+  </Grid>
 );

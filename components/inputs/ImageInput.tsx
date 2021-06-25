@@ -10,18 +10,22 @@ import {
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { Control, useController } from "react-hook-form";
+import { Control, useController, useFormContext } from "react-hook-form";
 
 interface Props {
   label: string;
   name: string;
-  control: Control<any>;
+  control?: Control<any>;
 }
 
 export default function ImageInput({ label, name, control }: Props) {
   const {
     field: { onChange },
-  } = useController({ name, control, defaultValue: null });
+  } = useController({
+    name,
+    control: control ? control : useFormContext().control,
+    defaultValue: null,
+  });
 
   const [image, setImage] = useState(null);
   const { getRootProps, getInputProps, isDragActive, isFileDialogActive } =

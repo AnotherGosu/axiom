@@ -4,12 +4,12 @@ import {
   Textarea as ChakraTextarea,
   TextareaProps,
 } from "@chakra-ui/react";
-import { Control, useController } from "react-hook-form";
+import { Control, useController, useFormContext } from "react-hook-form";
 
 interface Props extends TextareaProps {
   id: string;
   label: string;
-  control: Control<any>;
+  control?: Control<any>;
 }
 
 export default function Textarea({
@@ -21,10 +21,11 @@ export default function Textarea({
 }: Props) {
   const { field } = useController({
     name: id,
-    control,
+    control: control ? control : useFormContext().control,
     defaultValue: "",
     rules: { required: isRequired && "Это обязательное поле" },
   });
+
   return (
     <FormControl id={id}>
       <FormLabel>{label}</FormLabel>

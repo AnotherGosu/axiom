@@ -51,7 +51,7 @@ export default function Map({ setAddress, setLocation }: Props) {
   };
 
   return (
-    <Box pos="relative" w="100%" maxW="3xl" h={["xs", "md"]}>
+    <Box pos="relative" w="100%" h={["xs", "md"]}>
       <YMaps
         query={{
           apikey: process.env.NEXT_PUBLIC_MAP_API_KEY,

@@ -9,12 +9,12 @@ import {
   InputRightElement,
   FormHelperText,
 } from "@chakra-ui/react";
-import { Control, useController } from "react-hook-form";
+import { Control, useController, useFormContext } from "react-hook-form";
 
 interface Props extends InputProps {
   id: string;
-  label: string;
-  control: Control<any>;
+  label?: string;
+  control?: Control<any>;
   isDisabled?: boolean;
   leftChildren?: React.ReactNode;
   rightChildren?: React.ReactNode;
@@ -38,7 +38,7 @@ export default function TextInput({
     fieldState: { invalid, error },
   } = useController({
     name: id,
-    control,
+    control: control ? control : useFormContext().control,
     defaultValue: "",
     rules: { required: isRequired && "Это обязательное поле" },
   });
@@ -52,13 +52,13 @@ export default function TextInput({
       isDisabled={isDisabled}
       placeholder={placeholder}
     >
-      <FormLabel>{label}</FormLabel>
+      {label && <FormLabel>{label}</FormLabel>}
       <InputGroup>
         {leftChildren && <InputLeftElement children={leftChildren} />}
         <Input {...field} {...rest} required={false} />
         {rightChildren && <InputRightElement children={rightChildren} />}
       </InputGroup>
-      <FormHelperText>{helperText}</FormHelperText>
+      {helperText && <FormHelperText>{helperText}</FormHelperText>}
       <FormErrorMessage>{error?.message}</FormErrorMessage>
     </FormControl>
   );

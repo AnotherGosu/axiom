@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
 export default function ApartmentInputs() {
-  const { control, getValues, formState, clearErrors } = useFormContext();
+  const { getValues, formState, clearErrors } = useFormContext();
 
   const inputs = [
     {
@@ -35,7 +35,7 @@ export default function ApartmentInputs() {
     <Wrap spacing="20px">
       {inputs.map((props) => (
         <WrapItem key={props.id}>
-          <NumberInput control={control} isInteger {...props} />
+          <NumberInput isInteger {...props} />
         </WrapItem>
       ))}
     </Wrap>

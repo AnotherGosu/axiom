@@ -12,11 +12,8 @@ import {
   roomsTypeOptions,
   roomsOptions,
 } from "utils/constants";
-import { useFormContext } from "react-hook-form";
 
 export default function ApartmentTab() {
-  const { control } = useFormContext();
-
   return (
     <>
       <SquareInputs />
@@ -26,7 +23,7 @@ export default function ApartmentTab() {
       <Wrap spacing="20px">
         {selects.map((menu) => (
           <WrapItem key={menu.id}>
-            <Select control={control} {...menu} />
+            <Select {...menu} />
           </WrapItem>
         ))}
       </Wrap>
@@ -34,7 +31,7 @@ export default function ApartmentTab() {
       <Wrap spacing="40px">
         {switches.map((item) => (
           <WrapItem key={item.id}>
-            <Switch {...item} control={control} />
+            <Switch {...item} />
           </WrapItem>
         ))}
       </Wrap>

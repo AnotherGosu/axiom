@@ -9,17 +9,15 @@ interface Props {
 const AccordionList: React.FC<Props> = ({ title, links }) => {
   return (
     <Box>
-      <Link
-        href="/"
-        title={title}
-        fontSize="lg"
-        fontWeight="semibold"
-        color="whiteAlpha.900"
-      />
+      <Link href="/" fontSize="lg" fontWeight="semibold" color="whiteAlpha.900">
+        {title}
+      </Link>
       <List spacing="10px" mt="20px">
         {links.map(({ title, href }) => (
           <ListItem key={title}>
-            <Link href={href} title={title} />
+            <Link href={href} title={title}>
+              {title}
+            </Link>
           </ListItem>
         ))}
       </List>

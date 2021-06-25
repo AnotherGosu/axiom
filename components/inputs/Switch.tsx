@@ -3,18 +3,18 @@ import {
   FormLabel,
   Switch as ChakraSwitch,
 } from "@chakra-ui/react";
-import { Control, useController } from "react-hook-form";
+import { Control, useController, useFormContext } from "react-hook-form";
 
 interface Props {
   id: string;
   label: string;
-  control: Control<any>;
+  control?: Control<any>;
 }
 
 export default function Switch({ id, label, control }: Props) {
   const { field } = useController({
     name: id,
-    control,
+    control: control ? control : useFormContext().control,
     defaultValue: false,
   });
 

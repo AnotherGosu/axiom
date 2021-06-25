@@ -1,12 +1,11 @@
-import { Box, Heading, Text, Flex, Button } from "@chakra-ui/react";
+import { Box, Heading, Text, Flex } from "@chakra-ui/react";
 import TagBar from "components/common/TagBar";
 import Location from "components/common/Location";
 import Price from "components/common/Price";
 import PublicationDate from "components/common/PublicationDate";
+import ButtonLink from "components/common/ButtonLink";
 import type { SearchedEstate } from "utils/types/estate";
-import { useRouter } from "next/router";
-
-export default function Info({
+export default function SearchResultsCardInfo({
   id,
   createdAt,
   title,
@@ -18,7 +17,6 @@ export default function Info({
   isMortgage,
 }: SearchedEstate) {
   const tags = { isMortgage, isBargaining };
-  const { push } = useRouter();
 
   return (
     <Box p="20px">
@@ -33,6 +31,7 @@ export default function Info({
           as="h3"
           fontSize={{ base: "lg", md: "xl" }}
           mb={{ base: "10px", md: "0" }}
+          isTruncated
         >
           {`${title}, ${commonSquare} м`}
           <sup>2</sup>
@@ -48,7 +47,7 @@ export default function Info({
         {description}
       </Text>
       <Flex align="center" justifyContent="space-between">
-        <Button onClick={() => push(`estates/${id}`)}>Подробнее</Button>
+        <ButtonLink href={`/estates/${id}`}>Подробнее</ButtonLink>
         <PublicationDate createdAt={createdAt} />
       </Flex>
     </Box>

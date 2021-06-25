@@ -1,8 +1,3 @@
-export interface SystemFields {
-  id?: string;
-  createdAt?: string;
-}
-
 export interface CommonFields {
   images?: Array<{ url: string }>;
   plan?: { url: string };
@@ -54,23 +49,17 @@ export interface Tags {
   isMortgage?: boolean;
 }
 
-export interface CMSEstate
-  extends SystemFields,
-    CommonFields,
-    Apartment,
-    Building,
-    Tags {}
+export type FormEstate = CommonFields & Building & Apartment & Tags;
+
+export interface CMSEstate extends FormEstate {
+  id?: string;
+  createdAt?: string;
+}
 
 export interface Estate extends CMSEstate {
   title?: string;
   preview?: { url: string };
 }
-
-export type CreateEstateFormFields = CommonFields & Building & Apartment & Tags;
-
-export type CreateEstateData = CreateEstateFormFields & {
-  issuer?: string;
-};
 
 export interface UserEstate {
   id?: Estate["id"];

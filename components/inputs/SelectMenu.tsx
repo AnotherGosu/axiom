@@ -9,22 +9,21 @@ import {
   forwardRef,
 } from "@chakra-ui/react";
 import { TriangleDownIcon } from "@chakra-ui/icons";
-import { useController, useFormContext } from "react-hook-form";
+import { Control, useController, useFormContext } from "react-hook-form";
 
 interface Props {
   id: string;
   label: string;
   menuItems: any[];
+  control?: Control<any>;
 }
 
-export default function SelectMenu({ id, label, menuItems }: Props) {
-  const { control } = useFormContext();
-
+export default function SelectMenu({ id, label, menuItems, control }: Props) {
   const {
     field: { value, onChange },
   } = useController({
     name: id,
-    control,
+    control: control ? control : useFormContext().control,
     defaultValue: "",
     rules: { required: true },
   });

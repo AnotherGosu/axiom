@@ -1,19 +1,23 @@
 import { Center, Text, VStack, FormControl, FormLabel } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { Control, useController } from "react-hook-form";
+import { Control, useController, useFormContext } from "react-hook-form";
 import Sortable from "components/common/Sortable";
 
 interface Props {
   label: string;
   name: string;
-  control: Control<any>;
+  control?: Control<any>;
 }
 
 export default function ImagesInput({ label, name, control }: Props) {
   const {
     field: { onChange: setFiles, value: files },
-  } = useController({ name, control, defaultValue: [] });
+  } = useController({
+    name,
+    control: control ? control : useFormContext().control,
+    defaultValue: [],
+  });
 
   const [previews, setPreviews] = useState([]);
   const { getRootProps, getInputProps, isDragActive, isFileDialogActive } =
@@ -52,7 +56,13 @@ export default function ImagesInput({ label, name, control }: Props) {
   );
 
   return (
-    <FormControl id="images" as={VStack} spacing="10px" align="flex-start">
+    <FormControl
+      id="images"
+      as={VStack}
+      spacing="10px"
+      align="flex-start"
+      maxW="3xl"
+    >
       <FormLabel>{label}</FormLabel>
       <Center
         {...getRootProps({

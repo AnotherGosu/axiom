@@ -9,10 +9,10 @@ export default function MediaTab() {
 
   return (
     <>
-      <Textarea id="description" label="Описание объекта" control={control} />
-      <TextInput id="videoUrl" label="Ссылка на видео" control={control} />
-      <ImageInput label="План объекта" name="plan" control={control} />
-      <ImagesInput label="Фотографии объекта" name="images" control={control} />
+      <Textarea id="description" label="Описание объекта" maxW="3xl" />
+      <TextInput id="videoUrl" label="Ссылка на видео" maxW="3xl" />
+      <ImageInput label="План объекта" name="plan" />
+      <ImagesInput label="Фотографии объекта" name="images" />
     </>
   );
 }

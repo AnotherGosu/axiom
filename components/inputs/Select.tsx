@@ -6,14 +6,14 @@ import {
   Select as ChakraSelect,
   SelectProps,
 } from "@chakra-ui/react";
-import { Control, useController } from "react-hook-form";
+import { Control, useController, useFormContext } from "react-hook-form";
 import { Option } from "utils/types/common";
 
 interface Props extends SelectProps {
   id: string;
   label: string;
   options: Option[];
-  control: Control<any>;
+  control?: Control<any>;
   helperText?: string;
 }
 
@@ -31,7 +31,7 @@ export default function Select({
     fieldState: { invalid, error },
   } = useController({
     name: id,
-    control,
+    control: control ? control : useFormContext().control,
     defaultValue: isRequired ? options[0][0] : "",
     rules: { required: isRequired && "Это обязательное поле" },
   });

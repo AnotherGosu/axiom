@@ -9,12 +9,17 @@ import {
   InputLeftAddon,
   InputRightElement,
 } from "@chakra-ui/react";
-import { Control, useController, RegisterOptions } from "react-hook-form";
+import {
+  Control,
+  useController,
+  RegisterOptions,
+  useFormContext,
+} from "react-hook-form";
 import NumberFormat from "react-number-format";
 
 export interface Props extends InputProps {
   id: string;
-  control: Control<any>;
+  control?: Control<any>;
   label?: string;
   isInteger?: boolean;
   thousandSeparator?: boolean;
@@ -49,7 +54,7 @@ export default function NumberInput({
     fieldState: { invalid, error },
   } = useController({
     name: id,
-    control,
+    control: control ? control : useFormContext().control,
     defaultValue: null,
     rules: {
       ...rules,

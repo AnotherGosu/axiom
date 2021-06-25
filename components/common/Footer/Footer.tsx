@@ -1,4 +1,4 @@
-import { Grid, GridItem, Box, Flex } from "@chakra-ui/react";
+import { Grid, GridItem, Flex } from "@chakra-ui/react";
 import Link from "../Link";
 import LinksList from "./LinksList";
 import Credits from "./Credits";
@@ -60,12 +60,13 @@ const Footer: React.FC = () => {
             <Link
               key={title}
               href={href}
-              title={title}
               fontSize="lg"
               fontWeight="semibold"
               color="whiteAlpha.900"
               h="max-content"
-            />
+            >
+              {title}
+            </Link>
           ))}
         </Flex>
       </GridItem>

@@ -16,7 +16,9 @@ export default function Nav({ onClose, ...rest }: Props) {
       {...rest}
     >
       {links.map(({ title, href }) => (
-        <Link key={href} title={title} href={href} onClick={onClose} />
+        <Link key={href} href={href} onClick={onClose}>
+          {title}
+        </Link>
       ))}
     </Stack>
   );

@@ -1,17 +1,17 @@
 import { InferGetStaticPropsType, GetServerSidePropsContext } from "next";
 import PageLayout from "components/layouts/PageLayout";
 import Section from "components/common/Section";
-import AddEstateForm from "components/pages/add-estate/AddEstateForm";
+import EditEstateForm from "components/pages/edit-estate/EditEstateForm";
 import { getLoginSession } from "utils/auth/session";
-import { getUserContacts } from "utils/cms/requests";
+import { getEstate } from "utils/cms/requests";
 
 type Props = InferGetStaticPropsType<typeof getServerSideProps>;
 
-export default function AddEstate({ user, issuer }: Props) {
+export default function EditEstate({ issuer, estate }: Props) {
   return (
-    <PageLayout headTitle="Добавить">
-      <Section heading="Добавить объект">
-        <AddEstateForm user={user} issuer={issuer} />
+    <PageLayout headTitle="Изменить">
+      <Section heading="Изменить объект">
+        <EditEstateForm defaultValues={estate} issuer={issuer} />
       </Section>
     </PageLayout>
   );
@@ -29,7 +29,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
   const { issuer } = session;
 
-  const user = await getUserContacts(issuer);
+  const { id } = ctx.params;
+  const estate = await getEstate(id.toString());
 
-  return { props: { user, issuer } };
+  return { props: { issuer, estate } };
 };

@@ -2,17 +2,14 @@ import { Wrap, WrapItem } from "@chakra-ui/react";
 import { YearInput } from "components/inputs/CustomNumberInputs";
 import Select from "components/inputs/Select";
 import Switch from "components/inputs/Switch";
-import AddressInput from "../AddressInput";
+import AddressInput from "components/estateForm/AddressInput";
 import {
   apartmentTypeOptions,
   materialTypeOptions,
   parkingTypeOptions,
 } from "utils/constants";
-import { useFormContext } from "react-hook-form";
 
 export default function BuildingTab() {
-  const { control } = useFormContext();
-
   return (
     <>
       <AddressInput />
@@ -22,13 +19,12 @@ export default function BuildingTab() {
           <YearInput
             id="builtYear"
             label="Год постройки"
-            control={control}
             helperText="Для строящихся зданий - будущий год"
           />
         </WrapItem>
         {selects.map((select) => (
           <WrapItem key={select.id}>
-            <Select control={control} {...select} />
+            <Select {...select} />
           </WrapItem>
         ))}
       </Wrap>
@@ -36,7 +32,7 @@ export default function BuildingTab() {
       <Wrap spacing="40px">
         {switches.map((props) => (
           <WrapItem key={props.id}>
-            <Switch control={control} {...props} />
+            <Switch {...props} />
           </WrapItem>
         ))}
       </Wrap>

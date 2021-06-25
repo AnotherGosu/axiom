@@ -1,5 +1,6 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
-import LocationMarker from "components/common/Location";
+import { Box, Flex } from "@chakra-ui/react";
+import Location from "components/common/Location";
+import PublicationDate from "components/common/PublicationDate";
 
 interface Props {
   address: string;
@@ -9,14 +10,9 @@ interface Props {
 export default function Header({ address, createdAt }: Props) {
   return (
     <Flex flexDir="column" gridGap="15px">
-      <LocationMarker
-        address={address}
-        fontSize={{ base: "md", md: "lg", lg: "xl" }}
-      />
+      <Location address={address} />
       <Box bg="whitesmoke" px="15px" py="5px">
-        <Text fontSize="lg" color="blackAlpha.600">
-          {createdAt}
-        </Text>
+        <PublicationDate createdAt={createdAt} />
       </Box>
     </Flex>
   );

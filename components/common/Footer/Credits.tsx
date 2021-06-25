@@ -5,8 +5,8 @@ const Credits: React.FC = () => {
   return (
     <Flex flexWrap="wrap" gridColumnGap="50px" gridRowGap="20px">
       <Text>© 2021 Axiom</Text>
-      <Link href="/" title="Политика конфиденциальности" />
-      <Link href="/" title="Пользовательское соглашение" />
+      <Link href="/">Политика конфиденциальности</Link>
+      <Link href="/">Пользовательское соглашение</Link>
     </Flex>
   );
 };
