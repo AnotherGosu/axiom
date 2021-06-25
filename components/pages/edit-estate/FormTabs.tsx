@@ -23,7 +23,7 @@ export default function FormTabs({ issuer }: Props) {
 
   const { formState, handleSubmit } = useFormContext();
 
-  const onSubmit = async (data: FormEstate) => addEstate(data, issuer);
+  const onSubmit = async (data: FormEstate) => console.log(data);
   const onError = (errors) => switchToErrorTab(errors);
 
   const SubmitButton = () => {
