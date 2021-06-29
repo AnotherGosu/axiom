@@ -5,7 +5,7 @@ import SearchResults from "components/pages/search/SearchResults";
 import Options from "components/pages/search/Options";
 
 import { InferGetServerSidePropsType, GetServerSidePropsContext } from "next";
-import { getSearchedEstates } from "utils/cms/requests";
+import { getSearchedEstates } from "utils/cms/estate/requests";
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 

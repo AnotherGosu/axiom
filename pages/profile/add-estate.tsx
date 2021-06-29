@@ -3,15 +3,15 @@ import PageLayout from "components/layouts/PageLayout";
 import Section from "components/common/Section";
 import AddEstateForm from "components/pages/add-estate/AddEstateForm";
 import { getLoginSession } from "utils/auth/session";
-import { getUserContacts } from "utils/cms/requests";
+import { getUser } from "utils/cms/user/requests";
 
 type Props = InferGetStaticPropsType<typeof getServerSideProps>;
 
-export default function AddEstate({ user, issuer }: Props) {
+export default function AddEstate({ user }: Props) {
   return (
     <PageLayout headTitle="Добавить">
       <Section heading="Добавить объект">
-        <AddEstateForm user={user} issuer={issuer} />
+        <AddEstateForm user={user} />
       </Section>
     </PageLayout>
   );
@@ -29,7 +29,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
   const { issuer } = session;
 
-  const user = await getUserContacts(issuer);
+  const user = await getUser(issuer);
 
-  return { props: { user, issuer } };
+  return { props: { user } };
 };

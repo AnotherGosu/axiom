@@ -43,7 +43,7 @@ export default function Select({
       isRequired={isRequired}
       isInvalid={invalid}
     >
-      <FormLabel>{label}</FormLabel>
+      {label && <FormLabel>{label}</FormLabel>}
       <ChakraSelect {...field} {...rest}>
         {!isRequired && <option value=""></option>}
         {options.map(([value, title]) => (
@@ -52,7 +52,7 @@ export default function Select({
           </option>
         ))}
       </ChakraSelect>
-      <FormHelperText>{helperText}</FormHelperText>
+      {helperText && <FormHelperText>{helperText}</FormHelperText>}
       <FormErrorMessage>{error?.message}</FormErrorMessage>
     </FormControl>
   );

@@ -1,5 +1,5 @@
 import { CMSEstate, Estate, Apartment, Building } from "./types/estate";
-import { EstateType } from "./localizations";
+import { EstateType, Rooms } from "./localizations";
 
 export function structureEstate(estate: CMSEstate): Estate {
   const { images = [], rooms = "", estateType = "Объект" } = estate;
@@ -23,11 +23,11 @@ function getEstateTitle({
   switch (estateType) {
     case "apartment": {
       if (rooms === "freePlaning") {
-        return "Свободная планировка";
+        return Rooms["freePlaning"];
       } else if (rooms === "studio") {
-        return "Студия";
+        return Rooms["studio"];
       } else {
-        return `${rooms}-комнатная квартира`;
+        return `${Rooms[rooms]}-комнатная квартира`;
       }
     }
     default: {

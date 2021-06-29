@@ -1,6 +1,11 @@
 import { createStandaloneToast, UseToastOptions } from "@chakra-ui/toast";
-import { createEstate } from "utils/cms/requests";
-import type { FormEstate } from "utils/types/estate";
+import { addEstate, editEstate } from "utils/cms/estate/requests";
+import Router from "next/router";
+import type {
+  AddEstateFormData,
+  EditEstateFormData,
+  CMSEstate,
+} from "utils/types/estate";
 
 const errorToast: UseToastOptions = {
   isClosable: true,
@@ -9,7 +14,7 @@ const errorToast: UseToastOptions = {
   title: "Возникла ошибка",
 };
 
-export async function addEstate(data: FormEstate, issuer: string) {
+export async function handleAddEstate(data: AddEstateFormData, issuer: string) {
   const toast = createStandaloneToast();
 
   toast({
@@ -20,7 +25,7 @@ export async function addEstate(data: FormEstate, issuer: string) {
   });
 
   try {
-    const res = await createEstate(data, issuer);
+    await addEstate({ data, issuer });
 
     toast.closeAll();
     toast({
@@ -29,6 +34,7 @@ export async function addEstate(data: FormEstate, issuer: string) {
       status: "success",
       title: "Объект успешно добавлен",
     });
+    Router.push("/profile/my-estates");
   } catch (err) {
     console.error(err);
     toast.closeAll();
@@ -36,7 +42,15 @@ export async function addEstate(data: FormEstate, issuer: string) {
   }
 }
 
-export async function editEstate(data: FormEstate, issuer: string) {
+export async function handleEditEstate({
+  data,
+  existingImages,
+  existingPlan,
+}: {
+  data: EditEstateFormData;
+  existingImages: CMSEstate["images"];
+  existingPlan: CMSEstate["plan"];
+}) {
   const toast = createStandaloneToast();
   toast({
     isClosable: false,
@@ -46,7 +60,11 @@ export async function editEstate(data: FormEstate, issuer: string) {
   });
 
   try {
-    const res = await createEstate(data, issuer);
+    await editEstate({
+      data,
+      existingImages,
+      existingPlan,
+    });
 
     toast.closeAll();
     toast({
@@ -55,6 +73,7 @@ export async function editEstate(data: FormEstate, issuer: string) {
       status: "success",
       title: "Объект успешно изменен",
     });
+    Router.push("/profile/my-estates");
   } catch (err) {
     console.error(err);
     toast.closeAll();

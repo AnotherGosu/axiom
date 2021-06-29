@@ -2,15 +2,16 @@ import { Tabs, Button } from "@chakra-ui/react";
 import TabList from "components/estateForm/TabList";
 import TabPanels from "components/estateForm/TabPanels";
 import { useFormContext } from "react-hook-form";
-import { addEstate } from "components/estateForm/helpers";
+import { handleEditEstate } from "components/estateForm/helpers";
 import useFormTabs from "components/estateForm/useFormTabs";
-import type { FormEstate } from "utils/types/estate";
+import type { CMSEstate } from "utils/types/estate";
 
 interface Props {
-  issuer: string;
+  existingImages: CMSEstate["images"];
+  existingPlan: CMSEstate["plan"];
 }
 
-export default function FormTabs({ issuer }: Props) {
+export default function FormTabs({ existingImages, existingPlan }: Props) {
   const {
     tabIndex,
     setTabIndex,
@@ -23,7 +24,8 @@ export default function FormTabs({ issuer }: Props) {
 
   const { formState, handleSubmit } = useFormContext();
 
-  const onSubmit = async (data: FormEstate) => console.log(data);
+  const onSubmit = async (data) =>
+    handleEditEstate({ data, existingImages, existingPlan });
   const onError = (errors) => switchToErrorTab(errors);
 
   const SubmitButton = () => {

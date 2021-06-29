@@ -19,17 +19,18 @@ interface Props extends InputProps {
   leftChildren?: React.ReactNode;
   rightChildren?: React.ReactNode;
   helperText?: string;
+  rules?: any;
 }
 
 export default function TextInput({
   id,
   label,
-  placeholder,
   isDisabled,
   leftChildren,
   rightChildren,
   helperText,
   control,
+  rules,
   isRequired,
   ...rest
 }: Props) {
@@ -40,7 +41,7 @@ export default function TextInput({
     name: id,
     control: control ? control : useFormContext().control,
     defaultValue: "",
-    rules: { required: isRequired && "Это обязательное поле" },
+    rules: { ...rules, required: isRequired && "Это обязательное поле" },
   });
 
   return (
@@ -50,7 +51,6 @@ export default function TextInput({
       isInvalid={invalid && !field.value}
       isRequired={isRequired}
       isDisabled={isDisabled}
-      placeholder={placeholder}
     >
       {label && <FormLabel>{label}</FormLabel>}
       <InputGroup>

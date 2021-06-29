@@ -1,6 +1,4 @@
 export interface CommonFields {
-  images?: Array<{ url: string }>;
-  plan?: { url: string };
   videoUrl?: string;
   description?: string;
   address?: string;
@@ -12,7 +10,6 @@ export interface CommonFields {
   agentName?: string;
   agentPhone?: string;
   agencyServicePrice?: number;
-  customUser?: any;
 }
 
 export interface Apartment {
@@ -49,11 +46,25 @@ export interface Tags {
   isMortgage?: boolean;
 }
 
-export type FormEstate = CommonFields & Building & Apartment & Tags;
+export type StaticFields = CommonFields & Apartment & Building & Tags;
 
-export interface CMSEstate extends FormEstate {
+export interface AddEstateFormData extends StaticFields {
+  images?: File[];
+  plan?: File;
+}
+
+export interface EditEstateFormData extends StaticFields {
   id?: string;
   createdAt?: string;
+  images?: File[] | Array<{ id: string; url: string }>;
+  plan?: File | { id: string; url: string };
+}
+
+export interface CMSEstate extends StaticFields {
+  id?: string;
+  createdAt?: string;
+  images?: Array<{ id: string; url: string }>;
+  plan?: { id: string; url: string };
 }
 
 export interface Estate extends CMSEstate {

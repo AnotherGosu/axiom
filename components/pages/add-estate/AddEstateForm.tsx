@@ -3,17 +3,16 @@ import { useForm, FormProvider } from "react-hook-form";
 import FormTabs from "./FormTabs";
 import RentTypeSelectMenu from "components/estateForm/RentTypeSelectMenu";
 import EstateTypeSelectMenu from "components/estateForm/EstateTypeSelectMenu";
-import { FormEstate } from "utils/types/estate";
-import type { UserContacts } from "utils/types/user";
+import type { AddEstateFormData } from "utils/types/estate";
+import type { User } from "utils/types/user";
 
 interface Props {
-  user: UserContacts;
-  issuer: string;
+  user: User;
 }
 
-export default function AddEstateForm({ user, issuer }: Props) {
-  const { name, phone } = user;
-  const form = useForm<FormEstate>({
+export default function AddEstateForm({ user }: Props) {
+  const { issuer, name, phone } = user;
+  const form = useForm<AddEstateFormData>({
     defaultValues: {
       agentName: name,
       agentPhone: phone,

@@ -4,7 +4,7 @@ import SearchBar from "components/common/SearchBar";
 import Actuals from "components/pages/main/Actuals";
 
 import { InferGetStaticPropsType, GetStaticPropsContext } from "next";
-import { getActualEstates } from "utils/cms/requests";
+import { getActualEstates } from "utils/cms/estate/requests";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 

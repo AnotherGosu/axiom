@@ -1,6 +1,5 @@
 import { Flex, Box, Text, Heading } from "@chakra-ui/react";
 import Head from "components/common/Head";
-import Image from "next/image";
 
 interface Props {
   headTitle: string;
@@ -12,43 +11,39 @@ export default function AuthLayout({ headTitle, heading, children }: Props) {
   return (
     <>
       <Head title={headTitle} />
-      <Flex h="100vh" align="center" flexDir={{ base: "column", lg: "row" }}>
+      <Flex align="center" flexDir={{ base: "column-reverse", lg: "row" }}>
         <Flex
           flexDir="column"
-          w="100%"
+          w={{ base: "100%", lg: "50%" }}
+          h={{ base: "65vh", lg: "100vh" }}
           p="50px"
-          flexGrow={1}
-          alignItems="center"
+          align="center"
+          justify="center"
         >
           <Text
             fontWeight="bold"
-            fontSize="6xl"
+            fontSize={{ base: "4xl", lg: "5xl" }}
             letterSpacing="wider"
-            mb="50px"
+            mb={{ base: "25px", lg: "50px" }}
             color="purple.500"
           >
             Axiom
           </Text>
-          <Box w="100%" maxW="lg">
-            <Heading mb="20px">{heading}</Heading>
+          <Box w="100%" maxW="lg" textAlign="center">
+            <Heading mb="20px" fontSize={{ base: "2xl", lg: "3xl" }}>
+              {heading}
+            </Heading>
             {children}
           </Box>
         </Flex>
         <Flex
-          pos="relative"
-          w="100%"
-          h="100%"
-          flexGrow={1}
-          order={{ base: -1, lg: 1 }}
-        >
-          <Image
-            src="/sign-bg.jpg"
-            alt="City view"
-            layout="fill"
-            objectFit="cover"
-            objectPosition="bottom"
-          />
-        </Flex>
+          w={{ base: "100%", lg: "50%" }}
+          h={{ base: "35vh", lg: "100vh" }}
+          bgImage={`url("/sign-bg.jpg")`}
+          bgPosition="bottom"
+          bgRepeat="no-repeat"
+          bgSize="cover"
+        />
       </Flex>
     </>
   );

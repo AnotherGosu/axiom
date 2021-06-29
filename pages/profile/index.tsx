@@ -1,7 +1,7 @@
 import { VStack, Text } from "@chakra-ui/react";
 import PageLayout from "components/layouts/PageLayout";
 import { getLoginSession } from "utils/auth/session";
-import { getUserProfile } from "utils/cms/requests";
+import { getUser } from "utils/cms/user/requests";
 import type { InferGetStaticPropsType, GetServerSidePropsContext } from "next";
 
 type Props = InferGetStaticPropsType<typeof getServerSideProps>;
@@ -31,7 +31,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
-  const user = await getUserProfile(session.issuer);
+  const user = await getUser(session.issuer);
 
   return { props: { user } };
 };

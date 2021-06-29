@@ -37,10 +37,10 @@ export default function Sortable({
     >
       <SortableContext items={items} strategy={rectSortingStrategy}>
         <Wrap>
-          {items.map((preview, index) => (
-            <WrapItem key={preview}>
+          {items.map((url, index) => (
+            <WrapItem key={url}>
               <SortablePhoto
-                preview={preview}
+                url={url}
                 handleDelete={handleDelete}
                 index={index}
               />

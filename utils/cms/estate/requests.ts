@@ -1,35 +1,28 @@
-import { GraphQLClient } from "graphql-request";
+import { client, authorizationHeader } from "../client";
 import {
   GET_ESTATE,
   GET_SEARCHED_ESTATES,
   GET_PATHS,
-  GET_USER_BY_EMAIL,
-  CREATE_ESTATE,
-  CREATE_USER,
-  GET_USER_PROFILE,
-  GET_USER_ESTATES,
+  ADD_ESTATE,
   GET_ACTUAL_ESTATES,
-  GET_USER_CONTACTS,
+  GET_USER_ESTATES,
+  EDIT_ESTATE,
 } from "./queries";
 import type {
   ActualEstate,
   CMSEstate,
-  FormEstate,
+  AddEstateFormData,
+  EditEstateFormData,
   SearchedEstate,
   UserEstate,
-} from "../types/estate";
-import type {
-  CreateUserRequest,
-  UserProfile,
-  UserContacts,
-} from "../types/user";
-import { structureEstate } from "../helpers";
+} from "utils/types/estate";
+import { structureEstate } from "utils/helpers";
+import { editPlan } from "./editPlan";
+import { editImages } from "./editImages";
 
-const authorizationHeader = `Bearer ${process.env.NEXT_PUBLIC_MUTATION_TOKEN}`;
+export async function uploadAsset(file: File) {
+  if (!file) return;
 
-export const client = new GraphQLClient(process.env.NEXT_PUBLIC_API_URL);
-
-export async function uploadAsset(file) {
   const form = new FormData();
   form.append("fileUpload", file);
 
@@ -41,10 +34,17 @@ export async function uploadAsset(file) {
     body: form,
   });
 
-  return res.json();
+  const data = await res.json();
+  return data;
 }
 
-export async function createEstate(data: FormEstate, issuer: string) {
+export async function addEstate({
+  data,
+  issuer,
+}: {
+  data: AddEstateFormData;
+  issuer: string;
+}) {
   const { images, plan, ...rest } = data;
 
   const uploadedImages = await Promise.all(
@@ -52,17 +52,33 @@ export async function createEstate(data: FormEstate, issuer: string) {
   );
   const imagesAssets = uploadedImages.map((img) => ({ id: img.id }));
 
-  let planAsset = null;
-  if (plan) {
-    const uploadedPlan = await uploadAsset(plan);
-    planAsset = { id: uploadedPlan.id };
-  }
+  const uploadedPlan = await uploadAsset(plan);
+  const planAsset = { id: uploadedPlan.id };
 
   return client.request(
-    CREATE_ESTATE,
-    { ...rest, images: imagesAssets, plan: planAsset },
-    { authorization: authorizationHeader }
+    ADD_ESTATE,
+    { ...rest, images: imagesAssets, plan: planAsset, issuer },
+    authorizationHeader
   );
+}
+
+export async function editEstate({
+  data,
+  existingImages,
+  existingPlan,
+}: {
+  data: EditEstateFormData;
+  existingImages: CMSEstate["images"];
+  existingPlan: CMSEstate["plan"];
+}) {
+  const { images, plan, ...rest } = data;
+
+  await editImages({ images, existingImages, estateId: rest.id });
+  await editPlan({ plan, existingPlan, estateId: rest.id });
+
+  const res = await client.request(EDIT_ESTATE, rest, authorizationHeader);
+
+  return res;
 }
 
 export async function getSearchedEstates() {
@@ -98,19 +114,6 @@ export async function getPaths() {
   return estates.map(({ id }) => ({ params: { id } }));
 }
 
-export async function createUser(userData: CreateUserRequest) {
-  return client.request(
-    CREATE_USER,
-    { ...userData },
-    { authorization: authorizationHeader }
-  );
-}
-
-export async function getUserProfile(issuer: string) {
-  const { customUser } = await client.request(GET_USER_PROFILE, { issuer });
-  return customUser as UserProfile;
-}
-
 export async function getUserEstates(issuer: string) {
   const { estates } = await client.request(GET_USER_ESTATES, { issuer });
 
@@ -119,14 +122,4 @@ export async function getUserEstates(issuer: string) {
   );
 
   return userEstates;
-}
-
-export async function getUserByEmail(email: string) {
-  const { customUser } = await client.request(GET_USER_BY_EMAIL, { email });
-  return customUser;
-}
-
-export async function getUserContacts(issuer: string) {
-  const { customUser } = await client.request(GET_USER_CONTACTS, { issuer });
-  return customUser as UserContacts;
 }

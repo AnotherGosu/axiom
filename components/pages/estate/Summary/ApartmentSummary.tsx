@@ -6,6 +6,7 @@ import {
 } from "./SummaryComponents";
 import { Apartment } from "utils/types/estate";
 import {
+  Rooms,
   State,
   RoomsType,
   WindowsType,
@@ -32,7 +33,7 @@ export default function ApartmentSummary({
 }: Apartment) {
   return (
     <Container>
-      <TextItem title="Комнат" text={rooms} />
+      <TextItem title="Комнат" text={Rooms[rooms]} />
       <SquareItem title="Площадь" square={commonSquare} />
       <SquareItem title="Жилая" square={livingSquare} />
       <SquareItem title="Кухня" square={kitchenSquare} />

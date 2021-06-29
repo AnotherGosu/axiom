@@ -3,15 +3,15 @@ import PageLayout from "components/layouts/PageLayout";
 import Section from "components/common/Section";
 import EditEstateForm from "components/pages/edit-estate/EditEstateForm";
 import { getLoginSession } from "utils/auth/session";
-import { getEstate } from "utils/cms/requests";
+import { getEstate } from "utils/cms/estate/requests";
 
 type Props = InferGetStaticPropsType<typeof getServerSideProps>;
 
-export default function EditEstate({ issuer, estate }: Props) {
+export default function EditEstate({ estate }: Props) {
   return (
     <PageLayout headTitle="Изменить">
       <Section heading="Изменить объект">
-        <EditEstateForm defaultValues={estate} issuer={issuer} />
+        <EditEstateForm estate={estate} />
       </Section>
     </PageLayout>
   );
@@ -27,10 +27,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       },
     };
 
-  const { issuer } = session;
-
   const { id } = ctx.params;
   const estate = await getEstate(id.toString());
 
-  return { props: { issuer, estate } };
+  return { props: { estate } };
 };

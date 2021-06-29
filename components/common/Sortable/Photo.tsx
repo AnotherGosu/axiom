@@ -4,19 +4,19 @@ import { forwardRef } from "react";
 
 interface Props {
   handleDelete: (deletedPreview: string) => void;
-  preview: string;
+  url: string;
   index: number;
   faded?: any;
   style?: any;
 }
 
 const Photo = forwardRef<HTMLDivElement, Props>(
-  ({ preview, handleDelete, index, style, ...props }, ref) => {
+  ({ url, handleDelete, index, style, ...props }, ref) => {
     return (
       <VStack>
         <Box
           boxSize={["125px", "150px"]}
-          bgImage={`url("${preview}")`}
+          bgImage={`url("${url}")`}
           bgPosition="center"
           bgRepeat="no-repeat"
           bgSize="contain"
@@ -40,7 +40,7 @@ const Photo = forwardRef<HTMLDivElement, Props>(
             variant="outline"
             aria-label="delete image"
             size="xs"
-            onClick={() => handleDelete(preview)}
+            onClick={() => handleDelete(url)}
           />
         </Flex>
       </VStack>

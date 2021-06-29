@@ -21,13 +21,12 @@ export default function SignIn() {
         spacing="20px"
         p="20px"
         mb="10px"
-        alignItems="flex-start"
         borderWidth={1}
         borderRadius="md"
         onSubmit={handleSubmit(signInUser)}
       >
         <TextInput id="email" label="Электронная почта" control={control} />
-        <Button type="submit" isLoading={isSubmitting}>
+        <Button type="submit" isLoading={isSubmitting} w="100%">
           Войти
         </Button>
       </VStack>

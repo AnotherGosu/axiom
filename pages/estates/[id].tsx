@@ -9,7 +9,7 @@ import {
 } from "components/pages/estate/Summary";
 import Description from "components/pages/estate/Description";
 import { getApartmentAndBuildingProps } from "utils/helpers";
-import { getEstate, getPaths } from "utils/cms/requests";
+import { getEstate, getPaths } from "utils/cms/estate/requests";
 import { useRouter } from "next/router";
 
 import { InferGetStaticPropsType, GetStaticPropsContext } from "next";

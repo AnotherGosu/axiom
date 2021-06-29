@@ -20,32 +20,32 @@ interface Props {
 
 export default function ImageInput({ label, name, control }: Props) {
   const {
-    field: { onChange },
+    field: { onChange, value },
   } = useController({
     name,
     control: control ? control : useFormContext().control,
     defaultValue: null,
   });
 
-  const [image, setImage] = useState(null);
+  // const [image, setImage] = useState(null);
   const { getRootProps, getInputProps, isDragActive, isFileDialogActive } =
     useDropzone({
       accept: "image/*",
       onDrop: (acceptedFiles) => {
         const acceptedImage = acceptedFiles[0];
         const previewImage = Object.assign(acceptedImage, {
-          preview: URL.createObjectURL(acceptedImage),
+          url: URL.createObjectURL(acceptedImage),
         });
-        setImage(previewImage);
+        // setImage(previewImage);
         onChange(previewImage);
       },
     });
 
   useEffect(
     () => () => {
-      if (image) URL.revokeObjectURL(image.preview);
+      if (value) URL.revokeObjectURL(value.url);
     },
-    [image]
+    [value]
   );
 
   return (
@@ -63,7 +63,7 @@ export default function ImageInput({ label, name, control }: Props) {
           h: "200px",
           borderWidth: 1,
           borderColor:
-            isDragActive || isFileDialogActive || image
+            isDragActive || isFileDialogActive || value
               ? "purple.500"
               : "blackAlpha.400",
           borderRadius: "md",
@@ -73,20 +73,20 @@ export default function ImageInput({ label, name, control }: Props) {
         })}
       >
         <input {...getInputProps()} />
-        {!image ? (
+        {!value ? (
           <Text>Нажмите или перетащите изображение</Text>
         ) : (
           <Box
             w="100%"
             h="100%"
-            bgImage={`url("${image.preview}")`}
+            bgImage={`url("${value.url}")`}
             bgPosition="center"
             bgRepeat="no-repeat"
             bgSize="contain"
           />
         )}
       </Center>
-      {image && (
+      {value && (
         <IconButton
           alignSelf="center"
           icon={<DeleteIcon />}
@@ -94,7 +94,7 @@ export default function ImageInput({ label, name, control }: Props) {
           variant="outline"
           aria-label="delete plan"
           size="sm"
-          onClick={() => setImage(null)}
+          onClick={() => onChange(null)}
         />
       )}
     </FormControl>

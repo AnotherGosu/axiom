@@ -1,5 +1,6 @@
 import { MenuGroup, Option } from "./types/common";
 import {
+  Rooms,
   UrbAreas,
   SuburbAreas,
   BathType,
@@ -27,16 +28,7 @@ export const areasGroups: MenuGroup[] = [
   },
 ];
 
-export const roomsOptions: Option[] = [
-  ["freePlaning", "Свободная планировка"],
-  ["studio", "Студия"],
-  ["1", "1"],
-  ["2", "2"],
-  ["3", "3"],
-  ["4", "4"],
-  ["5", "5"],
-  ["6", "6+"],
-];
+export const roomsOptions: Option[] = Object.entries(Rooms);
 
 export const materialTypeOptions: Option[] = Object.entries(MaterialType);
 
