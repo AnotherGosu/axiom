@@ -2,7 +2,7 @@ import { createStandaloneToast, UseToastOptions } from "@chakra-ui/react";
 import Router from "next/router";
 import { Magic } from "magic-sdk";
 import { getUserByEmail, createUser } from "utils/cms/user/requests";
-import type { SignUpForm } from "utils/types/user";
+import type { SignUpForm } from "utils/types/forms";
 
 const errorToast: UseToastOptions = {
   title: "Ошибка авторизации",
@@ -33,9 +33,11 @@ async function createSession(email: string) {
 }
 
 export async function signUpUser(data: SignUpForm) {
+  const { lastName, name, patronim, email, phone } = data;
+  const userName = `${lastName} ${name} ${patronim}`;
   const toast = createStandaloneToast();
   try {
-    const user = await getUserByEmail(data.email);
+    const user = await getUserByEmail(email);
     if (user) {
       return toast({
         ...errorToast,
@@ -43,11 +45,11 @@ export async function signUpUser(data: SignUpForm) {
       });
     }
 
-    const res = await createSession(data.email);
+    const res = await createSession(email);
 
     if (res.ok) {
       const { issuer } = await res.json();
-      await createUser({ ...data, issuer });
+      await createUser({ name: userName, email, phone, issuer });
       Router.push("/");
     } else {
       throw new Error(await res.text());

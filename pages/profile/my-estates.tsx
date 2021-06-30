@@ -3,7 +3,7 @@ import type {
   InferGetServerSidePropsType,
 } from "next";
 import { getLoginSession } from "utils/auth/session";
-import { getUserEstates } from "utils/cms/estate/requests";
+import { getMyEstates } from "utils/cms/estate/requests";
 import PageLayout from "components/layouts/PageLayout";
 import Section from "components/common/Section";
 import EstatesList from "components/pages/my-estates/MyEstatesList";
@@ -32,7 +32,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
   }
 
-  const estates = await getUserEstates(session.issuer);
+  const estates = await getMyEstates(session.issuer);
 
   return {
     props: {

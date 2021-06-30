@@ -8,7 +8,6 @@ import {
   BuildingSummary,
 } from "components/pages/estate/Summary";
 import Description from "components/pages/estate/Description";
-import { getApartmentAndBuildingProps } from "utils/helpers";
 import { getEstate, getPaths } from "utils/cms/estate/requests";
 import { useRouter } from "next/router";
 
@@ -23,9 +22,16 @@ export default function EstatePage({ estate }: Props) {
     return <CircularProgress isIndeterminate />;
   }
 
-  const { title, address, createdAt, images, preview, description } = estate;
-
-  const { apartment, building } = getApartmentAndBuildingProps(estate);
+  const {
+    title,
+    address,
+    createdAt,
+    images,
+    preview,
+    description,
+    apartment,
+    building,
+  } = estate;
 
   return (
     <PageLayout headTitle={title}>
@@ -33,7 +39,7 @@ export default function EstatePage({ estate }: Props) {
         <Header address={address} createdAt={createdAt} />
       </Section>
       <Section heading="Галерея" isHiddenHeading>
-        <Gallery title={title} images={images} preview={preview} />
+        <Gallery title={title} images={images} />
       </Section>
       <Section heading="Описание квартиры">
         <ApartmentSummary {...apartment} />

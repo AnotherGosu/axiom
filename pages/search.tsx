@@ -1,7 +1,7 @@
 import PageLayout from "components/layouts/PageLayout";
 import Section from "components/common/Section";
 import SearchBar from "components/common/SearchBar";
-import SearchResults from "components/pages/search/SearchResults";
+import SearchResultsList from "components/pages/search/SearchResults";
 import Options from "components/pages/search/Options";
 
 import { InferGetServerSidePropsType, GetServerSidePropsContext } from "next";
@@ -19,7 +19,7 @@ export default function Search({ estates }: Props) {
         <Options />
       </Section>
       <Section heading="Результаты поиска" isHiddenHeading>
-        <SearchResults estates={estates} />
+        <SearchResultsList estates={estates} />
       </Section>
     </PageLayout>
   );

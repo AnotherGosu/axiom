@@ -5,44 +5,22 @@ import {
   GET_PATHS,
   ADD_ESTATE,
   GET_ACTUAL_ESTATES,
-  GET_USER_ESTATES,
+  GET_MY_ESTATES,
   EDIT_ESTATE,
+  GET_EDIT_FORM_ESTATE,
 } from "./queries";
-import type {
-  ActualEstate,
-  CMSEstate,
-  AddEstateFormData,
-  EditEstateFormData,
-  SearchedEstate,
-  UserEstate,
-} from "utils/types/estate";
-import { structureEstate } from "utils/helpers";
+import type { CMSEstate, Estate, EstateCard } from "utils/types/estate";
+import type { AddEstateForm, EditEstateForm } from "utils/types/forms";
+import { uploadAsset } from "../asset";
+import { structureEstate } from "utils/cms/estate/helpers";
 import { editPlan } from "./editPlan";
 import { editImages } from "./editImages";
-
-export async function uploadAsset(file: File) {
-  if (!file) return;
-
-  const form = new FormData();
-  form.append("fileUpload", file);
-
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upload`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MUTATION_TOKEN}`,
-    },
-    body: form,
-  });
-
-  const data = await res.json();
-  return data;
-}
 
 export async function addEstate({
   data,
   issuer,
 }: {
-  data: AddEstateFormData;
+  data: AddEstateForm;
   issuer: string;
 }) {
   const { images, plan, ...rest } = data;
@@ -67,7 +45,7 @@ export async function editEstate({
   existingImages,
   existingPlan,
 }: {
-  data: EditEstateFormData;
+  data: EditEstateForm;
   existingImages: CMSEstate["images"];
   existingPlan: CMSEstate["plan"];
 }) {
@@ -82,31 +60,35 @@ export async function editEstate({
 }
 
 export async function getSearchedEstates() {
-  const { estates }: { estates: CMSEstate[] } = await client.request(
-    GET_SEARCHED_ESTATES
-  );
-  const searchedEstates: SearchedEstate[] = estates.map((estate) =>
-    structureEstate(estate)
-  );
-  return searchedEstates;
+  const { estates } = await client.request(GET_SEARCHED_ESTATES);
+  const estateCards = estates.map((estate) => structureEstate(estate));
+  return estateCards;
 }
 
 export async function getActualEstates() {
-  const { estates }: { estates: CMSEstate[] } = await client.request(
-    GET_ACTUAL_ESTATES
-  );
-  const actualEstates: ActualEstate[] = estates.map((estate) =>
-    structureEstate(estate)
-  );
-  return actualEstates;
+  const { estates } = await client.request(GET_ACTUAL_ESTATES);
+  const estateCards = estates.map((estate) => structureEstate(estate));
+  return estateCards as EstateCard[];
 }
 
 export async function getEstate(id: string) {
-  const { estate }: { estate: CMSEstate } = await client.request(GET_ESTATE, {
+  const { commonFields, apartment, building } = await client.request(
+    GET_ESTATE,
+    {
+      id,
+    }
+  );
+  const estate = { ...commonFields, apartment, building };
+
+  return structureEstate(estate) as Estate;
+}
+
+export async function getEditFormEstate(id: string) {
+  const { estate } = await client.request(GET_EDIT_FORM_ESTATE, {
     id,
   });
 
-  return structureEstate(estate);
+  return estate as CMSEstate;
 }
 
 export async function getPaths() {
@@ -114,12 +96,8 @@ export async function getPaths() {
   return estates.map(({ id }) => ({ params: { id } }));
 }
 
-export async function getUserEstates(issuer: string) {
-  const { estates } = await client.request(GET_USER_ESTATES, { issuer });
-
-  const userEstates: UserEstate[] = estates.map((estate) =>
-    structureEstate(estate)
-  );
-
-  return userEstates;
+export async function getMyEstates(issuer: string) {
+  const { estates } = await client.request(GET_MY_ESTATES, { issuer });
+  const estateCards = estates.map((estate) => structureEstate(estate));
+  return estateCards as EstateCard[];
 }

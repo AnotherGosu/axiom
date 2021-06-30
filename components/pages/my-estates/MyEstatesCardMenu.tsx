@@ -17,7 +17,7 @@ interface Props {
   id: string;
 }
 
-export default function MyEstateCardMenu({ id }: Props) {
+export default function MyEstatesCardMenu({ id }: Props) {
   const { push } = useRouter();
   return (
     <Menu>

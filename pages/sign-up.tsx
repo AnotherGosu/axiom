@@ -5,7 +5,7 @@ import { PhoneInput } from "components/inputs/CustomNumberInputs";
 import Link from "components/common/Link";
 import { useForm } from "react-hook-form";
 import { signUpUser } from "utils/auth/helpers";
-import type { SignUpForm } from "utils/types/user";
+import type { SignUpForm } from "utils/types/forms";
 
 export default function SignUp() {
   const {
@@ -27,20 +27,17 @@ export default function SignUp() {
         borderRadius="md"
         onSubmit={handleSubmit(signUpUser)}
       >
+        <TextInput id="lastName" label="Фамилия" control={control} isRequired />
+        <TextInput id="name" label="Имя" control={control} isRequired />
         <TextInput
-          id="name"
-          label="ФИО"
+          id="patronim"
+          label="Отчество"
           control={control}
-          placeholder="Иванов Иван Иванович"
           isRequired
-          rules={{
-            pattern: { value: "", message: "Введите три слова с пробелами" },
-          }}
         />
         <TextInput
           id="email"
           label="Электронная почта"
-          placeholder="my_email@gmail.com"
           control={control}
           isRequired
         />

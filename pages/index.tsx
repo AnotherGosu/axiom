@@ -1,7 +1,7 @@
 import PageLayout from "components/layouts/PageLayout";
 import Section from "components/common/Section";
 import SearchBar from "components/common/SearchBar";
-import Actuals from "components/pages/main/Actuals";
+import ActualEstatesList from "components/pages/main/ActualEstates";
 
 import { InferGetStaticPropsType, GetStaticPropsContext } from "next";
 import { getActualEstates } from "utils/cms/estate/requests";
@@ -15,7 +15,7 @@ export default function Main({ estates }: Props) {
         <SearchBar />
       </Section>
       <Section heading="Актуальные предложения">
-        <Actuals estates={estates} />
+        <ActualEstatesList estates={estates} />
       </Section>
     </PageLayout>
   );

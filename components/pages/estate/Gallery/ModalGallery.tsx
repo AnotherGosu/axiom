@@ -40,12 +40,9 @@ export default function ModalGallery({ images }: Props) {
       <Button
         onClick={onOpen}
         leftIcon={<AiFillCamera />}
-        pos="absolute"
-        bottom="25px"
-        left="25px"
         colorScheme="blackAlpha"
       >
-        Смотреть все фото
+        Все изображения
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose} size="6xl" isCentered>

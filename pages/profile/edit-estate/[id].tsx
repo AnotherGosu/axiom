@@ -3,7 +3,7 @@ import PageLayout from "components/layouts/PageLayout";
 import Section from "components/common/Section";
 import EditEstateForm from "components/pages/edit-estate/EditEstateForm";
 import { getLoginSession } from "utils/auth/session";
-import { getEstate } from "utils/cms/estate/requests";
+import { getEditFormEstate } from "utils/cms/estate/requests";
 
 type Props = InferGetStaticPropsType<typeof getServerSideProps>;
 
@@ -28,7 +28,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     };
 
   const { id } = ctx.params;
-  const estate = await getEstate(id.toString());
+  const estate = await getEditFormEstate(id.toString());
 
   return { props: { estate } };
 };

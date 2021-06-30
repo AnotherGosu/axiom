@@ -1,20 +1,17 @@
-import { Grid } from "@chakra-ui/react";
-import MyEstateCard from "./MyEstateCard";
-import type { UserEstate } from "utils/types/estate";
+import EstateCardsList from "components/common/EstateCardsList";
+import MyEstatesCardContent from "./MyEstatesCardContent";
+import { EstateCard } from "utils/types/estate";
 
 interface Props {
-  estates: UserEstate[];
+  estates: EstateCard[];
 }
 
 export default function MyEstatesList({ estates }: Props) {
   return (
-    <Grid
+    <EstateCardsList
       templateColumns="repeat(auto-fit, minmax(300px, 400px))"
-      gridGap="30px"
-    >
-      {estates.map((estate) => (
-        <MyEstateCard key={estate.id} {...estate} />
-      ))}
-    </Grid>
+      estates={estates}
+      CardContent={MyEstatesCardContent}
+    />
   );
 }

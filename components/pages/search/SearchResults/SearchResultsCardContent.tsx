@@ -1,21 +1,21 @@
-import { Box, Heading, Text, Flex } from "@chakra-ui/react";
+import { Box, Heading, Flex } from "@chakra-ui/react";
 import TagBar from "components/common/TagBar";
 import Location from "components/common/Location";
 import Price from "components/common/Price";
 import PublicationDate from "components/common/PublicationDate";
 import ButtonLink from "components/common/ButtonLink";
-import type { SearchedEstate } from "utils/types/estate";
-export default function SearchResultsCardInfo({
+import type { EstateCard } from "utils/types/estate";
+
+export default function SearchResultsCardContent({
   id,
   createdAt,
   title,
-  description,
   price,
   address,
   commonSquare,
   isBargaining,
   isMortgage,
-}: SearchedEstate) {
+}: EstateCard) {
   const tags = { isMortgage, isBargaining };
 
   return (
@@ -43,9 +43,6 @@ export default function SearchResultsCardInfo({
         />
       </Flex>
       <Location address={address} mb="10px" />
-      <Text noOfLines={2} mb="20px">
-        {description}
-      </Text>
       <Flex align="center" justifyContent="space-between">
         <ButtonLink href={`/estates/${id}`}>Подробнее</ButtonLink>
         <PublicationDate createdAt={createdAt} />

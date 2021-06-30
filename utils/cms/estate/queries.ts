@@ -1,18 +1,44 @@
 import { gql } from "graphql-request";
-import { ESTATE_CARD, FULL_ESTATE } from "./fragments";
+import {
+  ESTATE_CARD,
+  ESTATE_COMMON_FIELDS,
+  ESTATE_APARTMENT,
+  ESTATE_BUILDING,
+} from "./fragments";
 
 export const GET_ESTATE = gql`
   query GetEstate($id: ID!) {
-    estate(where: { id: $id }) {
-      ...FullEstate
+    commonFields: estate(where: { id: $id }) {
+      ...EstateCommonFields
+    }
+    apartment: estate(where: { id: $id }) {
+      ...EstateApartment
+    }
+    building: estate(where: { id: $id }) {
+      ...EstateBuilding
     }
   }
-  ${FULL_ESTATE}
+  ${ESTATE_COMMON_FIELDS}
+  ${ESTATE_APARTMENT}
+  ${ESTATE_BUILDING}
+`;
+
+export const GET_EDIT_FORM_ESTATE = gql`
+  query GetEditFormEstate($id: ID!) {
+    estate(where: { id: $id }) {
+      ...EstateCommonFields
+      ...EstateApartment
+      ...EstateBuilding
+    }
+  }
+  ${ESTATE_COMMON_FIELDS}
+  ${ESTATE_APARTMENT}
+  ${ESTATE_BUILDING}
 `;
 
 export const GET_ACTUAL_ESTATES = gql`
   query GetActualEstates {
-    estates {
+    estates(last: 4) {
       ...EstateCard
     }
   }
@@ -28,7 +54,7 @@ export const GET_SEARCHED_ESTATES = gql`
   ${ESTATE_CARD}
 `;
 
-export const GET_USER_ESTATES = gql`
+export const GET_MY_ESTATES = gql`
   query GetUserEstates($issuer: String) {
     estates(where: { customUser: { issuer: $issuer } }) {
       ...EstateCard

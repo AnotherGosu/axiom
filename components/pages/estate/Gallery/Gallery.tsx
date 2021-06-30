@@ -1,4 +1,4 @@
-import { Flex, SimpleGrid, Box } from "@chakra-ui/react";
+import { Box, Grid, useBreakpointValue } from "@chakra-ui/react";
 import Image from "next/image";
 import ModalGallery from "./ModalGallery";
 import { Estate } from "utils/types/estate";
@@ -6,32 +6,31 @@ import { Estate } from "utils/types/estate";
 interface Props {
   title: string;
   images: Estate["images"];
-  preview: Estate["preview"];
 }
 
-export default function Gallery({ title, images, preview }: Props) {
-  const previews = images.slice(1, 5);
-
+export default function Gallery({ title, images }: Props) {
+  const imagesNumber = useBreakpointValue({ base: 1, lg: 3 });
   return (
-    <Flex gridGap="2px">
-      <Flex flexGrow={1} h={{ base: "300px", lg: "500px" }} pos="relative">
-        <Image src={preview.url} alt={title} layout="fill" objectFit="cover" />
-        {!!images.length && <ModalGallery images={images} />}
-      </Flex>
-      <Flex flexGrow={1} display={{ base: "none", md: "flex" }}>
-        <SimpleGrid gridGap="2px" rows={2} columns={2} w="100%">
-          {previews.map((image, idx) => (
-            <Box key={idx} pos="relative">
-              <Image
-                src={image.url}
-                alt={title}
-                layout="fill"
-                objectFit="cover"
-              />
-            </Box>
-          ))}
-        </SimpleGrid>
-      </Flex>
-    </Flex>
+    <Box pos="relative">
+      <Grid
+        gridGap="2px"
+        gridTemplateColumns={{ base: "1fr", lg: "2fr 1fr 1fr" }}
+      >
+        {images.slice(0, imagesNumber).map((img) => (
+          <Image
+            key={img.url}
+            src={img.url}
+            alt={title}
+            width={450}
+            height={300}
+            layout="responsive"
+            objectFit="cover"
+          />
+        ))}
+      </Grid>
+      <Box pos="absolute" bottom="10px" left="10px">
+        <ModalGallery images={images} />
+      </Box>
+    </Box>
   );
 }

@@ -2,17 +2,17 @@ import { Heading, Box, Flex, Spacer } from "@chakra-ui/react";
 import TagBar from "components/common/TagBar";
 import Location from "components/common/Location";
 import Price from "components/common/Price";
-import { ActualEstate } from "utils/types/estate";
+import { EstateCard } from "utils/types/estate";
 import ButtonLink from "components/common/ButtonLink";
 
-export default function ActualCardInfo({
+export default function ActualCardContent({
   id,
   title,
   address,
   price,
   isBargaining,
   isMortgage,
-}: ActualEstate) {
+}: EstateCard) {
   const tags = { isBargaining, isMortgage };
 
   return (

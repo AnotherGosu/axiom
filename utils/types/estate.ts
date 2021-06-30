@@ -48,18 +48,6 @@ export interface Tags {
 
 export type StaticFields = CommonFields & Apartment & Building & Tags;
 
-export interface AddEstateFormData extends StaticFields {
-  images?: File[];
-  plan?: File;
-}
-
-export interface EditEstateFormData extends StaticFields {
-  id?: string;
-  createdAt?: string;
-  images?: File[] | Array<{ id: string; url: string }>;
-  plan?: File | { id: string; url: string };
-}
-
 export interface CMSEstate extends StaticFields {
   id?: string;
   createdAt?: string;
@@ -67,40 +55,25 @@ export interface CMSEstate extends StaticFields {
   plan?: { id: string; url: string };
 }
 
-export interface Estate extends CMSEstate {
+export interface Estate extends CommonFields, Tags {
+  id: string;
+  createdAt: string;
+  images?: Array<{ id: string; url: string }>;
+  plan?: { id: string; url: string };
   title?: string;
-  preview?: { url: string };
+  preview?: string;
+  apartment: Apartment;
+  building: Building;
 }
 
-export interface UserEstate {
-  id?: Estate["id"];
-  createdAt?: Estate["createdAt"];
-  preview?: Estate["preview"];
-  estateType?: Estate["estateType"];
-  title: Estate["title"];
-  price?: Estate["price"];
-  address?: Estate["address"];
-}
-
-export interface ActualEstate {
-  id?: Estate["id"];
-  preview?: Estate["preview"];
-  isBargaining?: Estate["isBargaining"];
-  isMortgage?: Estate["isMortgage"];
-  title?: Estate["title"];
-  address?: Estate["address"];
-  price?: Estate["price"];
-}
-
-export interface SearchedEstate {
-  id?: Estate["id"];
-  preview?: Estate["preview"];
-  isBargaining?: Estate["isBargaining"];
-  isMortgage?: Estate["isMortgage"];
-  title?: Estate["title"];
-  address?: Estate["address"];
-  price?: Estate["price"];
-  createdAt?: Estate["createdAt"];
-  description?: Estate["description"];
-  commonSquare?: Estate["commonSquare"];
+export interface EstateCard extends Tags {
+  id?: string;
+  createdAt?: string;
+  preview?: string;
+  title?: string;
+  estateType?: string;
+  price?: number;
+  address?: string;
+  rooms?: number;
+  commonSquare?: number;
 }

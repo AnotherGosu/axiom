@@ -30,7 +30,7 @@ export default function FormTabs({ issuer }: Props) {
     return (
       <Button
         onClick={handleSubmit(onSubmit, onError)}
-        isDisabled={maxTabIndex !== 4}
+        isDisabled={maxTabIndex !== 3}
         isLoading={formState.isSubmitting}
       >
         Добавить объект

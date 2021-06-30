@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 import { client, authorizationHeader } from "../client";
-import { uploadAsset } from "./requests";
+import { uploadAsset } from "../asset";
 import type { EditEstateFormData, CMSEstate } from "utils/types/estate";
 
 export async function editImages({

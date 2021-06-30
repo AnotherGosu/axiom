@@ -12,7 +12,6 @@ import BuildingTab from "components/estateForm/formTabs/BuildingTab";
 import ApartmentTab from "components/estateForm/formTabs/ApartmentTab";
 import MediaTab from "components/estateForm/formTabs/MediaTab";
 import PriceTab from "components/estateForm/formTabs/PriceTab";
-import ContactsTab from "components/estateForm/formTabs/ContactsTab";
 
 interface Props {
   tabIndex: number;
@@ -47,7 +46,7 @@ export default function TabPanels({
                 <WrapItem>
                   <Button
                     variant="outline"
-                    isDisabled={tabIndex === 4}
+                    isDisabled={tabIndex === 3}
                     onClick={nextTab}
                   >
                     Далее
@@ -65,4 +64,4 @@ export default function TabPanels({
   );
 }
 
-const tabPanels = [BuildingTab, ApartmentTab, MediaTab, PriceTab, ContactsTab];
+const tabPanels = [BuildingTab, ApartmentTab, MediaTab, PriceTab];

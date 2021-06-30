@@ -43,11 +43,6 @@ export default function useFormTabs() {
       setTabIndex(1);
     } else if (errorFields.includes("price")) {
       setTabIndex(3);
-    } else if (
-      errorFields.includes("agentName") ||
-      errorFields.includes("agentPhone")
-    ) {
-      setTabIndex(4);
     }
     scrollToTabs();
   };

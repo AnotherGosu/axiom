@@ -18,15 +18,14 @@ export const ESTATE_CARD = gql`
   }
 `;
 
-export const FULL_ESTATE = gql`
-  fragment FullEstate on Estate {
+export const ESTATE_COMMON_FIELDS = gql`
+  fragment EstateCommonFields on Estate {
     id
     createdAt
     estateType
     price
     address
     rooms
-    commonSquare
     isBargaining
     isMortgage
     images {
@@ -53,6 +52,13 @@ export const FULL_ESTATE = gql`
       name
       phone
     }
+  }
+`;
+
+export const ESTATE_APARTMENT = gql`
+  fragment EstateApartment on Estate {
+    rooms
+    commonSquare
     livingSquare
     kitchenSquare
     floor
@@ -67,6 +73,11 @@ export const FULL_ESTATE = gql`
     isRemodeled
     isRoomsFurniture
     isKitchenFurniture
+  }
+`;
+
+export const ESTATE_BUILDING = gql`
+  fragment EstateBuilding on Estate {
     builtYear
     buildingType
     materialType

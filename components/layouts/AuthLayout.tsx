@@ -1,4 +1,4 @@
-import { Flex, Box, Text, Heading } from "@chakra-ui/react";
+import { Flex, Box, Text, Heading, useBreakpointValue } from "@chakra-ui/react";
 import Head from "components/common/Head";
 
 interface Props {
@@ -8,42 +8,45 @@ interface Props {
 }
 
 export default function AuthLayout({ headTitle, heading, children }: Props) {
+  const showImage = useBreakpointValue({ base: false, lg: true });
   return (
     <>
       <Head title={headTitle} />
-      <Flex align="center" flexDir={{ base: "column-reverse", lg: "row" }}>
+      <Flex align="center">
         <Flex
           flexDir="column"
-          w={{ base: "100%", lg: "50%" }}
-          h={{ base: "65vh", lg: "100vh" }}
-          p="50px"
+          w="100%"
+          h="100vh"
+          px="20px"
           align="center"
           justify="center"
         >
           <Text
             fontWeight="bold"
-            fontSize={{ base: "4xl", lg: "5xl" }}
+            fontSize="5xl"
             letterSpacing="wider"
-            mb={{ base: "25px", lg: "50px" }}
+            mb="20px"
             color="purple.500"
           >
             Axiom
           </Text>
           <Box w="100%" maxW="lg" textAlign="center">
-            <Heading mb="20px" fontSize={{ base: "2xl", lg: "3xl" }}>
+            <Heading mb="20px" fontSize="2xl">
               {heading}
             </Heading>
             {children}
           </Box>
         </Flex>
-        <Flex
-          w={{ base: "100%", lg: "50%" }}
-          h={{ base: "35vh", lg: "100vh" }}
-          bgImage={`url("/sign-bg.jpg")`}
-          bgPosition="bottom"
-          bgRepeat="no-repeat"
-          bgSize="cover"
-        />
+        {showImage && (
+          <Flex
+            w="100%"
+            h="100vh"
+            bgImage={`url("/sign-bg.jpg")`}
+            bgPosition="bottom"
+            bgRepeat="no-repeat"
+            bgSize="cover"
+          />
+        )}
       </Flex>
     </>
   );

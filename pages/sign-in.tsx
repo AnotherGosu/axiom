@@ -10,7 +10,7 @@ export default function SignIn() {
     handleSubmit,
     control,
     formState: { isSubmitting },
-  } = useForm({
+  } = useForm<{ email: string }>({
     reValidateMode: "onSubmit",
   });
 
