@@ -13,7 +13,8 @@ export default function Header() {
     <Flex
       as="header"
       pos="sticky"
-      top="0px"
+      top={0}
+      left={0}
       zIndex="sticky"
       bg="white "
       px={["20px", null, "50px"]}

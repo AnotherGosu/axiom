@@ -12,6 +12,7 @@ import {
   ViewIcon,
 } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
+import { handleDeleteEstate } from "components/estateForm/helpers";
 
 interface Props {
   id: string;
@@ -37,7 +38,9 @@ export default function MyEstatesCardMenu({ id }: Props) {
         >
           Изменить
         </MenuItem>
-        <MenuItem icon={<DeleteIcon />}>Удалить</MenuItem>
+        <MenuItem icon={<DeleteIcon />} onClick={() => handleDeleteEstate(id)}>
+          Удалить
+        </MenuItem>
       </MenuList>
     </Menu>
   );

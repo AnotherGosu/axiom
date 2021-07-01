@@ -73,8 +73,6 @@ export const GET_PATHS = gql`
 
 export const ADD_ESTATE = gql`
   mutation CreateEstate(
-    $images: [AssetWhereUniqueInput!]
-    $plan: AssetWhereUniqueInput
     $videoUrl: String
     $description: String
     $address: String
@@ -116,8 +114,6 @@ export const ADD_ESTATE = gql`
   ) {
     createEstate(
       data: {
-        images: { connect: $images }
-        plan: { connect: $plan }
         videoUrl: $videoUrl
         description: $description
         address: $address
@@ -246,6 +242,14 @@ export const EDIT_ESTATE = gql`
         isMortgage: $isMortgage
       }
     ) {
+      id
+    }
+  }
+`;
+
+export const DELETE_ESTATE = gql`
+  mutation DeleteEstate($estateId: ID!) {
+    deleteEstate(where: { id: $estateId }) {
       id
     }
   }

@@ -8,13 +8,13 @@ import {
   GET_MY_ESTATES,
   EDIT_ESTATE,
   GET_EDIT_FORM_ESTATE,
+  DELETE_ESTATE,
 } from "./queries";
 import type { CMSEstate, Estate, EstateCard } from "utils/types/estate";
 import type { AddEstateForm, EditEstateForm } from "utils/types/forms";
-import { uploadAsset } from "../asset";
 import { structureEstate } from "utils/cms/estate/helpers";
-import { editPlan } from "./editPlan";
-import { editImages } from "./editImages";
+import { editPlan, connectPlan, deletePlan } from "./estatePlan";
+import { editImages, connectImages, deleteImages } from "./estateImages";
 
 export async function addEstate({
   data,
@@ -25,19 +25,18 @@ export async function addEstate({
 }) {
   const { images, plan, ...rest } = data;
 
-  const uploadedImages = await Promise.all(
-    images.map((image) => uploadAsset(image))
-  );
-  const imagesAssets = uploadedImages.map((img) => ({ id: img.id }));
-
-  const uploadedPlan = await uploadAsset(plan);
-  const planAsset = { id: uploadedPlan.id };
-
-  return client.request(
+  const {
+    createEstate: { id: estateId },
+  } = await client.request(
     ADD_ESTATE,
-    { ...rest, images: imagesAssets, plan: planAsset, issuer },
+    { ...rest, issuer },
     authorizationHeader
   );
+
+  await connectImages({ estateId, images });
+  await connectPlan({ estateId, plan });
+
+  return estateId;
 }
 
 export async function editEstate({
@@ -54,9 +53,13 @@ export async function editEstate({
   await editImages({ images, existingImages, estateId: rest.id });
   await editPlan({ plan, existingPlan, estateId: rest.id });
 
-  const res = await client.request(EDIT_ESTATE, rest, authorizationHeader);
+  return await client.request(EDIT_ESTATE, rest, authorizationHeader);
+}
 
-  return res;
+export async function deleteEstate(estateId: string) {
+  await deleteImages({ estateId });
+  await deletePlan(estateId);
+  return await client.request(DELETE_ESTATE, { estateId }, authorizationHeader);
 }
 
 export async function getSearchedEstates() {
