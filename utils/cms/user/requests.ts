@@ -1,9 +1,19 @@
 import { client, authorizationHeader } from "../client";
-import { GET_USER_BY_EMAIL, GET_USER, CREATE_USER } from "./queries";
+import {
+  GET_USER_BY_EMAIL,
+  GET_USER,
+  CREATE_USER,
+  EDIT_USER_PROFILE,
+} from "./queries";
 import type { User } from "utils/types/user";
 
-export async function createUser(userData: User) {
-  return client.request(CREATE_USER, { ...userData }, authorizationHeader);
+export async function createUser(userData: {
+  issuer: string;
+  name: string;
+  email: string;
+  phone: string;
+}) {
+  return client.request(CREATE_USER, userData, authorizationHeader);
 }
 
 export async function getUser(issuer: string) {
@@ -14,4 +24,13 @@ export async function getUser(issuer: string) {
 export async function getUserByEmail(email: string) {
   const { customUser } = await client.request(GET_USER_BY_EMAIL, { email });
   return customUser;
+}
+
+export async function editUserProfile(data: User) {
+  const { issuer, ...rest } = data;
+  return await client.request(
+    EDIT_USER_PROFILE,
+    { issuer, data: rest },
+    authorizationHeader
+  );
 }

@@ -7,8 +7,6 @@ export interface CommonFields {
   dealType?: string;
   rentType?: string;
   estateType?: string;
-  agentName?: string;
-  agentPhone?: string;
   agencyServicePrice?: number;
 }
 
@@ -56,20 +54,20 @@ export interface CMSEstate extends StaticFields {
 }
 
 export interface Estate extends CommonFields, Tags {
-  id: string;
-  createdAt: string;
+  id?: string;
+  createdAt?: string;
   images?: Array<{ id: string; url: string }>;
   plan?: { id: string; url: string };
   title?: string;
   preview?: string;
-  apartment: Apartment;
-  building: Building;
+  apartment?: Apartment;
+  building?: Building;
 }
 
 export interface EstateCard extends Tags {
   id?: string;
   createdAt?: string;
-  preview?: string;
+  images?: Array<{ id: string; url: string }>;
   title?: string;
   estateType?: string;
   price?: number;

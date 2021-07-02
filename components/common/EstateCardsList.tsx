@@ -18,7 +18,7 @@ export default function EstateCardsList({
       gridGap="30px"
       {...rest}
     >
-      {estates.map(({ preview, ...estate }) => (
+      {estates.map(({ images, ...estate }) => (
         <Box
           key={estate.id}
           as="article"
@@ -28,7 +28,7 @@ export default function EstateCardsList({
           overflow="hidden"
         >
           <Image
-            src={preview}
+            src={images[0].url}
             alt={estate.title}
             width={400}
             height={250}

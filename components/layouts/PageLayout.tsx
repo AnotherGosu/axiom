@@ -5,7 +5,7 @@ import Footer from "components/common/Footer";
 
 interface Props {
   headTitle: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export default function PageLayout({ headTitle, children }: Props) {

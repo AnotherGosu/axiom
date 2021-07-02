@@ -2,13 +2,20 @@ import { gql } from "graphql-request";
 
 export const CREATE_USER = gql`
   mutation CreateUser(
+    $issuer: String!
     $name: String
     $email: String!
     $phone: String
-    $issuer: String!
   ) {
     createCustomUser(
-      data: { name: $name, email: $email, phone: $phone, issuer: $issuer }
+      data: {
+        issuer: $issuer
+        name: $name
+        email: $email
+        phone: $phone
+        contactName: $name
+        contactPhone: $phone
+      }
     ) {
       id
     }
@@ -30,6 +37,40 @@ export const GET_USER = gql`
       name
       email
       phone
+      contactName
+      contactPhone
+    }
+  }
+`;
+
+// export const EDIT_USER_PROFILE = gql`
+//   mutation EditUserProfile(
+//     $issuer: String!
+//     $name: String
+//     $phone: String
+//     $email: String
+//     $contactName: String
+//     $contactPhone: String
+//   ) {
+//     updateCustomUser(
+//       where: { issuer: $issuer }
+//       data: {
+//         name: $name
+//         phone: $phone
+//         email: $email
+//         contactName: $contactName
+//         contactPhone: $contactPhone
+//       }
+//     ) {
+//       issuer
+//     }
+//   }
+// `;
+
+export const EDIT_USER_PROFILE = gql`
+  mutation EditUserProfile($issuer: String!, $data: CustomUserUpdateInput!) {
+    updateCustomUser(where: { issuer: $issuer }, data: $data) {
+      issuer
     }
   }
 `;

@@ -3,4 +3,6 @@ export interface User {
   email: string;
   phone: string;
   name: string;
+  contactName: string;
+  contactPhone: string;
 }

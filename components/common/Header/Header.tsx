@@ -5,36 +5,42 @@ import ProfileMenu from "./ProfileMenu";
 import NavDrawer from "./NavDrawer";
 import Auth from "./Auth";
 import useUser from "utils/auth/useUser";
+import Loader from "../Loader";
+import usePageLoading from "utils/hooks/usePageLoading";
 
 export default function Header() {
   const user = useUser();
+  const isLoading = usePageLoading();
 
   return (
-    <Flex
-      as="header"
-      pos="sticky"
-      top={0}
-      left={0}
-      zIndex="sticky"
-      bg="white "
-      px={["20px", null, "50px"]}
-      py="5px"
-      boxShadow="md"
-      justify="space-between"
-      align="center"
-    >
-      <Logo />
-      <Box display={{ base: "none", lg: "block" }}>
-        <Nav />
-      </Box>
-      <Flex>
+    <Box>
+      <Flex
+        as="header"
+        pos="sticky"
+        top={0}
+        left={0}
+        zIndex="sticky"
+        bg="white "
+        px={["20px", null, "50px"]}
+        py="5px"
+        boxShadow="md"
+        justify="space-between"
+        align="center"
+      >
+        <Logo />
         <Box display={{ base: "none", lg: "block" }}>
-          {user ? <ProfileMenu /> : <Auth />}
+          <Nav />
         </Box>
-        <Box display={{ base: "block", lg: "none" }}>
-          <NavDrawer />
-        </Box>
+        <Flex>
+          <Box display={{ base: "none", lg: "block" }}>
+            {user ? <ProfileMenu /> : <Auth />}
+          </Box>
+          <Box display={{ base: "block", lg: "none" }}>
+            <NavDrawer />
+          </Box>
+        </Flex>
       </Flex>
-    </Flex>
+      <Loader isLoading={isLoading} />
+    </Box>
   );
 }

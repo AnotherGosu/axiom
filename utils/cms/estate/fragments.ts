@@ -45,13 +45,7 @@ export const ESTATE_COMMON_FIELDS = gql`
     dealType
     rentType
     apartmentType
-    agentName
-    agentPhone
     agencyServicePrice
-    customUser {
-      name
-      phone
-    }
   }
 `;
 

@@ -1,15 +1,13 @@
 import { EstateType, Rooms } from "../../localizations";
 
 export function structureEstate(estate) {
-  const { images = [], rooms = "", estateType = "Объект" } = estate;
+  const { images, rooms, estateType } = estate;
 
   const title = getEstateTitle({ rooms, estateType });
 
-  const firstImage = images[0];
-  const defaultPreview = "/logo.svg";
-  const preview = firstImage ? firstImage.url : defaultPreview;
+  if (!images.length) images.push({ url: "/logo.svg" });
 
-  return { title, preview, ...estate };
+  return { ...estate, title };
 }
 
 function getEstateTitle({

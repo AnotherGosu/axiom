@@ -24,12 +24,13 @@ export async function addEstate({
   issuer: string;
 }) {
   const { images, plan, ...rest } = data;
+  const requestData = { ...rest, customUser: { connect: { issuer } } };
 
   const {
     createEstate: { id: estateId },
   } = await client.request(
     ADD_ESTATE,
-    { ...rest, issuer },
+    { data: requestData },
     authorizationHeader
   );
 
@@ -48,12 +49,16 @@ export async function editEstate({
   existingImages: CMSEstate["images"];
   existingPlan: CMSEstate["plan"];
 }) {
-  const { images, plan, ...rest } = data;
+  const { images, plan, id: estateId, createdAt, ...rest } = data;
 
-  await editImages({ images, existingImages, estateId: rest.id });
-  await editPlan({ plan, existingPlan, estateId: rest.id });
+  await editImages({ images, existingImages, estateId });
+  await editPlan({ plan, existingPlan, estateId });
 
-  return await client.request(EDIT_ESTATE, rest, authorizationHeader);
+  return await client.request(
+    EDIT_ESTATE,
+    { estateId, data: rest },
+    authorizationHeader
+  );
 }
 
 export async function deleteEstate(estateId: string) {

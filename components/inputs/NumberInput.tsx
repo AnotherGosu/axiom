@@ -47,6 +47,7 @@ export default function NumberInput({
   isInteger,
   isRequired,
   isStringValue,
+  isReadOnly,
   rules,
 }: Props) {
   const {
@@ -90,6 +91,7 @@ export default function NumberInput({
           customInput={Input}
           placeholder={placeholder}
           borderLeftRadius={leftChildren && "none"}
+          readOnly={isReadOnly}
           {...fieldProps}
         />
         {rightChildren && (

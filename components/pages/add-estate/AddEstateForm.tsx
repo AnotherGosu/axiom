@@ -4,20 +4,13 @@ import FormTabs from "./FormTabs";
 import RentTypeSelectMenu from "components/estateForm/RentTypeSelectMenu";
 import EstateTypeSelectMenu from "components/estateForm/EstateTypeSelectMenu";
 import type { AddEstateForm as AddEstateFormData } from "utils/types/forms";
-import type { User } from "utils/types/user";
 
 interface Props {
-  user: User;
+  issuer: string;
 }
 
-export default function AddEstateForm({ user }: Props) {
-  const { issuer, name, phone } = user;
-  const form = useForm<AddEstateFormData>({
-    defaultValues: {
-      agentName: name,
-      agentPhone: phone,
-    },
-  });
+export default function AddEstateForm({ issuer }: Props) {
+  const form = useForm<AddEstateFormData>();
 
   const isTabsVisible = form.watch("rentType") && form.watch("estateType");
 
