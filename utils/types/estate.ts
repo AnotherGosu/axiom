@@ -7,6 +7,7 @@ export interface CommonFields {
   dealType?: string;
   rentType?: string;
   estateType?: string;
+  apartmentType?: string;
   agencyServicePrice?: number;
 }
 
@@ -59,7 +60,6 @@ export interface Estate extends CommonFields, Tags {
   images?: Array<{ id: string; url: string }>;
   plan?: { id: string; url: string };
   title?: string;
-  preview?: string;
   apartment?: Apartment;
   building?: Building;
 }

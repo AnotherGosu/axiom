@@ -3,11 +3,7 @@ import PageLayout from "components/layouts/PageLayout";
 import Section from "components/common/Section";
 import Header from "components/pages/estate/Header";
 import Gallery from "components/pages/estate/Gallery";
-import {
-  ApartmentSummary,
-  BuildingSummary,
-} from "components/pages/estate/Summary";
-import Description from "components/pages/estate/Description";
+import Summary from "components/pages/estate/Summary";
 import { getEstate, getPaths } from "utils/cms/estate/requests";
 import { useRouter } from "next/router";
 
@@ -22,16 +18,7 @@ export default function EstatePage({ estate }: Props) {
     return <CircularProgress isIndeterminate />;
   }
 
-  const {
-    title,
-    address,
-    createdAt,
-    images,
-    preview,
-    description,
-    apartment,
-    building,
-  } = estate;
+  const { title, address, createdAt, images, ...rest } = estate;
 
   return (
     <PageLayout headTitle={title}>
@@ -41,15 +28,7 @@ export default function EstatePage({ estate }: Props) {
       <Section heading="Галерея" isHiddenHeading>
         <Gallery title={title} images={images} />
       </Section>
-      <Section heading="Описание квартиры">
-        <ApartmentSummary {...apartment} />
-      </Section>
-      <Section heading="Описание дома">
-        <BuildingSummary {...building} />
-      </Section>
-      <Section heading="Комментарий продавца">
-        <Description description={description} />
-      </Section>
+      <Summary {...rest} />
     </PageLayout>
   );
 }

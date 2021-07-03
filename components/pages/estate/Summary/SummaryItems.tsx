@@ -1,4 +1,4 @@
-import { Flex, Grid, Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import { CheckIcon, SmallCloseIcon } from "@chakra-ui/icons";
 
 export const TextItem = ({
@@ -11,7 +11,7 @@ export const TextItem = ({
   children?: React.ReactNode;
 }) => {
   return (
-    <Flex justify="space-between" align="center">
+    <Flex justify="space-between" gridGap="10px" align="center">
       <Text>{title}</Text>
       {children ? (
         children
@@ -30,7 +30,7 @@ export const SquareItem = ({
   square: number;
 }) => {
   return (
-    <Flex justify="space-between" align="center">
+    <Flex justify="space-between" gridGap="10px" align="center">
       <Text>{title}</Text>
       <Text fontWeight="semibold">
         {square ? (
@@ -54,7 +54,7 @@ export const BooleanItem = ({
   value: boolean;
 }) => {
   return (
-    <Flex justify="space-between" align="center">
+    <Flex justify="space-between" gridGap="10px" align="center">
       <Text>{title}</Text>
       {value ? (
         <CheckIcon w={4} h={4} color="green.500" />
@@ -64,16 +64,3 @@ export const BooleanItem = ({
     </Flex>
   );
 };
-
-export const Container: React.FC = ({ children }) => (
-  <Grid
-    templateColumns={{
-      base: "minmax(max-content, 350px)",
-      md: "repeat(2, minmax(max-content, 350px))",
-    }}
-    gridRowGap="10px"
-    gridColumnGap="30px"
-  >
-    {children}
-  </Grid>
-);

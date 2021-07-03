@@ -6,7 +6,7 @@ import { getLoginSession } from "utils/auth/session";
 import { getMyEstates } from "utils/cms/estate/requests";
 import PageLayout from "components/layouts/PageLayout";
 import Section from "components/common/Section";
-import EstatesList from "components/pages/my-estates/MyEstatesList";
+import MyEstatesList from "components/pages/my-estates/MyEstatesList";
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
@@ -14,7 +14,7 @@ export default function MyEstates({ estates }: Props) {
   return (
     <PageLayout headTitle="Мои объекты">
       <Section heading="Мои объекты">
-        <EstatesList estates={estates} />
+        <MyEstatesList estates={estates} />
       </Section>
     </PageLayout>
   );

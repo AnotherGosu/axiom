@@ -1,5 +1,7 @@
+import { Box } from "@chakra-ui/react";
 import EstateCardsList from "components/common/EstateCardsList";
 import MyEstatesCardContent from "./MyEstatesCardContent";
+import ControlBar from "./ControlBar";
 import { EstateCard } from "utils/types/estate";
 
 interface Props {
@@ -8,10 +10,13 @@ interface Props {
 
 export default function MyEstatesList({ estates }: Props) {
   return (
-    <EstateCardsList
-      templateColumns="repeat(auto-fit, minmax(300px, 400px))"
-      estates={estates}
-      CardContent={MyEstatesCardContent}
-    />
+    <Box>
+      <ControlBar />
+      <EstateCardsList
+        templateColumns="repeat(auto-fit, minmax(300px, 400px))"
+        estates={estates}
+        CardContent={MyEstatesCardContent}
+      />
+    </Box>
   );
 }

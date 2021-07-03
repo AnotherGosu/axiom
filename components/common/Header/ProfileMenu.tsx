@@ -1,5 +1,4 @@
 import { Menu, MenuButton, MenuList, MenuItem, Avatar } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
 import { VscSignOut } from "react-icons/vsc";
 import { CgProfile } from "react-icons/cg";
 import { BsListUl } from "react-icons/bs";
@@ -16,12 +15,6 @@ export default function ProfileMenu() {
       <MenuList>
         <MenuItem icon={<CgProfile />} onClick={() => push("/profile")}>
           Профиль
-        </MenuItem>
-        <MenuItem
-          icon={<AddIcon />}
-          onClick={() => push("/profile/add-estate")}
-        >
-          Добавить объект
         </MenuItem>
         <MenuItem
           icon={<BsListUl />}

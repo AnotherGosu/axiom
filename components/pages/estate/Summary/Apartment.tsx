@@ -1,9 +1,4 @@
-import {
-  Container,
-  TextItem,
-  SquareItem,
-  BooleanItem,
-} from "./SummaryComponents";
+import { TextItem, SquareItem, BooleanItem } from "./SummaryItems";
 import { Apartment } from "utils/types/estate";
 import {
   Rooms,
@@ -32,7 +27,7 @@ export default function ApartmentSummary({
   isRoomsFurniture,
 }: Apartment) {
   return (
-    <Container>
+    <>
       <TextItem title="Комнат" text={Rooms[rooms]} />
       <SquareItem title="Площадь" square={commonSquare} />
       <SquareItem title="Жилая" square={livingSquare} />
@@ -56,6 +51,6 @@ export default function ApartmentSummary({
       <TextItem title="Санузел" text={BathType[bathType]} />
       <BooleanItem title="Кухонный гарнитур" value={isKitchenFurniture} />
       <BooleanItem title="Мебель в комнатах" value={isRoomsFurniture} />
-    </Container>
+    </>
   );
 }

@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Modal,
   ModalOverlay,
@@ -45,19 +44,19 @@ export default function ModalGallery({ images }: Props) {
         Все изображения
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose} size="6xl" isCentered>
+      <Modal isOpen={isOpen} onClose={onClose} size="5xl" isCentered>
         <ModalOverlay />
         <ModalContent mx={{ base: "15px", md: "50px" }}>
           <ModalHeader>Галерея</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Box pos="relative" w="100%" minH="70vh">
-              <Image
-                src={images[currentImage].url}
-                layout="fill"
-                objectFit="contain"
-              />
-            </Box>
+            <Image
+              src={images[currentImage].url}
+              width={400}
+              height={300}
+              layout="responsive"
+              objectFit="contain"
+            />
           </ModalBody>
           <ModalFooter justifyContent="center" gridColumnGap="20px">
             <IconButton

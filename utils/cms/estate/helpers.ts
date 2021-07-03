@@ -23,6 +23,8 @@ function getEstateTitle({
         return Rooms["freePlaning"];
       } else if (rooms === "studio") {
         return Rooms["studio"];
+      } else if (rooms === "six") {
+        return "6-комнатная квартира";
       } else {
         return `${Rooms[rooms]}-комнатная квартира`;
       }
