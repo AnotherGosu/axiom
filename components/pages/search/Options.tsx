@@ -1,6 +1,8 @@
 import { Grid, GridItem, Button, useBreakpointValue } from "@chakra-ui/react";
+
 import SortTypeMenu from "./SortTypeMenu";
 import FiltersModal from "./FiltersModal";
+
 import { IoLocationSharp } from "react-icons/io5";
 
 import { useRouter } from "next/router";

@@ -5,6 +5,7 @@ import Building from "./Building";
 import Description from "./Description";
 import Deal from "./Deal";
 import YouTubeEmbed from "./YouTubeEmbed";
+import Map from "./Map";
 import type { Estate } from "utils/types/estate";
 
 export default function Summary({
@@ -15,12 +16,12 @@ export default function Summary({
   dealType,
   apartmentType,
   videoUrl,
+  location,
 }: Estate) {
   return (
     <Grid
       templateColumns={["1fr", null, "repeat(auto-fit, minmax(600px, 1fr))"]}
-      gridRowGap={["20px", null, "50px"]}
-      gridColumnGap="50px"
+      gridGap="50px"
     >
       <Section heading="Описание квартиры">
         <SimpleGrid columns={[1, 2]} gridRowGap="10px" gridColumnGap="30px">
@@ -49,7 +50,9 @@ export default function Summary({
           <YouTubeEmbed videoUrl={videoUrl} />
         </Section>
       )}
-      <Section heading="Расположение"></Section>
+      <Section heading="Расположение">
+        <Map location={location} />
+      </Section>
     </Grid>
   );
 }

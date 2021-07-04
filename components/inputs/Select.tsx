@@ -11,7 +11,7 @@ import { Option } from "utils/types/common";
 
 interface Props extends SelectProps {
   id: string;
-  label: string;
+  label?: string;
   options: Option[];
   control?: Control<any>;
   helperText?: string;

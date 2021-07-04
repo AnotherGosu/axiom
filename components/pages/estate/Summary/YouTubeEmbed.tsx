@@ -10,7 +10,7 @@ export default function YouTubeEmbed({ videoUrl }: Props) {
     <Box
       as="iframe"
       width="100%"
-      height={["200px", "350px", "500px"]}
+      height={["200px", "400px"]}
       src={`https://www.youtube.com/embed/${videoId}`}
       title="YouTube video player"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
