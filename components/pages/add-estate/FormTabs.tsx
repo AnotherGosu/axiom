@@ -13,7 +13,6 @@ export default function FormTabs({ issuer }: Props) {
   const {
     tabIndex,
     setTabIndex,
-    maxTabIndex,
     isTabListVisible,
     tabsRef,
     nextTab,
@@ -30,7 +29,6 @@ export default function FormTabs({ issuer }: Props) {
     return (
       <Button
         onClick={handleSubmit(onSubmit, onError)}
-        isDisabled={maxTabIndex !== 3}
         isLoading={formState.isSubmitting}
       >
         Добавить объект
@@ -40,11 +38,7 @@ export default function FormTabs({ issuer }: Props) {
 
   return (
     <Tabs variant="enclosed" index={tabIndex} onChange={setTabIndex}>
-      <TabList
-        tabsRef={tabsRef}
-        isTabListVisible={isTabListVisible}
-        maxTabIndex={maxTabIndex}
-      />
+      <TabList tabsRef={tabsRef} isTabListVisible={isTabListVisible} />
       <TabPanels
         SubmitButton={SubmitButton}
         tabIndex={tabIndex}

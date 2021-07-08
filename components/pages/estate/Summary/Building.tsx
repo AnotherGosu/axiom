@@ -1,23 +1,19 @@
 import { TextItem, BooleanItem } from "./SummaryItems";
 import { Building } from "utils/types/estate";
-import { BuildingType, MaterialType, ParkingType } from "utils/localizations";
+import { MaterialType, ParkingType } from "utils/localizations";
 
 export default function BuildingSummary({
-  buildingType,
   builtYear,
   materialType,
   parkingType,
-  isRestrictedArea,
   isElevator,
   isServiceElevator,
 }: Building) {
   return (
     <>
-      <TextItem title="Тип недвижимости" text={BuildingType[buildingType]} />
       <TextItem title="Год постройки" text={builtYear} />
       <TextItem title="Материал стен" text={MaterialType[materialType]} />
-      <TextItem title="Тип парковки" text={ParkingType[parkingType]} />
-      <BooleanItem title="Закрытая территория" value={isRestrictedArea} />
+      <TextItem title="Парковка" text={ParkingType[parkingType]} />
       <BooleanItem title="Лифт" value={isElevator} />
       <BooleanItem title="Грузовой лифт" value={isServiceElevator} />
     </>

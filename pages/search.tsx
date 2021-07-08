@@ -1,6 +1,6 @@
 import PageLayout from "components/layouts/PageLayout";
 import Section from "components/common/Section";
-import SearchBar from "components/common/SearchBar";
+import SearchForm from "components/pages/search/SearchForm";
 import SearchResultsList from "components/pages/search/SearchResults";
 import Options from "components/pages/search/Options";
 
@@ -13,20 +13,21 @@ export default function Search({ estates }: Props) {
   return (
     <PageLayout headTitle="Поиск">
       <Section heading="Поиск жилья">
-        <SearchBar />
+        <SearchForm />
       </Section>
       <Section heading="Дополнительные опции поиска" isHiddenHeading>
         <Options />
       </Section>
       <Section heading="Результаты поиска" isHiddenHeading>
-        <SearchResultsList estates={estates} />
+        <SearchResultsList initialEstates={estates} />
       </Section>
     </PageLayout>
   );
 }
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  const estates = await getSearchedEstates();
+  const { query } = ctx;
+  const estates = await getSearchedEstates(query);
 
   return {
     props: { estates },

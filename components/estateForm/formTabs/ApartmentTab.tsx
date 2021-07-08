@@ -4,13 +4,13 @@ import Switch from "components/inputs/Switch";
 import SquareInputs from "./SquareInputs";
 import ApartmentInputs from "./ApartmentInputs";
 import {
-  buildingTypeOptions,
   bathTypeOptions,
   stateOptions,
   windowsTypeOptions,
   plateTypeOptions,
   roomsTypeOptions,
   roomsOptions,
+  apartmentStatusOptions,
 } from "utils/constants";
 
 export default function ApartmentTab() {
@@ -42,18 +42,14 @@ export default function ApartmentTab() {
 const selects = [
   {
     id: "rooms",
-    label: "Количесво комнат",
+    label: "Комнаты",
     options: roomsOptions,
     isRequired: true,
   },
+  { id: "apartmentStatus", label: "Статус", options: apartmentStatusOptions },
   { id: "roomsType", label: "Тип комнат", options: roomsTypeOptions },
   { id: "state", label: "Состояние", options: stateOptions },
-  {
-    id: "buildingType",
-    label: "Тип недвижимости",
-    options: buildingTypeOptions,
-  },
-  { id: "windowsType", label: "Окна", options: windowsTypeOptions },
+  { id: "windowsType", label: "Вид из окна", options: windowsTypeOptions },
   { id: "bathType", label: "Санузел", options: bathTypeOptions },
   { id: "plateType", label: "Плита", options: plateTypeOptions },
 ];

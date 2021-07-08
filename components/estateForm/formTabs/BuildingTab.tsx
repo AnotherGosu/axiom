@@ -3,11 +3,7 @@ import { YearInput } from "components/inputs/CustomNumberInputs";
 import Select from "components/inputs/Select";
 import Switch from "components/inputs/Switch";
 import AddressInput from "components/estateForm/AddressInput";
-import {
-  apartmentTypeOptions,
-  materialTypeOptions,
-  parkingTypeOptions,
-} from "utils/constants";
+import { materialTypeOptions, parkingTypeOptions } from "utils/constants";
 
 export default function BuildingTab() {
   return (
@@ -41,13 +37,11 @@ export default function BuildingTab() {
 }
 
 const selects = [
-  { id: "materialType", label: "Материал", options: materialTypeOptions },
+  { id: "materialType", label: "Материал стен", options: materialTypeOptions },
   { id: "parkingType", label: "Парковка", options: parkingTypeOptions },
-  { id: "apartmentType", label: "Тип жилья", options: apartmentTypeOptions },
 ];
 
 const switches = [
-  { id: "isRestrictedArea", label: "Закрытая территория" },
   { id: "isElevator", label: "Лифт" },
   { id: "isServiceElevator", label: "Грузовой лифт" },
 ];

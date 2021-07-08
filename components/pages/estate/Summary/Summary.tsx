@@ -3,7 +3,6 @@ import Section from "components/common/Section";
 import Apartment from "./Apartment";
 import Building from "./Building";
 import Description from "./Description";
-import Deal from "./Deal";
 import YouTubeEmbed from "./YouTubeEmbed";
 import Map from "./Map";
 import type { Estate } from "utils/types/estate";
@@ -12,9 +11,6 @@ export default function Summary({
   apartment,
   building,
   description,
-  rentType,
-  dealType,
-  apartmentType,
   videoUrl,
   location,
 }: Estate) {
@@ -31,15 +27,6 @@ export default function Summary({
       <Section heading="Описание дома">
         <SimpleGrid columns={[1, 2]} gridRowGap="10px" gridColumnGap="30px">
           <Building {...building} />
-        </SimpleGrid>
-      </Section>
-      <Section heading="Описание сделки">
-        <SimpleGrid columns={[1, 2]} gridRowGap="10px" gridColumnGap="30px">
-          <Deal
-            dealType={dealType}
-            apartmentType={apartmentType}
-            rentType={rentType}
-          />
         </SimpleGrid>
       </Section>
       <Section heading="Комментарий продавца">

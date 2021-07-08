@@ -34,3 +34,35 @@ function getEstateTitle({
     }
   }
 }
+
+export function createFilters(filterQuery: {
+  [key: string]: string | string[];
+}) {
+  //if query is empty prevent filtering
+  if (
+    Object.keys(filterQuery).length === 0 &&
+    filterQuery.constructor === Object
+  ) {
+    return {};
+  }
+
+  const filterQueryEntries = Object.entries(filterQuery);
+
+  const filters = filterQueryEntries.reduce((filters, entry) => {
+    const [key, value] = entry;
+    if (key.endsWith("From")) {
+      const filterName = key.replace("From", "_gte");
+      return { ...filters, [filterName]: Number(value) };
+    } else if (key.endsWith("To")) {
+      const filterName = key.replace("To", "_lte");
+      return { ...filters, [filterName]: Number(value) };
+    } else if (key.startsWith("is")) {
+      return { ...filters, [key]: Boolean(value) };
+    } else {
+      const filterName = `${key}_in`;
+      return { ...filters, [filterName]: value.toString().split(",") };
+    }
+  }, {});
+
+  return filters;
+}

@@ -12,7 +12,7 @@ import {
 } from "./queries";
 import type { CMSEstate, Estate, EstateCard } from "utils/types/estate";
 import type { AddEstateForm, EditEstateForm } from "utils/types/forms";
-import { structureEstate } from "utils/cms/estate/helpers";
+import { structureEstate, createFilters } from "utils/cms/estate/helpers";
 import { editPlan, connectPlan, deletePlan } from "./estatePlan";
 import { editImages, connectImages, deleteImages } from "./estateImages";
 
@@ -67,8 +67,11 @@ export async function deleteEstate(estateId: string) {
   return await client.request(DELETE_ESTATE, { estateId }, authorizationHeader);
 }
 
-export async function getSearchedEstates() {
-  const { estates } = await client.request(GET_SEARCHED_ESTATES);
+export async function getSearchedEstates(query: {
+  [key: string]: string | string[];
+}) {
+  const filters = createFilters(query);
+  const { estates } = await client.request(GET_SEARCHED_ESTATES, { filters });
   const estateCards = estates.map((estate) => structureEstate(estate));
   return estateCards;
 }

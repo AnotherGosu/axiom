@@ -1,9 +1,8 @@
 import { useBreakpointValue } from "@chakra-ui/react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 
 export default function useFormTabs() {
   const [tabIndex, setTabIndex] = useState(0);
-  const [maxTabIndex, setMaxTabIndex] = useState(0);
   const isTabListVisible = useBreakpointValue({ base: false, md: true });
 
   const tabsRef = useRef(null);
@@ -47,14 +46,9 @@ export default function useFormTabs() {
     scrollToTabs();
   };
 
-  useEffect(() => {
-    if (tabIndex > maxTabIndex) setMaxTabIndex(tabIndex);
-  }, [tabIndex, maxTabIndex, setMaxTabIndex]);
-
   return {
     tabIndex,
     setTabIndex,
-    maxTabIndex,
     isTabListVisible,
     tabsRef,
     nextTab,

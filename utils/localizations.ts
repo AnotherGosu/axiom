@@ -1,5 +1,4 @@
 export enum Rooms {
-  freePlaning = "Свободная планировка",
   studio = "Студия",
   one = "1",
   two = "2",
@@ -45,11 +44,6 @@ export enum PlateType {
   electric = "Электрическая",
 }
 
-export enum BuildingType {
-  livingFund = "Жилой фонд",
-  apartment = "Апартаменты",
-}
-
 export enum MaterialType {
   brick = "Кирпич",
   monolith = "Монолит",
@@ -57,7 +51,7 @@ export enum MaterialType {
   brickMonolith = "Кирпич-монолит",
 }
 
-export enum ApartmentType {
+export enum ApartmentStatus {
   flat = "Квартира",
   share = "Доля в кваритре",
   apartment = "Апартаменты",
@@ -77,13 +71,6 @@ export enum UrbAreas {
   central = "Центральный",
 }
 
-export enum SuburbAreas {
-  west = "Западное | ЕАО",
-  north = "Северное | Воронеж (1/2/3), Нагорное",
-  east = "Восточное | Матвеевка, Сергеевка, Галкино",
-  south = "Южное | Ильинка, Корсаково, Влад-ое Шоссе",
-}
-
 export enum RentType {
   sale = "Продать",
   longPeriodRent = "Сдать длительно",
@@ -93,7 +80,7 @@ export enum RentType {
 export enum EstateType {
   apartment = "Квартира",
   room = "Комната",
-  house = "Дом",
+  house = "Дом / Котедж",
   garage = "Гараж",
   commercial = "Коммерческая",
   land = "Участок",

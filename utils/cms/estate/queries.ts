@@ -46,8 +46,8 @@ export const GET_ACTUAL_ESTATES = gql`
 `;
 
 export const GET_SEARCHED_ESTATES = gql`
-  query GetSearchedEstates {
-    estates {
+  query GetSearchedEstates($filters: EstateWhereInput) {
+    estates(where: $filters) {
       ...EstateCard
     }
   }

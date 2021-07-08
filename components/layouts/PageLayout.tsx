@@ -2,6 +2,7 @@ import { Flex } from "@chakra-ui/react";
 import Head from "components/common/Head";
 import Header from "components/common/Header";
 import Footer from "components/common/Footer";
+import ScrollToTopButton from "components/common/ScrollToTopButton";
 
 interface Props {
   headTitle: string;
@@ -23,6 +24,7 @@ export default function PageLayout({ headTitle, children }: Props) {
         </Flex>
         <Footer />
       </Flex>
+      <ScrollToTopButton />
     </>
   );
 }

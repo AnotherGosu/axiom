@@ -1,6 +1,6 @@
 import PageLayout from "components/layouts/PageLayout";
 import Section from "components/common/Section";
-import TestSelect from "components/inputs/TestSelect";
+import CheckboxMenu from "components/inputs/CheckboxMenu";
 import { roomsOptions } from "utils/constants";
 import { useForm } from "react-hook-form";
 
@@ -10,7 +10,7 @@ export default function Test() {
   return (
     <PageLayout headTitle="Тест">
       <Section heading="Тест">
-        <TestSelect
+        <CheckboxMenu
           id="test"
           label="Комнаты"
           options={roomsOptions}

@@ -44,7 +44,6 @@ export const ESTATE_COMMON_FIELDS = gql`
     }
     dealType
     rentType
-    apartmentType
     agencyServicePrice
   }
 `;
@@ -62,6 +61,7 @@ export const ESTATE_APARTMENT = gql`
     roomsType
     windowsType
     state
+    apartmentStatus
     plateType
     bathType
     isRemodeled
@@ -73,11 +73,9 @@ export const ESTATE_APARTMENT = gql`
 export const ESTATE_BUILDING = gql`
   fragment EstateBuilding on Estate {
     builtYear
-    buildingType
     materialType
     parkingType
     isElevator
     isServiceElevator
-    isRestrictedArea
   }
 `;

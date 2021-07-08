@@ -7,7 +7,6 @@ export interface CommonFields {
   dealType?: string;
   rentType?: string;
   estateType?: string;
-  apartmentType?: string;
   agencyServicePrice?: number;
 }
 
@@ -23,6 +22,7 @@ export interface Apartment {
   roomsType?: string;
   windowsType?: string;
   state?: string;
+  apartmentStatus?: string;
   plateType?: string;
   bathType?: string;
   isRemodeled?: boolean;
@@ -37,7 +37,6 @@ export interface Building {
   parkingType?: string;
   isElevator?: boolean;
   isServiceElevator?: boolean;
-  isRestrictedArea?: boolean;
 }
 
 export interface Tags {

@@ -5,32 +5,15 @@ import {
   MenuList,
   MenuGroup,
   MenuItem,
-  forwardRef,
-  ButtonProps,
-  useBreakpointValue,
 } from "@chakra-ui/react";
 import { UpDownIcon } from "@chakra-ui/icons";
-
-const SortMenuButton = forwardRef<ButtonProps, "button">((props, ref) => {
-  const size = useBreakpointValue({ base: "md", md: "lg" });
-  return (
-    <Button
-      variant="outline"
-      size={size}
-      w={["100%", null, "max-content"]}
-      leftIcon={<UpDownIcon />}
-      ref={ref}
-      {...props}
-    >
-      Сортировка
-    </Button>
-  );
-});
 
 export default function SortTypeMenu() {
   return (
     <Menu>
-      <MenuButton as={SortMenuButton} />
+      <MenuButton as={Button} variant="outline" leftIcon={<UpDownIcon />}>
+        Сортировка
+      </MenuButton>
       <MenuList>
         <MenuItem>По актуальности</MenuItem>
         <MenuGroup title="Дата">

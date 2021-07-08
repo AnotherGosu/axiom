@@ -1,5 +1,5 @@
 import { Wrap, WrapItem } from "@chakra-ui/react";
-import NumberInput from "components/inputs/NumberInput";
+import { SquareInput } from "components/inputs/CustomNumberInputs";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
@@ -59,15 +59,7 @@ export default function SquareInputs() {
     <Wrap spacing="20px">
       {inputs.map((props) => (
         <WrapItem key={props.id}>
-          <NumberInput
-            control={control}
-            rightChildren={
-              <span>
-                м<sup>2</sup>
-              </span>
-            }
-            {...props}
-          />
+          <SquareInput control={control} {...props} />
         </WrapItem>
       ))}
     </Wrap>
