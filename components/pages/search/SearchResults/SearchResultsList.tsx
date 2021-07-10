@@ -1,5 +1,6 @@
+import { CircularProgress } from "@chakra-ui/react";
 import SearchResultsCardContent from "./SearchResultsCardContent";
-import { EstateCard } from "utils/types/estate";
+import type { EstateCard } from "utils/types/estate";
 import EstateCardsList from "components/common/EstateCardsList";
 import useSWR from "swr";
 import { getSearchedEstates } from "utils/cms/estate/requests";
@@ -23,6 +24,9 @@ export default function SearchResultsList({ initialEstates }: Props) {
     initialData: initialEstates,
   });
   if (error) console.log(error);
+  if (!estates) {
+    return <CircularProgress isIndeterminate />;
+  }
 
   return (
     <EstateCardsList

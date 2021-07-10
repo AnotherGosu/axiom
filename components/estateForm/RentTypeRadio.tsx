@@ -1,15 +1,9 @@
-import SelectMenu from "../inputs/SelectMenu";
+import RadioCards from "../inputs/RadioCards";
 import { rentTypeOptions } from "utils/constants";
 import { IoKey, IoCalendarOutline, IoTimeOutline } from "react-icons/io5";
 
 export default function RentTypeSelectMenu() {
-  return (
-    <SelectMenu
-      id="rentType"
-      label="Тип сделки"
-      menuItems={rentTypeMenuItems}
-    />
-  );
+  return <RadioCards id="rentType" options={rentTypeMenuItems} />;
 }
 
 const rentTypeIcons = [IoKey, IoCalendarOutline, IoTimeOutline];

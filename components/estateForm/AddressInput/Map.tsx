@@ -1,15 +1,15 @@
 import { Box } from "@chakra-ui/react";
 import { YMaps, Map as YMap } from "react-yandex-maps";
 import { useRef } from "react";
-
-const modules = ["control.ZoomControl", "geocode", "SuggestView"];
+import type { Estate } from "utils/types/estate";
 
 interface Props {
   setAddress?: (...event: any[]) => void;
   setLocation?: (...event: any[]) => void;
+  location?: Estate["location"];
 }
 
-export default function Map({ setAddress, setLocation }: Props) {
+export default function Map({ setAddress, setLocation, location }: Props) {
   const ymapsRef = useRef(null);
   const mapRef = useRef(null);
 
@@ -56,7 +56,6 @@ export default function Map({ setAddress, setLocation }: Props) {
         query={{
           apikey: process.env.NEXT_PUBLIC_MAP_API_KEY,
           ns: "use-load-options",
-          load: modules.join(","),
         }}
       >
         <YMap
@@ -70,10 +69,11 @@ export default function Map({ setAddress, setLocation }: Props) {
             mapRef.current = ref;
           }}
           defaultState={{
-            center: [48.47, 135.07],
+            center: [location.latitude, location.longitude],
             zoom: 14,
             controls: ["zoomControl"],
           }}
+          modules={["control.ZoomControl", "geocode", "SuggestView"]}
           onLoad={onLoad}
         />
       </YMaps>

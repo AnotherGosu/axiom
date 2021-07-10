@@ -1,4 +1,4 @@
-import { CircularProgress } from "@chakra-ui/react";
+import PageFallback from "components/common/PageFallback";
 import PageLayout from "components/layouts/PageLayout";
 import Section from "components/common/Section";
 import Header from "components/pages/estate/Header";
@@ -12,10 +12,10 @@ import { InferGetStaticPropsType, GetStaticPropsContext } from "next";
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 export default function EstatePage({ estate }: Props) {
-  const router = useRouter();
+  const { isFallback } = useRouter();
 
-  if (router.isFallback) {
-    return <CircularProgress isIndeterminate />;
+  if (isFallback) {
+    return <PageFallback />;
   }
 
   const { title, address, createdAt, images, ...rest } = estate;

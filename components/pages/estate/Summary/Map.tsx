@@ -2,8 +2,6 @@ import { Box } from "@chakra-ui/react";
 import { YMaps, Map as YMap, Placemark } from "react-yandex-maps";
 import type { Estate } from "utils/types/estate";
 
-const modules = ["control.ZoomControl", "control.FullscreenControl"];
-
 interface Props {
   location: Estate["location"];
 }
@@ -13,8 +11,8 @@ export default function Map({ location }: Props) {
     <Box w="100%" height={["200px", "400px"]}>
       <YMaps
         query={{
+          apikey: process.env.NEXT_PUBLIC_MAP_API_KEY,
           ns: "use-load-options",
-          load: modules.join(","),
         }}
       >
         <YMap
@@ -31,6 +29,7 @@ export default function Map({ location }: Props) {
             zoom: 17,
             controls: ["zoomControl", "fullscreenControl"],
           }}
+          modules={["control.ZoomControl", "control.FullscreenControl"]}
         >
           <Placemark
             defaultGeometry={[location.latitude, location.longitude]}
@@ -41,6 +40,7 @@ export default function Map({ location }: Props) {
               iconImageOffset: [-25, -60],
             }}
           />
+          )
         </YMap>
       </YMaps>
     </Box>

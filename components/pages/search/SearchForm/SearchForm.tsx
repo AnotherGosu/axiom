@@ -6,61 +6,7 @@ import type { SearchForm as SearchFormData } from "utils/types/forms";
 import { useRouter } from "next/router";
 import { useEffect, useMemo } from "react";
 
-export default function SearchForm() {
-  const { isOpen, onToggle } = useDisclosure();
-  const { push, query } = useRouter();
-
-  const form = useForm();
-  const { handleSubmit, reset, setValue } = form;
-
-  const onSubmit = async (data: SearchFormData) => {
-    const filterQuery = new URLSearchParams();
-    const dataEntries = Object.entries(data);
-    dataEntries.forEach(([key, value]) => {
-      if (value && value?.length !== 0) {
-        filterQuery.append(key, value.toString());
-      }
-    });
-    push(`search/?${filterQuery.toString()}`, undefined, { shallow: true });
-  };
-
-  // useEffect(() => {
-  //   reset();
-  //   const queryEntries = Object.entries(query);
-  //   queryEntries.forEach((entry) => {
-  //     const [key, value] = entry;
-  //     if (key.endsWith("From") || key.endsWith("To")) {
-  //       // return { ...values, [key]: null(value) };
-  //       setValue(key, Number(value));
-  //     } else if (key.startsWith("is")) {
-  //       // return { ...values, [key]: Boolean(value) };
-  //       setValue(key, Boolean(value));
-  //     } else {
-  //       // return { ...values, [key]: value.toString().split(",") };
-  //       setValue(key, value.toString().split(","));
-  //     }
-  //   }, {});
-  // }, [query]);
-
-  return (
-    <FormProvider {...form}>
-      <Box
-        as="form"
-        p="20px"
-        borderWidth="1px"
-        borderRadius="md"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <Searchbar onToggle={onToggle} />
-        <Collapse in={isOpen} animateOpacity>
-          <Filters />
-        </Collapse>
-      </Box>
-    </FormProvider>
-  );
-}
-
-const searchFormDefaultValues = {
+const defaultValues = {
   priceFrom: null,
   priceTo: null,
   commonSquareFrom: null,
@@ -94,3 +40,60 @@ const searchFormDefaultValues = {
   isServiceElevator: false,
   isRestrictedArea: false,
 };
+
+export default function SearchForm() {
+  const { isOpen, onToggle } = useDisclosure();
+  const { push, query } = useRouter();
+
+  const form = useForm();
+  const { handleSubmit, reset, setValue } = form;
+
+  const onSubmit = async (data: SearchFormData) => {
+    const filterQuery = new URLSearchParams();
+    const dataEntries = Object.entries(data);
+    dataEntries.forEach(([key, value]) => {
+      if (value && value?.length !== 0) {
+        filterQuery.append(key, value.toString());
+      }
+    });
+    push(`search/?${filterQuery.toString()}`, undefined, { shallow: true });
+  };
+
+  // useEffect(() => {
+  //   if (Object.keys(query).length === 0 && query.constructor === Object) {
+  //     reset(defaultValues);
+  //   } else {
+  //     const resetValues = Object.entries(query).reduce(
+  //       (values, entry) => {
+  //         const [key, value] = entry;
+  //         if (key.endsWith("From") || key.endsWith("To")) {
+  //           return { ...values, [key]: Number(value) };
+  //         } else if (key.startsWith("is")) {
+  //           return { ...values, [key]: Boolean(value) };
+  //         } else {
+  //           return { ...values, [key]: value.toString().split(",") };
+  //         }
+  //       },
+  //       { ...defaultValues }
+  //     );
+  //     reset(resetValues);
+  //   }
+  // }, [query]);
+
+  return (
+    <FormProvider {...form}>
+      <Box
+        as="form"
+        p="20px"
+        borderWidth="1px"
+        borderRadius="md"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <Searchbar onToggle={onToggle} />
+        <Collapse in={isOpen} animateOpacity>
+          <Filters />
+        </Collapse>
+      </Box>
+    </FormProvider>
+  );
+}

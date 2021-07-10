@@ -19,8 +19,8 @@ const estateTypeIcons = [
   FaMapSigns,
 ];
 
-const estateTypeMenuOptions = estateTypeOptions.map((option, idx) => ({
-  icon: estateTypeIcons[idx],
-  value: option[0],
-  label: option[1],
-}));
+const estateTypeMenuOptions = estateTypeOptions.map((option, idx) => {
+  const [value, label] = option;
+  const icon = estateTypeIcons[idx];
+  return { value, label, icon };
+});

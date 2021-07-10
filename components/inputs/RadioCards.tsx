@@ -1,9 +1,17 @@
-import { Box, Wrap, WrapItem, useRadio, useRadioGroup } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Wrap,
+  WrapItem,
+  useRadio,
+  useRadioGroup,
+  Icon,
+} from "@chakra-ui/react";
 import { useController, useFormContext, Control } from "react-hook-form";
 
 interface Props {
   id: string;
-  options: any[];
+  options: { value: string; label: string; icon?: any }[];
   control?: Control<any>;
 }
 
@@ -18,21 +26,22 @@ export default function RadioCards({ id, options, control }: Props) {
   });
 
   const { getRootProps, getRadioProps } = useRadioGroup({
-    name: "estateType",
-    defaultValue: null,
-    onChange: console.log,
+    name: id,
+    defaultValue: value,
+    onChange,
   });
 
   const group = getRootProps();
 
   return (
-    <Wrap {...group}>
-      {options.map(({ value, ...rest }) => {
+    <Wrap spacing="10px" {...group}>
+      {options.map(({ value, label, icon }) => {
         const radio = getRadioProps({ value });
         return (
           <WrapItem key={value}>
-            <RadioCard {...radio} {...rest}>
-              {value}
+            <RadioCard {...radio}>
+              <Icon as={icon} />
+              {label}
             </RadioCard>
           </WrapItem>
         );
@@ -50,25 +59,31 @@ const RadioCard = (props) => {
   return (
     <Box as="label">
       <input {...input} />
-      <Box
+      <Flex
         {...checkbox}
         cursor="pointer"
+        align="center"
+        gridColumnGap="5px"
         borderWidth="1px"
         borderRadius="md"
         boxShadow="md"
         _checked={{
           color: "white",
-          bg: "purple.600",
-          borderColor: "purple.600",
+          bg: "purple.500",
+          borderColor: "purple.500",
         }}
         _focus={{
           boxShadow: "outline",
         }}
+        _hover={{
+          boxShadow: "xl",
+        }}
+        transition="0.3s ease"
         px={5}
         py={3}
       >
         {props.children}
-      </Box>
+      </Flex>
     </Box>
   );
 };

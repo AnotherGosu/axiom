@@ -1,10 +1,10 @@
-import { InferGetStaticPropsType, GetServerSidePropsContext } from "next";
+import { InferGetServerSidePropsType, GetServerSidePropsContext } from "next";
 import PageLayout from "components/layouts/PageLayout";
 import Section from "components/common/Section";
 import AddEstateForm from "components/pages/add-estate/AddEstateForm";
 import { getLoginSession } from "utils/auth/session";
 
-type Props = InferGetStaticPropsType<typeof getServerSideProps>;
+type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 export default function AddEstate({ issuer }: Props) {
   return (

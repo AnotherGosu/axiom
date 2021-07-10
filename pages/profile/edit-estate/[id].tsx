@@ -1,11 +1,11 @@
-import { InferGetStaticPropsType, GetServerSidePropsContext } from "next";
+import { InferGetServerSidePropsType, GetServerSidePropsContext } from "next";
 import PageLayout from "components/layouts/PageLayout";
 import Section from "components/common/Section";
 import EditEstateForm from "components/pages/edit-estate/EditEstateForm";
 import { getLoginSession } from "utils/auth/session";
 import { getEditFormEstate } from "utils/cms/estate/requests";
 
-type Props = InferGetStaticPropsType<typeof getServerSideProps>;
+type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 export default function EditEstate({ estate }: Props) {
   return (

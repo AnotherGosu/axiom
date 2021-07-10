@@ -3,9 +3,13 @@ import Section from "components/common/Section";
 import Apartment from "./Apartment";
 import Building from "./Building";
 import Description from "./Description";
+// import Map from "./Map";
 import YouTubeEmbed from "./YouTubeEmbed";
-import Map from "./Map";
+import ErrorBoundary from "components/common/ErrorBoundary";
 import type { Estate } from "utils/types/estate";
+import dynamic from "next/dynamic";
+
+const Map = dynamic(() => import("./Map"), { ssr: false });
 
 export default function Summary({
   apartment,
@@ -38,7 +42,9 @@ export default function Summary({
         </Section>
       )}
       <Section heading="Расположение">
+        {/* <ErrorBoundary> */}
         <Map location={location} />
+        {/* </ErrorBoundary> */}
       </Section>
     </Grid>
   );
