@@ -1,4 +1,4 @@
-import { Heading, Box, Flex, Spacer } from "@chakra-ui/react";
+import { Heading, Box } from "@chakra-ui/react";
 import TagBar from "components/common/TagBar";
 import Location from "components/common/Location";
 import Price from "components/common/Price";
@@ -10,6 +10,7 @@ export default function ActualCardContent({
   title,
   address,
   price,
+  commonSquare,
   isBargaining,
   isMortgage,
 }: EstateCard) {
@@ -18,15 +19,13 @@ export default function ActualCardContent({
   return (
     <Box p="15px">
       <TagBar tags={tags} mb="10px" />
-      <Heading as="h3" mb="10px" size="md" isTruncated>
-        {title}
+      <Heading as="h3" size="md" isTruncated mb="10px">
+        {`${title}, ${commonSquare} м`}
+        <sup>2</sup>
       </Heading>
+      <Price price={price} fontSize="lg" fontWeight="semibold" mb="10px" />
       <Location address={address} mb="20px" />
-      <Flex align="center" mt="auto">
-        <ButtonLink href={`/estates/${id}`}>Подробнее</ButtonLink>
-        <Spacer />
-        <Price price={price} fontSize="xl" fontWeight="semibold" />
-      </Flex>
+      <ButtonLink href={`/estates/${id}`}>Подробнее</ButtonLink>
     </Box>
   );
 }

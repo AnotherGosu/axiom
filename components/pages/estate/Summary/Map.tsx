@@ -40,7 +40,6 @@ export default function Map({ location }: Props) {
               iconImageOffset: [-25, -60],
             }}
           />
-          )
         </YMap>
       </YMaps>
     </Box>

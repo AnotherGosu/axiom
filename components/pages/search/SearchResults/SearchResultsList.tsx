@@ -29,14 +29,6 @@ export default function SearchResultsList({ initialEstates }: Props) {
   }
 
   return (
-    <EstateCardsList
-      estates={estates}
-      CardContent={SearchResultsCardContent}
-      templateColumns={{
-        base: "1fr",
-        md: "1fr 1fr",
-        xl: "repeat(3, 1fr)",
-      }}
-    />
+    <EstateCardsList estates={estates} CardContent={SearchResultsCardContent} />
   );
 }

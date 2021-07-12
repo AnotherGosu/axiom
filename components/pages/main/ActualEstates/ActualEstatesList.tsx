@@ -7,11 +7,5 @@ interface Props {
 }
 
 export default function ActualEstatesList({ estates }: Props) {
-  return (
-    <EstateCardsList
-      gridTemplateColumns={["1fr", null, "1fr 1fr", null, "repeat(4, 1fr)"]}
-      estates={estates}
-      CardContent={ActualCardContent}
-    />
-  );
+  return <EstateCardsList estates={estates} CardContent={ActualCardContent} />;
 }

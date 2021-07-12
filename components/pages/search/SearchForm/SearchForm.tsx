@@ -4,49 +4,64 @@ import Filters from "./Filters";
 import { useForm, FormProvider } from "react-hook-form";
 import type { SearchForm as SearchFormData } from "utils/types/forms";
 import { useRouter } from "next/router";
-import { useEffect, useMemo } from "react";
 
-const defaultValues = {
-  priceFrom: null,
-  priceTo: null,
-  commonSquareFrom: null,
-  commonSquareTo: null,
-  livingSquareFrom: null,
-  livingSquareTo: null,
-  kitchenSquareFrom: null,
-  kitchenSquareTo: null,
-  floorFrom: null,
-  floorTo: null,
-  allFloorsFrom: null,
-  allFloorsTo: null,
-  balconiesFrom: null,
-  loggiasFrom: null,
-  builtYearFrom: null,
-  rooms: [],
-  roomsType: [],
-  windowsType: [],
-  state: [],
-  plateType: [],
-  bathType: [],
-  dealType: [],
-  apartmentType: [],
-  buildingType: [],
-  materialType: [],
-  parkingType: [],
-  isRemodeled: false,
-  isRoomsFurniture: false,
-  isKitchenFurniture: false,
-  isElevator: false,
-  isServiceElevator: false,
-  isRestrictedArea: false,
-};
+// const defaultValues = {
+//   priceFrom: null,
+//   priceTo: null,
+//   commonSquareFrom: null,
+//   commonSquareTo: null,
+//   livingSquareFrom: null,
+//   livingSquareTo: null,
+//   kitchenSquareFrom: null,
+//   kitchenSquareTo: null,
+//   floorFrom: null,
+//   floorTo: null,
+//   allFloorsFrom: null,
+//   allFloorsTo: null,
+//   balconiesFrom: null,
+//   loggiasFrom: null,
+//   builtYearFrom: null,
+//   rooms: [],
+//   roomsType: [],
+//   windowsType: [],
+//   state: [],
+//   plateType: [],
+//   bathType: [],
+//   dealType: [],
+//   apartmentStatus: [],
+//   buildingType: [],
+//   materialType: [],
+//   parkingType: [],
+//   isRemodeled: false,
+//   isRoomsFurniture: false,
+//   isKitchenFurniture: false,
+//   isElevator: false,
+//   isServiceElevator: false,
+//   isRestrictedArea: false,
+// };
 
 export default function SearchForm() {
   const { isOpen, onToggle } = useDisclosure();
+
   const { push, query } = useRouter();
+  // const getQueryValues = () => {
+  //   return Object.entries(query).reduce(
+  //     (values, entry) => {
+  //       const [key, value] = entry;
+  //       if (key.endsWith("From") || key.endsWith("To")) {
+  //         return { ...values, [key]: Number(value) };
+  //       } else if (key.startsWith("is")) {
+  //         return { ...values, [key]: Boolean(value) };
+  //       } else {
+  //         return { ...values, [key]: value.toString().split(",") };
+  //       }
+  //     },
+  //     { ...defaultValues }
+  //   );
+  // };
 
   const form = useForm();
-  const { handleSubmit, reset, setValue } = form;
+  const { handleSubmit } = form;
 
   const onSubmit = async (data: SearchFormData) => {
     const filterQuery = new URLSearchParams();
@@ -58,27 +73,6 @@ export default function SearchForm() {
     });
     push(`search/?${filterQuery.toString()}`, undefined, { shallow: true });
   };
-
-  // useEffect(() => {
-  //   if (Object.keys(query).length === 0 && query.constructor === Object) {
-  //     reset(defaultValues);
-  //   } else {
-  //     const resetValues = Object.entries(query).reduce(
-  //       (values, entry) => {
-  //         const [key, value] = entry;
-  //         if (key.endsWith("From") || key.endsWith("To")) {
-  //           return { ...values, [key]: Number(value) };
-  //         } else if (key.startsWith("is")) {
-  //           return { ...values, [key]: Boolean(value) };
-  //         } else {
-  //           return { ...values, [key]: value.toString().split(",") };
-  //         }
-  //       },
-  //       { ...defaultValues }
-  //     );
-  //     reset(resetValues);
-  //   }
-  // }, [query]);
 
   return (
     <FormProvider {...form}>

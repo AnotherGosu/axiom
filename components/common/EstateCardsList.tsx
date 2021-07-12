@@ -14,7 +14,7 @@ export default function EstateCardsList({
 }: Props) {
   return (
     <Grid
-      templateColumns="repeat(auto-fit, minmax(300px, 450px))"
+      templateColumns={["1fr", "repeat(auto-fit, 400px)"]}
       gridGap="30px"
       {...rest}
     >

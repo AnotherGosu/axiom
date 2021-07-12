@@ -21,28 +21,12 @@ export default function SearchResultsCardContent({
   return (
     <Box p="20px">
       <TagBar tags={tags} mb="10px" />
-      <Flex
-        flexDir={{ base: "column", md: "row" }}
-        justify="space-between"
-        align={{ base: "flex-start", md: "center" }}
-        mb="20px"
-      >
-        <Heading
-          as="h3"
-          fontSize={{ base: "lg", md: "xl" }}
-          mb={{ base: "10px", md: "0" }}
-          isTruncated
-        >
-          {`${title}, ${commonSquare} м`}
-          <sup>2</sup>
-        </Heading>
-        <Price
-          price={price}
-          fontWeight="semibold"
-          fontSize={{ base: "lg", md: "xl" }}
-        />
-      </Flex>
-      <Location address={address} mb="10px" />
+      <Heading as="h3" size="md" mb="10px" isTruncated>
+        {`${title}, ${commonSquare} м`}
+        <sup>2</sup>
+      </Heading>
+      <Price price={price} fontWeight="semibold" fontSize="lg" mb="10px" />
+      <Location address={address} mb="20px" />
       <Flex align="center" justifyContent="space-between">
         <ButtonLink href={`/estates/${id}`}>Подробнее</ButtonLink>
         <PublicationDate createdAt={createdAt} />

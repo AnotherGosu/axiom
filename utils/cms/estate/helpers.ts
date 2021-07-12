@@ -19,9 +19,7 @@ function getEstateTitle({
 }) {
   switch (estateType) {
     case "apartment": {
-      if (rooms === "freePlaning") {
-        return Rooms["freePlaning"];
-      } else if (rooms === "studio") {
+      if (rooms === "studio") {
         return Rooms["studio"];
       } else if (rooms === "six") {
         return "6-комнатная квартира";

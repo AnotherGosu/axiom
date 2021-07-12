@@ -5,11 +5,8 @@ import {
   Input,
   FormErrorMessage,
 } from "@chakra-ui/react";
-// import Map from "./Map";
-import ErrorBoundary from "components/common/ErrorBoundary";
 import { useFormContext, useController } from "react-hook-form";
 import dynamic from "next/dynamic";
-
 const Map = dynamic(() => import("./Map"), { ssr: false });
 
 export default function AddressInput() {
@@ -57,13 +54,11 @@ export default function AddressInput() {
         <Input id="suggest" onChange={setAddress} {...fieldProps} />
         <FormErrorMessage>{error?.message}</FormErrorMessage>
       </FormControl>
-      {/* <ErrorBoundary> */}
       <Map
         setAddress={setAddress}
         setLocation={setLocation}
         location={location}
       />
-      {/* </ErrorBoundary> */}
     </VStack>
   );
 }

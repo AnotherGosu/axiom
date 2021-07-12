@@ -12,11 +12,7 @@ export default function MyEstatesList({ estates }: Props) {
   return (
     <Box>
       <ControlBar />
-      <EstateCardsList
-        templateColumns="repeat(auto-fit, minmax(300px, 400px))"
-        estates={estates}
-        CardContent={MyEstatesCardContent}
-      />
+      <EstateCardsList estates={estates} CardContent={MyEstatesCardContent} />
     </Box>
   );
 }

@@ -9,17 +9,17 @@ export default function MyEstatesCardContent({
   title,
   address,
   price,
+  commonSquare,
   createdAt,
   id,
 }: EstateCard) {
   return (
     <Box p="20px">
-      <Flex justify="space-between" mb="20px">
-        <Heading as="h3" size="md" isTruncated>
-          {title}
-        </Heading>
-        <Price fontWeight="semibold" price={price} />
-      </Flex>
+      <Heading as="h3" size="md" isTruncated mb="10px">
+        {`${title}, ${commonSquare} м`}
+        <sup>2</sup>
+      </Heading>
+      <Price fontSize="lg" fontWeight="semibold" price={price} mb="10px" />
       <Location address={address} mb="20px" />
       <Flex justify="space-between" align="center">
         <MyEstatesCardMenu id={id} />
