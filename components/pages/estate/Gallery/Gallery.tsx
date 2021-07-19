@@ -1,36 +1,65 @@
-import { Box, Grid, useBreakpointValue } from "@chakra-ui/react";
+import { Box, IconButton } from "@chakra-ui/react";
+import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import Image from "next/image";
-import ModalGallery from "./ModalGallery";
-import { Estate } from "utils/types/estate";
+import ImagesPreviews from "./ImagesPreviews";
+import { StructuredEstate } from "utils/types/estate";
+import { useState } from "react";
 
-interface Props {
-  title: string;
-  images: Estate["images"];
-}
+type Props = Pick<StructuredEstate, "title" | "images">;
 
 export default function Gallery({ title, images }: Props) {
-  const imagesNumber = useBreakpointValue({ base: 1, lg: 3 });
+  const [currentImageIndex, setCurrentImageindex] = useState(0);
+
+  const onNextImageClick = () => {
+    const nextIndex =
+      currentImageIndex === images.length - 1 ? 0 : currentImageIndex + 1;
+    setCurrentImageindex(nextIndex);
+  };
+
+  const onPrevImageClick = () => {
+    const prevIndex =
+      currentImageIndex === 0 ? images.length - 1 : currentImageIndex - 1;
+    setCurrentImageindex(prevIndex);
+  };
+
   return (
-    <Box pos="relative">
-      <Grid
-        gridGap="2px"
-        gridTemplateColumns={{ base: "1fr", lg: "2fr 1fr 1fr" }}
-      >
-        {images.slice(0, imagesNumber).map((img) => (
-          <Image
-            key={img.url}
-            src={img.url}
-            alt={title}
-            width={450}
-            height={300}
-            layout="responsive"
-            objectFit="cover"
-          />
-        ))}
-      </Grid>
-      <Box pos="absolute" bottom="10px" left="10px">
-        <ModalGallery images={images} />
+    <Box>
+      <Box overflow="hidden" pos="relative" borderRadius="md" borderWidth={1}>
+        <IconButton
+          aria-label="Предыдущее фото"
+          icon={<ArrowLeftIcon />}
+          onClick={onPrevImageClick}
+          size="sm"
+          pos="absolute"
+          top="50%"
+          left="10px"
+          zIndex={10}
+        />
+        <Image
+          src={images[currentImageIndex].url}
+          alt={title}
+          width={700}
+          height={400}
+          layout="responsive"
+          objectFit="cover"
+        />
+        <IconButton
+          aria-label="Следующее фото"
+          icon={<ArrowRightIcon />}
+          onClick={onNextImageClick}
+          size="sm"
+          pos="absolute"
+          top="50%"
+          right="10px"
+          zIndex={10}
+        />
       </Box>
+      <ImagesPreviews
+        images={images}
+        title={title}
+        currentImageIndex={currentImageIndex}
+        setCurrentImageIndex={setCurrentImageindex}
+      />
     </Box>
   );
 }

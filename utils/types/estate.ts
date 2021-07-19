@@ -1,4 +1,8 @@
 export interface CommonFields {
+  id?: string;
+  createdAt?: string;
+  images?: Array<{ id: string; url: string }>;
+  plan?: { id: string; url: string };
   videoUrl?: string;
   description?: string;
   address?: string;
@@ -23,7 +27,6 @@ export interface Apartment {
   windowsType?: string;
   state?: string;
   apartmentStatus?: string;
-  plateType?: string;
   bathType?: string;
   isRemodeled?: boolean;
   isRoomsFurniture?: boolean;
@@ -34,6 +37,9 @@ export interface Building {
   builtYear?: number;
   buildingType?: string;
   materialType?: string;
+  ceilingType?: string;
+  ceilingHeight?: number;
+  plateType?: string;
   parkingType?: string;
   isElevator?: boolean;
   isServiceElevator?: boolean;
@@ -44,33 +50,28 @@ export interface Tags {
   isMortgage?: boolean;
 }
 
-export type StaticFields = CommonFields & Apartment & Building & Tags;
+export type Estate = CommonFields & Apartment & Building & Tags;
 
-export interface CMSEstate extends StaticFields {
-  id?: string;
-  createdAt?: string;
-  images?: Array<{ id: string; url: string }>;
-  plan?: { id: string; url: string };
-}
-
-export interface Estate extends CommonFields, Tags {
-  id?: string;
-  createdAt?: string;
-  images?: Array<{ id: string; url: string }>;
-  plan?: { id: string; url: string };
+export interface StructuredEstate extends CommonFields, Tags {
   title?: string;
   apartment?: Apartment;
   building?: Building;
 }
 
-export interface EstateCard extends Tags {
-  id?: string;
-  createdAt?: string;
-  images?: Array<{ id: string; url: string }>;
+export interface EstateCard
+  extends Pick<
+    Estate,
+    | "id"
+    | "createdAt"
+    | "images"
+    | "location"
+    | "estateType"
+    | "price"
+    | "address"
+    | "rooms"
+    | "commonSquare"
+    | "isBargaining"
+    | "isMortgage"
+  > {
   title?: string;
-  estateType?: string;
-  price?: number;
-  address?: string;
-  rooms?: number;
-  commonSquare?: number;
 }

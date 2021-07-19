@@ -5,21 +5,23 @@ import {
   MenuItem,
   IconButton,
 } from "@chakra-ui/react";
-import {
-  HamburgerIcon,
-  EditIcon,
-  DeleteIcon,
-  ViewIcon,
-} from "@chakra-ui/icons";
+import { HamburgerIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
 import { handleDeleteEstate } from "components/estateForm/helpers";
 
 interface Props {
   id: string;
+  mutate: any;
 }
 
-export default function MyEstatesCardMenu({ id }: Props) {
+export default function MyEstatesCardMenu({ id, mutate }: Props) {
   const { push } = useRouter();
+
+  const onDelete = async () => {
+    await handleDeleteEstate(id);
+    mutate();
+  };
+
   return (
     <Menu>
       <MenuButton
@@ -27,18 +29,16 @@ export default function MyEstatesCardMenu({ id }: Props) {
         aria-label="Опции"
         icon={<HamburgerIcon />}
         variant="outline"
+        mt="20px"
       />
       <MenuList>
-        <MenuItem icon={<ViewIcon />} onClick={() => push(`/estates/${id}`)}>
-          Просмотреть
-        </MenuItem>
         <MenuItem
           icon={<EditIcon />}
           onClick={() => push(`/profile/edit-estate/${id}`)}
         >
           Изменить
         </MenuItem>
-        <MenuItem icon={<DeleteIcon />} onClick={() => handleDeleteEstate(id)}>
+        <MenuItem icon={<DeleteIcon />} onClick={onDelete}>
           Удалить
         </MenuItem>
       </MenuList>

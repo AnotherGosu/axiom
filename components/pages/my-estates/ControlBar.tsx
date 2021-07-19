@@ -1,22 +1,24 @@
-import { Wrap, WrapItem, Button } from "@chakra-ui/react";
-import IconButtonLink from "components/common/ButtonLink";
+import { Flex } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
+import OrderByMenu from "components/common/OrderByMenu";
+import IconButtonLink from "components/common/ButtonLink";
 
-export default function ControlBar() {
+interface Props {
+  orderBy: string;
+  setOrderBy: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function ControlBar({ orderBy, setOrderBy }: Props) {
   return (
-    <Wrap mb="20px" spacing="20px">
-      <WrapItem>
-        <Button variant="outline">Сортировать</Button>
-      </WrapItem>
-      <WrapItem>
-        <IconButtonLink
-          href="/profile/add-estate"
-          aria-label="Добавить новый объект"
-          leftIcon={<AddIcon />}
-        >
-          Добавить
-        </IconButtonLink>
-      </WrapItem>
-    </Wrap>
+    <Flex gridGap="20px" mb="30px" flexWrap="wrap">
+      <OrderByMenu orderBy={orderBy} setOrderBy={setOrderBy} />
+      <IconButtonLink
+        href="/profile/add-estate"
+        aria-label="Добавить новый объект"
+        leftIcon={<AddIcon />}
+      >
+        Добавить
+      </IconButtonLink>
+    </Flex>
   );
 }

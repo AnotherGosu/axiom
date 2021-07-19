@@ -6,5 +6,5 @@ interface Props extends TextProps {
 
 export default function PublicationDate({ createdAt, ...rest }: Props) {
   const publicationDate = new Date(createdAt).toLocaleDateString("ru");
-  return <Text {...rest}>{publicationDate}</Text>;
+  return <Text {...rest}>{`Опубликовано: ${publicationDate}`}</Text>;
 }

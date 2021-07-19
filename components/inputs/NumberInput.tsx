@@ -1,109 +1,65 @@
 import {
-  FormControl,
-  FormLabel,
   Input,
-  FormErrorMessage,
-  InputProps,
   InputGroup,
-  FormHelperText,
   InputLeftAddon,
   InputRightElement,
 } from "@chakra-ui/react";
-import {
-  Control,
-  useController,
-  RegisterOptions,
-  useFormContext,
-} from "react-hook-form";
+import FormControl, { FormControlProps } from "./FormControl";
 import NumberFormat from "react-number-format";
 
-export interface Props extends InputProps {
-  id: string;
-  control?: Control<any>;
-  label?: string;
+export interface Props extends FormControlProps {
   isInteger?: boolean;
   thousandSeparator?: boolean;
   format?: string;
   leftChildren?: React.ReactNode;
   rightChildren?: React.ReactNode;
-  helperText?: string;
   isStringValue?: boolean;
-  rules?: Exclude<
-    RegisterOptions,
-    "valueAsNumber" | "valueAsDate" | "setValueAs"
-  >;
 }
 
 export default function NumberInput({
-  id,
-  label,
-  placeholder,
   leftChildren,
   rightChildren,
-  helperText,
   format,
   thousandSeparator,
-  control,
   isInteger,
-  isRequired,
   isStringValue,
   isReadOnly,
-  rules,
+  ...rest
 }: Props) {
-  const {
-    field: { onChange, ...fieldProps },
-    fieldState: { invalid, error },
-  } = useController({
-    name: id,
-    control: control ? control : useFormContext().control,
-    defaultValue: null,
-    rules: {
-      ...rules,
-      required: isRequired && "Это обязательное поле",
-    },
-  });
-
-  const onValueChange = ({ formattedValue, floatValue }) => {
-    isStringValue ? onChange(formattedValue) : onChange(floatValue);
-  };
-
   return (
-    <FormControl
-      label={label}
-      id={id}
-      isInvalid={invalid}
-      isRequired={isRequired}
-    >
-      {label && <FormLabel>{label}</FormLabel>}
-      <InputGroup>
-        {leftChildren && (
-          <InputLeftAddon pointerEvents="none" children={leftChildren} />
-        )}
-        <NumberFormat
-          autoComplete="off"
-          format={format}
-          mask="_"
-          onValueChange={onValueChange}
-          thousandSeparator={thousandSeparator && " "}
-          allowEmptyFormatting
-          decimalScale={isInteger ? 0 : 2}
-          allowNegative={false}
-          customInput={Input}
-          placeholder={placeholder}
-          borderLeftRadius={leftChildren && "none"}
-          readOnly={isReadOnly}
-          {...fieldProps}
-        />
-        {rightChildren && (
-          <InputRightElement
-            zIndex={-1}
-            pointerEvents="none"
-            children={rightChildren}
+    <FormControl {...rest}>
+      {({ onChange, ...field }) => (
+        <InputGroup>
+          {leftChildren && (
+            <InputLeftAddon pointerEvents="none" children={leftChildren} />
+          )}
+          <NumberFormat
+            onValueChange={({ formattedValue, floatValue }) => {
+              return isStringValue
+                ? onChange(formattedValue)
+                : onChange(floatValue);
+            }}
+            autoComplete="off"
+            format={format}
+            mask="_"
+            thousandSeparator={thousandSeparator && " "}
+            allowEmptyFormatting
+            decimalScale={isInteger ? 0 : 2}
+            allowNegative={false}
+            customInput={Input}
+            borderLeftRadius={leftChildren && "none"}
+            readOnly={isReadOnly}
+            {...field}
           />
-        )}
-      </InputGroup>
-      {helperText && <FormHelperText>{helperText}</FormHelperText>}
-      <FormErrorMessage>{error?.message}</FormErrorMessage>
+          {rightChildren && (
+            <InputRightElement
+              zIndex={-1}
+              pointerEvents="none"
+              children={rightChildren}
+            />
+          )}
+        </InputGroup>
+      )}
     </FormControl>
   );
 }

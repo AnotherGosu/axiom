@@ -10,8 +10,8 @@ export enum Rooms {
 
 export enum DealType {
   free = "Свободная продажа",
-  alternative = "Альтернатива",
   assignemt = "Переуступка",
+  alternative = "Альтернативная",
 }
 
 export enum BathType {
@@ -44,11 +44,17 @@ export enum PlateType {
   electric = "Электрическая",
 }
 
+export enum CeilingType {
+  wood = "Деревянные",
+  reinforced = "Железобетонные",
+}
+
 export enum MaterialType {
   brick = "Кирпич",
   monolith = "Монолит",
   panel = "Панель",
   brickMonolith = "Кирпич-монолит",
+  wood = "Дерево",
 }
 
 export enum ApartmentStatus {
@@ -80,8 +86,10 @@ export enum RentType {
 export enum EstateType {
   apartment = "Квартира",
   room = "Комната",
-  house = "Дом / Котедж",
-  garage = "Гараж",
-  commercial = "Коммерческая",
-  land = "Участок",
+  house = "Дом / Коттедж",
+  commercial = "Коммерческая недвижиомсть",
+  land = "Земельный участок",
+  dacha = "Дача",
+  garage = "Гараж / Машинно-место",
+  newBuilding = "Новостройка",
 }

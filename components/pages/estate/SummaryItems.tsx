@@ -11,7 +11,7 @@ export const TextItem = ({
   children?: React.ReactNode;
 }) => {
   return (
-    <Flex justify="space-between" gridGap="10px" align="center">
+    <Flex justify="space-between" w="100%" gridGap="10px" align="center">
       <Text>{title}</Text>
       {children ? (
         children
@@ -30,7 +30,7 @@ export const SquareItem = ({
   square: number;
 }) => {
   return (
-    <Flex justify="space-between" gridGap="10px" align="center">
+    <Flex justify="space-between" w="100%" gridGap="10px" align="center">
       <Text>{title}</Text>
       <Text fontWeight="semibold">
         {square ? (
@@ -54,7 +54,7 @@ export const BooleanItem = ({
   value: boolean;
 }) => {
   return (
-    <Flex justify="space-between" gridGap="10px" align="center">
+    <Flex justify="space-between" w="100%" gridGap="10px" align="center">
       <Text>{title}</Text>
       {value ? (
         <CheckIcon w={4} h={4} color="green.500" />

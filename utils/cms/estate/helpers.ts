@@ -1,11 +1,12 @@
-import { EstateType, Rooms } from "../../localizations";
+import { EstateType, Rooms } from "utils/localizations";
+import type { Estate, StructuredEstate } from "utils/types/estate";
 
-export function structureEstate(estate) {
+export function structureEstate(estate: Estate): StructuredEstate {
   const { images, rooms, estateType } = estate;
 
   const title = getEstateTitle({ rooms, estateType });
 
-  if (!images.length) images.push({ url: "/logo.svg" });
+  if (!images.length) images.push({ id: "defaultLogoImage", url: "/logo.svg" });
 
   return { ...estate, title };
 }
@@ -48,17 +49,36 @@ export function createFilters(filterQuery: {
 
   const filters = filterQueryEntries.reduce((filters, entry) => {
     const [key, value] = entry;
+    //handle number input (left border)
     if (key.endsWith("From")) {
       const filterName = key.replace("From", "_gte");
       return { ...filters, [filterName]: Number(value) };
-    } else if (key.endsWith("To")) {
+    }
+    //handle number input (right border)
+    else if (key.endsWith("To")) {
       const filterName = key.replace("To", "_lte");
       return { ...filters, [filterName]: Number(value) };
-    } else if (key.startsWith("is")) {
-      return { ...filters, [key]: Boolean(value) };
-    } else {
-      const filterName = `${key}_in`;
-      return { ...filters, [filterName]: value.toString().split(",") };
+    }
+    //handle switch
+    else if (key.startsWith("is")) {
+      //balconies / loggias exception
+      if (key === "isBalcony") {
+        return { ...filters, OR: [{ balconies_gte: 1 }, { loggias_gte: 1 }] };
+      } else {
+        return { ...filters, [key]: Boolean(value) };
+      }
+    }
+    //handle checboxmenu
+    else {
+      //ceilingType exception
+      if (key === "ceilingType") {
+        const filterName = `${key}_in`;
+        const selectedValues = value.toString().split(",");
+        return { ...filters, [filterName]: [...selectedValues, ""] };
+      } else {
+        const filterName = `${key}_in`;
+        return { ...filters, [filterName]: value.toString().split(",") };
+      }
     }
   }, {});
 

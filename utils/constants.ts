@@ -1,12 +1,12 @@
-import { MenuGroup, Option } from "./types/common";
+import { Option } from "./types/common";
 import {
   Rooms,
-  UrbAreas,
   BathType,
   DealType,
   MaterialType,
   ParkingType,
   PlateType,
+  CeilingType,
   RoomsType,
   State,
   WindowsType,
@@ -24,6 +24,8 @@ export const apartmentStatusOptions: Option[] = Object.entries(ApartmentStatus);
 export const parkingTypeOptions: Option[] = Object.entries(ParkingType);
 
 export const plateTypeOptions: Option[] = Object.entries(PlateType);
+
+export const ceilingTypeOptions: Option[] = Object.entries(CeilingType);
 
 export const bathTypeOptions: Option[] = Object.entries(BathType);
 

@@ -1,67 +1,23 @@
-import { Box, useDisclosure, Collapse } from "@chakra-ui/react";
+import { Box, useDisclosure, Collapse, Button } from "@chakra-ui/react";
+import { RepeatIcon } from "@chakra-ui/icons";
 import Searchbar from "./Searchbar";
 import Filters from "./Filters";
 import { useForm, FormProvider } from "react-hook-form";
 import type { SearchForm as SearchFormData } from "utils/types/forms";
 import { useRouter } from "next/router";
+import { useQueryValues, defaultValues } from "./useQueryValues";
 
-// const defaultValues = {
-//   priceFrom: null,
-//   priceTo: null,
-//   commonSquareFrom: null,
-//   commonSquareTo: null,
-//   livingSquareFrom: null,
-//   livingSquareTo: null,
-//   kitchenSquareFrom: null,
-//   kitchenSquareTo: null,
-//   floorFrom: null,
-//   floorTo: null,
-//   allFloorsFrom: null,
-//   allFloorsTo: null,
-//   balconiesFrom: null,
-//   loggiasFrom: null,
-//   builtYearFrom: null,
-//   rooms: [],
-//   roomsType: [],
-//   windowsType: [],
-//   state: [],
-//   plateType: [],
-//   bathType: [],
-//   dealType: [],
-//   apartmentStatus: [],
-//   buildingType: [],
-//   materialType: [],
-//   parkingType: [],
-//   isRemodeled: false,
-//   isRoomsFurniture: false,
-//   isKitchenFurniture: false,
-//   isElevator: false,
-//   isServiceElevator: false,
-//   isRestrictedArea: false,
-// };
+interface Props {
+  scrollToSearchResult: () => void;
+}
 
-export default function SearchForm() {
+export default function SearchForm({ scrollToSearchResult }: Props) {
   const { isOpen, onToggle } = useDisclosure();
 
-  const { push, query } = useRouter();
-  // const getQueryValues = () => {
-  //   return Object.entries(query).reduce(
-  //     (values, entry) => {
-  //       const [key, value] = entry;
-  //       if (key.endsWith("From") || key.endsWith("To")) {
-  //         return { ...values, [key]: Number(value) };
-  //       } else if (key.startsWith("is")) {
-  //         return { ...values, [key]: Boolean(value) };
-  //       } else {
-  //         return { ...values, [key]: value.toString().split(",") };
-  //       }
-  //     },
-  //     { ...defaultValues }
-  //   );
-  // };
+  const { push } = useRouter();
 
-  const form = useForm();
-  const { handleSubmit } = form;
+  const form = useForm({ defaultValues });
+  const { handleSubmit, reset } = form;
 
   const onSubmit = async (data: SearchFormData) => {
     const filterQuery = new URLSearchParams();
@@ -72,7 +28,10 @@ export default function SearchForm() {
       }
     });
     push(`search/?${filterQuery.toString()}`, undefined, { shallow: true });
+    scrollToSearchResult();
   };
+
+  useQueryValues(reset);
 
   return (
     <FormProvider {...form}>
@@ -86,6 +45,18 @@ export default function SearchForm() {
         <Searchbar onToggle={onToggle} />
         <Collapse in={isOpen} animateOpacity>
           <Filters />
+          <Button
+            display="block"
+            ml="auto"
+            mt="50px"
+            leftIcon={<RepeatIcon />}
+            variant="outline"
+            onClick={() => {
+              reset(defaultValues);
+            }}
+          >
+            Очистить
+          </Button>
         </Collapse>
       </Box>
     </FormProvider>

@@ -7,27 +7,24 @@ import {
   useRadioGroup,
   Icon,
 } from "@chakra-ui/react";
-import { useController, useFormContext, Control } from "react-hook-form";
+import FormControl, { FormControlProps } from "./FormControl";
 
-interface Props {
-  id: string;
+interface Props extends FormControlProps {
   options: { value: string; label: string; icon?: any }[];
-  control?: Control<any>;
 }
 
-export default function RadioCards({ id, options, control }: Props) {
-  const {
-    field: { value, onChange },
-  } = useController({
-    name: id,
-    control: control ? control : useFormContext().control,
-    defaultValue: "",
-    rules: { required: true },
-  });
+export default function RadioCards({ options, ...rest }: Props) {
+  return (
+    <FormControl defaultValue="" {...rest}>
+      {({ ref, ...field }) => <RadioGroup options={options} {...field} />}
+    </FormControl>
+  );
+}
 
+const RadioGroup = ({ onChange, name, options }) => {
   const { getRootProps, getRadioProps } = useRadioGroup({
-    name: id,
-    defaultValue: value,
+    name,
+    defaultValue: "",
     onChange,
   });
 
@@ -48,7 +45,7 @@ export default function RadioCards({ id, options, control }: Props) {
       })}
     </Wrap>
   );
-}
+};
 
 const RadioCard = (props) => {
   const { getInputProps, getCheckboxProps } = useRadio(props);

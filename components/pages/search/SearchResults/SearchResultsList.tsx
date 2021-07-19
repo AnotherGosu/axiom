@@ -1,34 +1,21 @@
-import { CircularProgress } from "@chakra-ui/react";
-import SearchResultsCardContent from "./SearchResultsCardContent";
-import type { EstateCard } from "utils/types/estate";
-import EstateCardsList from "components/common/EstateCardsList";
-import useSWR from "swr";
-import { getSearchedEstates } from "utils/cms/estate/requests";
-import { useRouter } from "next/router";
-
-const fetcher = async (
-  key: string,
-  query: { [key: string]: string | string[] }
-) => {
-  const estates = await getSearchedEstates(query);
-  return estates;
-};
+import EstateCardsList from "components/common/EstatesCardsList/EstateCardsList";
+import EstateCard from "components/common/EstateCard";
+import { EstateCard as EstateCardProps } from "utils/types/estate";
 
 interface Props {
-  initialEstates: EstateCard[];
+  estates: EstateCardProps[];
+  isValidating: boolean;
 }
 
-export default function SearchResultsList({ initialEstates }: Props) {
-  const { query } = useRouter();
-  const { data: estates, error } = useSWR(["searchEstates", query], fetcher, {
-    initialData: initialEstates,
-  });
-  if (error) console.log(error);
-  if (!estates) {
-    return <CircularProgress isIndeterminate />;
-  }
-
+export default function SearchResultsList({ estates, isValidating }: Props) {
   return (
-    <EstateCardsList estates={estates} CardContent={SearchResultsCardContent} />
+    <EstateCardsList
+      listLength={estates?.length}
+      emptyListText="Не удалось найти объекты, отвечающие заданным параметрам поиска."
+    >
+      {estates.map((estate) => (
+        <EstateCard key={estate.id} isLoading={isValidating} {...estate} />
+      ))}
+    </EstateCardsList>
   );
 }

@@ -1,9 +1,16 @@
 import PageFallback from "components/common/PageFallback";
-import PageLayout from "components/layouts/PageLayout";
+import EstateLayout from "components/layouts/EstateLayout";
 import Section from "components/common/Section";
 import Header from "components/pages/estate/Header";
 import Gallery from "components/pages/estate/Gallery";
-import Summary from "components/pages/estate/Summary";
+import Apartment from "components/pages/estate/Apartment";
+import Building from "components/pages/estate/Building";
+import Description from "components/pages/estate/Description";
+import YouTubeEmbed from "components/pages/estate/YouTubeEmbed";
+import dynamic from "next/dynamic";
+const Map = dynamic(() => import("components/pages/estate/Map"), {
+  ssr: false,
+});
 import { getEstate, getPaths } from "utils/cms/estate/requests";
 import { useRouter } from "next/router";
 
@@ -18,18 +25,51 @@ export default function EstatePage({ estate }: Props) {
     return <PageFallback />;
   }
 
-  const { title, address, createdAt, images, ...rest } = estate;
+  const {
+    title,
+    address,
+    createdAt,
+    images,
+    plan,
+    location,
+    description,
+    videoUrl,
+    apartment,
+    building,
+    ...rest
+  } = estate;
 
   return (
-    <PageLayout headTitle={title}>
-      <Section heading={title}>
-        <Header address={address} createdAt={createdAt} />
+    <EstateLayout headTitle={title}>
+      <Section heading="Заголовок" isHiddenHeading>
+        <Header
+          title={title}
+          commonSquare={apartment.commonSquare}
+          address={address}
+          createdAt={createdAt}
+        />
       </Section>
       <Section heading="Галерея" isHiddenHeading>
-        <Gallery title={title} images={images} />
+        <Gallery title={title} images={plan ? [...images, plan] : images} />
       </Section>
-      <Summary {...rest} />
-    </PageLayout>
+      <Section heading="Описание дома">
+        <Building {...building} />
+      </Section>
+      <Section heading="Описание квартиры">
+        <Apartment {...apartment} />
+      </Section>
+      <Section heading="Расположение">
+        <Map location={location} />
+      </Section>
+      <Section heading="Комментарий продавца">
+        <Description description={description} />
+      </Section>
+      {videoUrl && (
+        <Section heading="Видео обзор">
+          <YouTubeEmbed videoUrl={videoUrl} />
+        </Section>
+      )}
+    </EstateLayout>
   );
 }
 

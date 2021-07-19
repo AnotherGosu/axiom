@@ -1,18 +1,29 @@
-import { Box } from "@chakra-ui/react";
-import EstateCardsList from "components/common/EstateCardsList";
-import MyEstatesCardContent from "./MyEstatesCardContent";
-import ControlBar from "./ControlBar";
-import { EstateCard } from "utils/types/estate";
+import EstateCardsList from "components/common/EstatesCardsList/EstateCardsList";
+import EstateCard from "components/common/EstateCard";
+import MyEstatesCardMenu from "./MyEstatesCardMenu";
+import { EstateCard as EstateCardProps } from "utils/types/estate";
 
 interface Props {
-  estates: EstateCard[];
+  estates: EstateCardProps[];
+  isValidating: boolean;
+  mutate: any;
 }
 
-export default function MyEstatesList({ estates }: Props) {
+export default function MyEstatesList({
+  estates,
+  isValidating,
+  mutate,
+}: Props) {
   return (
-    <Box>
-      <ControlBar />
-      <EstateCardsList estates={estates} CardContent={MyEstatesCardContent} />
-    </Box>
+    <EstateCardsList
+      listLength={estates?.length}
+      emptyListText="У Вас нет добавленных объектов."
+    >
+      {estates.map((estate) => (
+        <EstateCard key={estate.id} isLoading={isValidating} {...estate}>
+          <MyEstatesCardMenu id={estate.id} mutate={mutate} />
+        </EstateCard>
+      ))}
+    </EstateCardsList>
   );
 }

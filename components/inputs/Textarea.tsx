@@ -1,35 +1,10 @@
-import {
-  FormControl,
-  FormLabel,
-  Textarea as ChakraTextarea,
-  TextareaProps,
-} from "@chakra-ui/react";
-import { Control, useController, useFormContext } from "react-hook-form";
+import { Textarea as ChakraTextarea } from "@chakra-ui/react";
+import FormControl, { FormControlProps } from "./FormControl";
 
-interface Props extends TextareaProps {
-  id: string;
-  label: string;
-  control?: Control<any>;
-}
-
-export default function Textarea({
-  id,
-  label,
-  control,
-  isRequired,
-  ...rest
-}: Props) {
-  const { field } = useController({
-    name: id,
-    control: control ? control : useFormContext().control,
-    defaultValue: "",
-    rules: { required: isRequired && "Это обязательное поле" },
-  });
-
+export default function Textarea(props: FormControlProps) {
   return (
-    <FormControl id={id}>
-      <FormLabel>{label}</FormLabel>
-      <ChakraTextarea {...field} {...rest} />
+    <FormControl defaultValue="" {...props}>
+      {(field) => <ChakraTextarea {...field} />}
     </FormControl>
   );
 }

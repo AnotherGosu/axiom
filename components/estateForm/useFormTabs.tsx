@@ -1,27 +1,21 @@
 import { useBreakpointValue } from "@chakra-ui/react";
 import { useState, useRef } from "react";
+import ScrollIntoView from "utils/hooks/scrollIntoView";
 
 export default function useFormTabs() {
   const [tabIndex, setTabIndex] = useState(0);
   const isTabListVisible = useBreakpointValue({ base: false, md: true });
 
   const tabsRef = useRef(null);
-  const scrollToTabs = () => {
-    if (tabsRef?.current) {
-      const y =
-        tabsRef.current.getBoundingClientRect().top + window.pageYOffset - 150;
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }
-  };
 
   const nextTab = () => {
     setTabIndex(tabIndex + 1);
-    scrollToTabs();
+    ScrollIntoView({ ref: tabsRef });
   };
 
   const prevTab = () => {
     setTabIndex(tabIndex - 1);
-    scrollToTabs();
+    ScrollIntoView({ ref: tabsRef });
   };
 
   const switchToErrorTab = (errors) => {
@@ -36,14 +30,18 @@ export default function useFormTabs() {
           "kitchenSquare",
           "floor",
           "allFloors",
+          "rooms",
         ].includes(field)
       )
     ) {
       setTabIndex(1);
-    } else if (errorFields.includes("price")) {
+    } else if (
+      errorFields.includes("dealType") ||
+      errorFields.includes("price")
+    ) {
       setTabIndex(3);
     }
-    scrollToTabs();
+    ScrollIntoView({ ref: tabsRef });
   };
 
   return {

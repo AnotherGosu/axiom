@@ -13,11 +13,15 @@ export default function PriceTab() {
             id="dealType"
             label="Тип сделки"
             options={dealTypeOptions}
-            isRequired
+            rules={{ required: "Это обязательное поле" }}
           />
         </WrapItem>
         <WrapItem>
-          <PriceInput id="price" label="Цена" isRequired />
+          <PriceInput
+            id="price"
+            label="Цена"
+            rules={{ required: "Это обязательное поле" }}
+          />
         </WrapItem>
         <WrapItem>
           <PriceInput id="agencyServicePrice" label="Услуги агентства" />

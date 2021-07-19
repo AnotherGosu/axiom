@@ -1,11 +1,20 @@
-import EstateCardsList from "components/common/EstateCardsList";
-import ActualCardContent from "./ActualCardContent";
-import type { EstateCard } from "utils/types/estate";
+import EstateCardsList from "components/common/EstatesCardsList/EstateCardsList";
+import EstateCard from "components/common/EstateCard";
+import type { EstateCard as EstateCardProps } from "utils/types/estate";
 
 interface Props {
-  estates: EstateCard[];
+  estates: EstateCardProps[];
 }
 
 export default function ActualEstatesList({ estates }: Props) {
-  return <EstateCardsList estates={estates} CardContent={ActualCardContent} />;
+  return (
+    <EstateCardsList
+      listLength={estates.length}
+      emptyListText="Актуальные предложения отсутствуют"
+    >
+      {estates.map((estate) => (
+        <EstateCard key={estate.id} isLoading={false} {...estate} />
+      ))}
+    </EstateCardsList>
+  );
 }

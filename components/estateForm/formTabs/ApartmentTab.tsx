@@ -7,7 +7,6 @@ import {
   bathTypeOptions,
   stateOptions,
   windowsTypeOptions,
-  plateTypeOptions,
   roomsTypeOptions,
   roomsOptions,
   apartmentStatusOptions,
@@ -42,16 +41,15 @@ export default function ApartmentTab() {
 const selects = [
   {
     id: "rooms",
-    label: "Комнаты",
+    label: "Количество комнат",
     options: roomsOptions,
-    isRequired: true,
+    rules: { required: "Это обязательное поле" },
   },
   { id: "apartmentStatus", label: "Статус", options: apartmentStatusOptions },
   { id: "roomsType", label: "Тип комнат", options: roomsTypeOptions },
   { id: "state", label: "Состояние", options: stateOptions },
   { id: "windowsType", label: "Вид из окна", options: windowsTypeOptions },
   { id: "bathType", label: "Санузел", options: bathTypeOptions },
-  { id: "plateType", label: "Плита", options: plateTypeOptions },
 ];
 
 const switches = [

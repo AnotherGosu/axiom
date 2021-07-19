@@ -2,7 +2,7 @@ import { gql } from "graphql-request";
 import { client, authorizationHeader } from "../client";
 import { uploadAsset } from "../asset";
 import type { EditEstateForm } from "utils/types/forms";
-import type { CMSEstate } from "utils/types/estate";
+import type { Estate } from "utils/types/estate";
 
 export async function editImages({
   images,
@@ -10,7 +10,7 @@ export async function editImages({
   estateId,
 }: {
   images: EditEstateForm["images"];
-  existingImages: CMSEstate["images"];
+  existingImages: Estate["images"];
   estateId: string;
 }) {
   const imagesToSetIds = await Promise.all(

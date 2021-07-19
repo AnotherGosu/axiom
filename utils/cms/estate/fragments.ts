@@ -9,6 +9,10 @@ export const ESTATE_CARD = gql`
     id
     createdAt
     estateType
+    location {
+      longitude
+      latitude
+    }
     price
     address
     rooms
@@ -62,7 +66,7 @@ export const ESTATE_APARTMENT = gql`
     windowsType
     state
     apartmentStatus
-    plateType
+
     bathType
     isRemodeled
     isRoomsFurniture
@@ -74,7 +78,10 @@ export const ESTATE_BUILDING = gql`
   fragment EstateBuilding on Estate {
     builtYear
     materialType
+    ceilingType
+    ceilingHeight
     parkingType
+    plateType
     isElevator
     isServiceElevator
   }

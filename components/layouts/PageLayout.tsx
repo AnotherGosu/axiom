@@ -18,7 +18,7 @@ export default function PageLayout({ headTitle, children }: Props) {
         <Flex
           flexDir="column"
           p={["20px", null, "50px"]}
-          gridRowGap={["20px", null, "50px"]}
+          gridRowGap={["30px", null, "50px"]}
         >
           {children}
         </Flex>

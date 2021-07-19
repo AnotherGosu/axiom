@@ -6,15 +6,15 @@ import { getLoginSession } from "utils/auth/session";
 import { getMyEstates } from "utils/cms/estate/requests";
 import PageLayout from "components/layouts/PageLayout";
 import Section from "components/common/Section";
-import MyEstatesList from "components/pages/my-estates/MyEstatesList";
+import MyEstatesSection from "components/pages/my-estates/MyEstates";
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
-export default function MyEstates({ estates }: Props) {
+export default function MyEstates({ estates, issuer }: Props) {
   return (
     <PageLayout headTitle="Мои объекты">
       <Section heading="Мои объекты">
-        <MyEstatesList estates={estates} />
+        <MyEstatesSection initialEstates={estates} issuer={issuer} />
       </Section>
     </PageLayout>
   );
@@ -31,11 +31,13 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       },
     };
   }
+  const { issuer } = session;
 
-  const estates = await getMyEstates(session.issuer);
+  const estates = await getMyEstates({ issuer });
 
   return {
     props: {
+      issuer,
       estates,
     },
   };

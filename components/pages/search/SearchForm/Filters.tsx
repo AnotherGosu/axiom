@@ -1,4 +1,4 @@
-import { Box, SimpleGrid, VStack, Wrap, WrapItem } from "@chakra-ui/react";
+import { Box, SimpleGrid } from "@chakra-ui/react";
 import CheckboxMenu from "components/inputs/CheckboxMenu";
 import NumberInput from "components/inputs/NumberInput";
 import Switch from "components/inputs/Switch";
@@ -13,101 +13,63 @@ import {
   roomsTypeOptions,
   dealTypeOptions,
   apartmentStatusOptions,
+  ceilingTypeOptions,
 } from "utils/constants";
 
 export default function Filters() {
   return (
     <Box>
-      <SimpleGrid minChildWidth="250px" spacing="50px" mt="50px">
-        <VStack spacing="10px" align="flex-start">
-          <SquareInput
-            id="commonSquareFrom"
-            label="Площадь"
-            leftChildren="От"
-          />
-          <SquareInput id="commonSquareTo" leftChildren="До" />
-        </VStack>
-
-        <VStack spacing="10px" align="flex-start">
-          <SquareInput
-            id="livingSquareFrom"
-            label="Жилая площадь"
-            leftChildren="От"
-          />
-          <SquareInput id="livingSquareTo" leftChildren="До" />
-        </VStack>
-
-        <VStack spacing="10px" align="flex-start">
-          <SquareInput
-            id="kitchenSquareFrom"
-            label="Площадь кухни"
-            leftChildren="От"
-          />
-          <SquareInput id="kitchenSquareTo" leftChildren="До" />
-        </VStack>
-
-        <VStack spacing="10px" align="flex-start">
-          <NumberInput
-            id="floorFrom"
-            label="Этаж"
-            leftChildren="От"
-            isInteger
-          />
-          <NumberInput id="floorTo" leftChildren="До" isInteger />
-        </VStack>
-
-        <VStack spacing="10px" align="flex-start">
-          <NumberInput
-            id="allFloorsFrom"
-            label="Всего этажей"
-            leftChildren="От"
-            isInteger
-          />
-          <NumberInput id="allFloorsTo" leftChildren="До" isInteger />
-        </VStack>
+      <SimpleGrid
+        columns={[1, 1, 2, 3, 4, 5]}
+        spacingX="50px"
+        spacingY="20px"
+        mt="50px"
+      >
+        <SquareInput
+          id="livingSquareFrom"
+          label="Жилая площадь"
+          leftChildren="От"
+        />
+        <SquareInput
+          id="kitchenSquareFrom"
+          label="Площадь кухни"
+          leftChildren="От"
+        />
+        <NumberInput
+          id="allFloorsFrom"
+          label="Этажность"
+          leftChildren="От"
+          isInteger
+        />
+        <YearInput id="builtYearFrom" label="Год постройки" leftChildren="От" />
+        <NumberInput
+          id="ceilingHeight"
+          label="Высота потолков"
+          leftChildren="От"
+          rightChildren="м"
+        />
       </SimpleGrid>
 
-      <Wrap mt="50px" spacing="50px">
-        <WrapItem>
-          <NumberInput
-            id="balconies"
-            label="Балконов"
-            leftChildren="От"
-            isInteger
-          />
-        </WrapItem>
-        <WrapItem>
-          <NumberInput
-            id="loggias"
-            label="Лоджий"
-            leftChildren="От"
-            isInteger
-          />
-        </WrapItem>
-        <WrapItem>
-          <YearInput id="builtYear" label="Год постройки" leftChildren="От" />
-        </WrapItem>
-      </Wrap>
+      <SimpleGrid
+        columns={[1, 1, 2, 3, 4, 5]}
+        spacingX="50px"
+        spacingY="20px"
+        mt="50px"
+      >
+        <Switch id="isBalcony" label="Балкон / Лоджия" />
+        <Switch id="isElevator" label="Лифт" />
+        <Switch id="isServiceElevator" label="Грузовой лифт" />
+        <Switch id="isRoomsFurniture" label="Мебель в комнатах" />
+        <Switch id="isKitchenFurniture" label="Кухонный гарнитур" />
+        <Switch id="isRemodeled" label="Перепланировка" />
+      </SimpleGrid>
 
-      <Wrap mt="50px" spacing="50px" align="center">
-        <WrapItem>
-          <Switch id="isRoomsFurniture" label="Мебель в комнатах" />
-        </WrapItem>
-        <WrapItem>
-          <Switch id="isKitchenFurniture" label="Кухонный гарнитур" />
-        </WrapItem>
-        <WrapItem>
-          <Switch id="isElevator" label="Лифт" />
-        </WrapItem>
-        <WrapItem>
-          <Switch id="isServiceElevator" label="Грузовой лифт" />
-        </WrapItem>
-        <WrapItem>
-          <Switch id="isRemodeled" label="Перепланировка" />
-        </WrapItem>
-      </Wrap>
-
-      <SimpleGrid minChildWidth="275px" spacing="50px" mt="50px">
+      <SimpleGrid
+        columns={[1, 1, 2, 3, 4, 5]}
+        spacingX="50px"
+        spacingY="20px"
+        mt="50px"
+      >
         <CheckboxMenu id="state" label="Состояние" options={stateOptions} />
         <CheckboxMenu
           id="roomsType"
@@ -117,7 +79,7 @@ export default function Filters() {
         <CheckboxMenu id="plateType" label="Плита" options={plateTypeOptions} />
         <CheckboxMenu
           id="windowsType"
-          label="Вид из окон"
+          label="Вид из окна"
           options={windowsTypeOptions}
         />
         <CheckboxMenu id="bathType" label="Санузел" options={bathTypeOptions} />
@@ -130,6 +92,11 @@ export default function Filters() {
           id="materialType"
           label="Материал стен"
           options={materialTypeOptions}
+        />
+        <CheckboxMenu
+          id="ceilingType"
+          label="Перекрытия"
+          options={ceilingTypeOptions}
         />
         <CheckboxMenu
           id="apartmentStatus"

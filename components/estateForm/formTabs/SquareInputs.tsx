@@ -4,14 +4,14 @@ import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
 export default function SquareInputs() {
-  const { control, getValues, formState, clearErrors } = useFormContext();
+  const { getValues, formState, clearErrors } = useFormContext();
 
   const inputs = [
     {
       id: "commonSquare",
       label: "Общая площадь",
-      isRequired: true,
       rules: {
+        required: "Это обязательное поле",
         min: {
           value: getValues("livingSquare") + getValues("kitchenSquare"),
           message: "Значение меньше суммы площадей",
@@ -21,7 +21,6 @@ export default function SquareInputs() {
     {
       id: "livingSquare",
       label: "Жилая площадь",
-      isRequired: false,
       rules: {
         max: {
           value: getValues("commonSquare"),
@@ -32,7 +31,6 @@ export default function SquareInputs() {
     {
       id: "kitchenSquare",
       label: "Площадь кухни",
-      isRequired: false,
       rules: {
         max: {
           value: getValues("livingSquare"),
@@ -59,7 +57,7 @@ export default function SquareInputs() {
     <Wrap spacing="20px">
       {inputs.map((props) => (
         <WrapItem key={props.id}>
-          <SquareInput control={control} {...props} />
+          <SquareInput {...props} />
         </WrapItem>
       ))}
     </Wrap>

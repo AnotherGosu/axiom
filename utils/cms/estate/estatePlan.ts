@@ -2,7 +2,7 @@ import { gql } from "graphql-request";
 import { client, authorizationHeader } from "../client";
 import { uploadAsset } from "../asset";
 import type { EditEstateForm } from "utils/types/forms";
-import type { CMSEstate } from "utils/types/estate";
+import type { Estate } from "utils/types/estate";
 
 export async function editPlan({
   plan,
@@ -10,7 +10,7 @@ export async function editPlan({
   estateId,
 }: {
   plan: EditEstateForm["plan"];
-  existingPlan: CMSEstate["plan"];
+  existingPlan: Estate["plan"];
   estateId: string;
 }) {
   //user removed existing plan

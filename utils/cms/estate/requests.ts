@@ -10,7 +10,7 @@ import {
   GET_EDIT_FORM_ESTATE,
   DELETE_ESTATE,
 } from "./queries";
-import type { CMSEstate, Estate, EstateCard } from "utils/types/estate";
+import type { Estate, EstateCard } from "utils/types/estate";
 import type { AddEstateForm, EditEstateForm } from "utils/types/forms";
 import { structureEstate, createFilters } from "utils/cms/estate/helpers";
 import { editPlan, connectPlan, deletePlan } from "./estatePlan";
@@ -46,8 +46,8 @@ export async function editEstate({
   existingPlan,
 }: {
   data: EditEstateForm;
-  existingImages: CMSEstate["images"];
-  existingPlan: CMSEstate["plan"];
+  existingImages: Estate["images"];
+  existingPlan: Estate["plan"];
 }) {
   const { images, plan, id: estateId, createdAt, ...rest } = data;
 
@@ -67,13 +67,20 @@ export async function deleteEstate(estateId: string) {
   return await client.request(DELETE_ESTATE, { estateId }, authorizationHeader);
 }
 
-export async function getSearchedEstates(query: {
-  [key: string]: string | string[];
+export async function getSearchedEstates({
+  query,
+  orderBy = "createdAt_DESC",
+}: {
+  query: { [key: string]: string | string[] };
+  orderBy?: string;
 }) {
   const filters = createFilters(query);
-  const { estates } = await client.request(GET_SEARCHED_ESTATES, { filters });
+  const { estates } = await client.request(GET_SEARCHED_ESTATES, {
+    filters,
+    orderBy,
+  });
   const estateCards = estates.map((estate) => structureEstate(estate));
-  return estateCards;
+  return estateCards as EstateCard[];
 }
 
 export async function getActualEstates() {
@@ -91,7 +98,7 @@ export async function getEstate(id: string) {
   );
   const estate = { ...commonFields, apartment, building };
 
-  return structureEstate(estate) as Estate;
+  return structureEstate(estate);
 }
 
 export async function getEditFormEstate(id: string) {
@@ -99,7 +106,7 @@ export async function getEditFormEstate(id: string) {
     id,
   });
 
-  return estate as CMSEstate;
+  return estate as Estate;
 }
 
 export async function getPaths() {
@@ -107,8 +114,14 @@ export async function getPaths() {
   return estates.map(({ id }) => ({ params: { id } }));
 }
 
-export async function getMyEstates(issuer: string) {
-  const { estates } = await client.request(GET_MY_ESTATES, { issuer });
+export async function getMyEstates({
+  issuer,
+  orderBy = "createdAt_DESC",
+}: {
+  issuer: string;
+  orderBy?: string;
+}) {
+  const { estates } = await client.request(GET_MY_ESTATES, { issuer, orderBy });
   const estateCards = estates.map((estate) => structureEstate(estate));
   return estateCards as EstateCard[];
 }

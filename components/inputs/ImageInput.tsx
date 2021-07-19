@@ -1,33 +1,18 @@
-import {
-  Box,
-  Center,
-  Text,
-  VStack,
-  IconButton,
-  FormControl,
-  FormLabel,
-} from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { Box, Center, Text, VStack, IconButton } from "@chakra-ui/react";
+import FormControl, { FormControlProps } from "./FormControl";
+import { useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { Control, useController, useFormContext } from "react-hook-form";
 
-interface Props {
-  label: string;
-  name: string;
-  control?: Control<any>;
+export default function ImageInput(props: FormControlProps) {
+  return (
+    <FormControl {...props}>
+      {({ ref, ...field }) => <ImageDropZone {...field} />}
+    </FormControl>
+  );
 }
 
-export default function ImageInput({ label, name, control }: Props) {
-  const {
-    field: { onChange, value },
-  } = useController({
-    name,
-    control: control ? control : useFormContext().control,
-    defaultValue: null,
-  });
-
-  // const [image, setImage] = useState(null);
+const ImageDropZone = ({ onChange, value }) => {
   const { getRootProps, getInputProps, isDragActive, isFileDialogActive } =
     useDropzone({
       accept: "image/*",
@@ -36,7 +21,6 @@ export default function ImageInput({ label, name, control }: Props) {
         const previewImage = Object.assign(acceptedImage, {
           url: URL.createObjectURL(acceptedImage),
         });
-        // setImage(previewImage);
         onChange(previewImage);
       },
     });
@@ -49,14 +33,7 @@ export default function ImageInput({ label, name, control }: Props) {
   );
 
   return (
-    <FormControl
-      id="images"
-      as={VStack}
-      spacing="10px"
-      w="3xs"
-      align="flex-start"
-    >
-      <FormLabel>{label}</FormLabel>
+    <VStack spacing="10px" w="3xs" align="flex-start">
       <Center
         {...getRootProps({
           w: "100%",
@@ -97,6 +74,6 @@ export default function ImageInput({ label, name, control }: Props) {
           onClick={() => onChange(null)}
         />
       )}
-    </FormControl>
+    </VStack>
   );
-}
+};

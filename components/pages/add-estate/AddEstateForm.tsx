@@ -1,4 +1,4 @@
-import { Box, VStack } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import { useForm, FormProvider } from "react-hook-form";
 import FormTabs from "./FormTabs";
 import type { AddEstateForm as AddEstateFormData } from "utils/types/forms";

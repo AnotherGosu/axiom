@@ -1,14 +1,14 @@
 import { Box } from "@chakra-ui/react";
 import { YMaps, Map as YMap, Placemark } from "react-yandex-maps";
-import type { Estate } from "utils/types/estate";
+import type { EstateCard } from "utils/types/estate";
 
 interface Props {
-  location: Estate["location"];
+  estates: EstateCard[];
 }
 
-export default function Map({ location }: Props) {
+export default function Map({ estates }: Props) {
   return (
-    <Box w="100%" height={["200px", "400px"]}>
+    <Box w="100%" height="600px">
       <YMaps
         query={{
           apikey: process.env.NEXT_PUBLIC_MAP_API_KEY,
@@ -25,21 +25,24 @@ export default function Map({ location }: Props) {
             ref?.behaviors.disable("scrollZoom");
           }}
           defaultState={{
-            center: [location.latitude, location.longitude],
-            zoom: 17,
+            center: [48.47, 135.07],
+            zoom: 14,
             controls: ["zoomControl", "fullscreenControl"],
           }}
           modules={["control.ZoomControl", "control.FullscreenControl"]}
         >
-          <Placemark
-            defaultGeometry={[location.latitude, location.longitude]}
-            defaultOptions={{
-              iconLayout: "default#image",
-              iconImageHref: "/placemark.svg",
-              iconImageSize: [50, 80],
-              iconImageOffset: [-25, -60],
-            }}
-          />
+          {estates.map(({ location }) => (
+            <Placemark
+              key={`${location.latitude} ${location.longitude}`}
+              defaultGeometry={[location.latitude, location.longitude]}
+              defaultOptions={{
+                iconLayout: "default#image",
+                iconImageHref: "/placemark.svg",
+                iconImageSize: [50, 80],
+                iconImageOffset: [-25, -60],
+              }}
+            />
+          ))}
         </YMap>
       </YMaps>
     </Box>

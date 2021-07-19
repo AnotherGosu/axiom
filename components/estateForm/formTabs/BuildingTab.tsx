@@ -1,9 +1,15 @@
 import { Wrap, WrapItem } from "@chakra-ui/react";
 import { YearInput } from "components/inputs/CustomNumberInputs";
+import NumberInput from "components/inputs/NumberInput";
 import Select from "components/inputs/Select";
 import Switch from "components/inputs/Switch";
 import AddressInput from "components/estateForm/AddressInput";
-import { materialTypeOptions, parkingTypeOptions } from "utils/constants";
+import {
+  materialTypeOptions,
+  parkingTypeOptions,
+  plateTypeOptions,
+  ceilingTypeOptions,
+} from "utils/constants";
 
 export default function BuildingTab() {
   return (
@@ -18,6 +24,16 @@ export default function BuildingTab() {
             helperText="Для строящихся зданий - будущий год"
           />
         </WrapItem>
+        <WrapItem>
+          <NumberInput
+            id="ceilingHeight"
+            label="Высота потолков"
+            rightChildren="м"
+          />
+        </WrapItem>
+      </Wrap>
+
+      <Wrap spacing="20px">
         {selects.map((select) => (
           <WrapItem key={select.id}>
             <Select {...select} />
@@ -25,7 +41,7 @@ export default function BuildingTab() {
         ))}
       </Wrap>
 
-      <Wrap spacing="40px">
+      <Wrap spacing="20px">
         {switches.map((props) => (
           <WrapItem key={props.id}>
             <Switch {...props} />
@@ -38,7 +54,9 @@ export default function BuildingTab() {
 
 const selects = [
   { id: "materialType", label: "Материал стен", options: materialTypeOptions },
+  { id: "ceilingType", label: "Перекрытия", options: ceilingTypeOptions },
   { id: "parkingType", label: "Парковка", options: parkingTypeOptions },
+  { id: "plateType", label: "Плита", options: plateTypeOptions },
 ];
 
 const switches = [

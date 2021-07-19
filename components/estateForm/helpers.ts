@@ -2,7 +2,7 @@ import { createStandaloneToast, UseToastOptions } from "@chakra-ui/toast";
 import { addEstate, editEstate, deleteEstate } from "utils/cms/estate/requests";
 import Router from "next/router";
 import type { AddEstateForm, EditEstateForm } from "utils/types/forms";
-import { CMSEstate } from "utils/types/estate";
+import { Estate } from "utils/types/estate";
 
 const errorToast: UseToastOptions = {
   isClosable: true,
@@ -11,7 +11,13 @@ const errorToast: UseToastOptions = {
   title: "Возникла ошибка",
 };
 
-export async function handleAddEstate(data: AddEstateForm, issuer: string) {
+export async function handleAddEstate({
+  data,
+  issuer,
+}: {
+  data: AddEstateForm;
+  issuer: string;
+}) {
   const toast = createStandaloneToast();
 
   toast({
@@ -45,8 +51,8 @@ export async function handleEditEstate({
   existingPlan,
 }: {
   data: EditEstateForm;
-  existingImages: CMSEstate["images"];
-  existingPlan: CMSEstate["plan"];
+  existingImages: Estate["images"];
+  existingPlan: Estate["plan"];
 }) {
   const toast = createStandaloneToast();
   toast({
@@ -97,7 +103,6 @@ export async function handleDeleteEstate(estateId: string) {
       status: "success",
       title: "Объект успешно удален",
     });
-    Router.reload();
   } catch (err) {
     console.error(err);
     toast.closeAll();

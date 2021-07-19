@@ -38,7 +38,7 @@ export const GET_EDIT_FORM_ESTATE = gql`
 
 export const GET_ACTUAL_ESTATES = gql`
   query GetActualEstates {
-    estates(last: 4) {
+    estates(last: 4, orderBy: createdAt_DESC) {
       ...EstateCard
     }
   }
@@ -46,8 +46,11 @@ export const GET_ACTUAL_ESTATES = gql`
 `;
 
 export const GET_SEARCHED_ESTATES = gql`
-  query GetSearchedEstates($filters: EstateWhereInput) {
-    estates(where: $filters) {
+  query GetSearchedEstates(
+    $filters: EstateWhereInput
+    $orderBy: EstateOrderByInput
+  ) {
+    estates(where: $filters, orderBy: $orderBy) {
       ...EstateCard
     }
   }
@@ -55,8 +58,8 @@ export const GET_SEARCHED_ESTATES = gql`
 `;
 
 export const GET_MY_ESTATES = gql`
-  query GetUserEstates($issuer: String) {
-    estates(where: { customUser: { issuer: $issuer } }) {
+  query GetUserEstates($issuer: String, $orderBy: EstateOrderByInput) {
+    estates(where: { customUser: { issuer: $issuer } }, orderBy: $orderBy) {
       ...EstateCard
     }
   }

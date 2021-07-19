@@ -4,11 +4,11 @@ import TabPanels from "components/estateForm/TabPanels";
 import { useFormContext } from "react-hook-form";
 import { handleEditEstate } from "components/estateForm/helpers";
 import useFormTabs from "components/estateForm/useFormTabs";
-import type { CMSEstate } from "utils/types/estate";
+import type { Estate } from "utils/types/estate";
 
 interface Props {
-  existingImages: CMSEstate["images"];
-  existingPlan: CMSEstate["plan"];
+  existingImages: Estate["images"];
+  existingPlan: Estate["plan"];
 }
 
 export default function FormTabs({ existingImages, existingPlan }: Props) {
