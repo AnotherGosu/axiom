@@ -1,16 +1,19 @@
-import { Stack, StackProps, Button } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import Link from "../Link";
+import ButtonLink from "../ButtonLink";
+import ProfileMenu from "./ProfileMenu";
+import { useUser } from "@auth0/nextjs-auth0";
 
-export default function Auth(props: StackProps) {
-  const { push } = useRouter();
+export default function Auth() {
+  const { user, isLoading, error } = useUser();
 
-  return (
-    <Stack spacing="30px" align="center" direction="row" {...props}>
-      <Link fontWeight="semibold" fontSize="lg" href="/sign-up">
-        Регистрация
-      </Link>
-      <Button onClick={() => push("/sign-in")}>Войти</Button>
-    </Stack>
+  if (isLoading) return <div />;
+  if (error) {
+    console.log(error);
+    return <div />;
+  }
+
+  return !isLoading && user ? (
+    <ProfileMenu />
+  ) : (
+    <ButtonLink href="/api/auth/login">Войти</ButtonLink>
   );
 }

@@ -5,11 +5,7 @@ import type { AddEstateForm as AddEstateFormData } from "utils/types/forms";
 import EstateTypeRadio from "components/estateForm/EstateTypeRadio";
 import RentTypeRadio from "components/estateForm/RentTypeRadio";
 
-interface Props {
-  issuer: string;
-}
-
-export default function AddEstateForm({ issuer }: Props) {
+export default function AddEstateForm() {
   const form = useForm<AddEstateFormData>({
     defaultValues: {
       location: { latitude: 48.47, longitude: 135.07 },
@@ -24,7 +20,7 @@ export default function AddEstateForm({ issuer }: Props) {
       <VStack as="form" w="100%" spacing="50px" align="flex-start">
         <RentTypeRadio />
         {isRentType && <EstateTypeRadio />}
-        {isEstateType && <FormTabs issuer={issuer} />}
+        {isEstateType && <FormTabs />}
       </VStack>
     </FormProvider>
   );

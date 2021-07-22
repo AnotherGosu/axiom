@@ -18,13 +18,13 @@ import { editImages, connectImages, deleteImages } from "./estateImages";
 
 export async function addEstate({
   data,
-  issuer,
+  sub,
 }: {
   data: AddEstateForm;
-  issuer: string;
+  sub: string;
 }) {
   const { images, plan, ...rest } = data;
-  const requestData = { ...rest, customUser: { connect: { issuer } } };
+  const requestData = { ...rest, customUser: { connect: { sub } } };
 
   const {
     createEstate: { id: estateId },
@@ -115,13 +115,13 @@ export async function getPaths() {
 }
 
 export async function getMyEstates({
-  issuer,
+  sub,
   orderBy = "createdAt_DESC",
 }: {
-  issuer: string;
+  sub: string;
   orderBy?: string;
 }) {
-  const { estates } = await client.request(GET_MY_ESTATES, { issuer, orderBy });
+  const { estates } = await client.request(GET_MY_ESTATES, { sub, orderBy });
   const estateCards = estates.map((estate) => structureEstate(estate));
   return estateCards as EstateCard[];
 }

@@ -13,13 +13,12 @@ const errorToast: UseToastOptions = {
 
 export async function handleAddEstate({
   data,
-  issuer,
+  sub,
 }: {
   data: AddEstateForm;
-  issuer: string;
+  sub: string;
 }) {
   const toast = createStandaloneToast();
-
   toast({
     isClosable: false,
     duration: null,
@@ -28,7 +27,7 @@ export async function handleAddEstate({
   });
 
   try {
-    await addEstate({ data, issuer });
+    await addEstate({ data, sub });
 
     toast.closeAll();
     toast({

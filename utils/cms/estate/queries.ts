@@ -58,8 +58,8 @@ export const GET_SEARCHED_ESTATES = gql`
 `;
 
 export const GET_MY_ESTATES = gql`
-  query GetUserEstates($issuer: String, $orderBy: EstateOrderByInput) {
-    estates(where: { customUser: { issuer: $issuer } }, orderBy: $orderBy) {
+  query GetUserEstates($sub: String, $orderBy: EstateOrderByInput) {
+    estates(where: { customUser: { sub: $sub } }, orderBy: $orderBy) {
       ...EstateCard
     }
   }

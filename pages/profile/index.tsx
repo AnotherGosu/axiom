@@ -1,6 +1,6 @@
 import PageLayout from "components/layouts/PageLayout";
 import ProfileForm from "components/pages/profile/ProfileForm";
-import { getLoginSession } from "utils/auth/session";
+import { withPageAuthRequired, getSession } from "@auth0/nextjs-auth0";
 import { getUser } from "utils/cms/user/requests";
 import type {
   InferGetServerSidePropsType,
@@ -9,27 +9,18 @@ import type {
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
-export default function Profile({ user }: Props) {
+export default function Profile({ userData }: Props) {
   return (
     <PageLayout headTitle="Профиль">
-      <ProfileForm {...user} />
+      <ProfileForm {...userData} />
     </PageLayout>
   );
 }
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  const session = await getLoginSession(ctx.req);
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/sign-in",
-        permanent: false,
-      },
-    };
-  }
-
-  const user = await getUser(session.issuer);
-
-  return { props: { user } };
-};
+export const getServerSideProps = withPageAuthRequired({
+  async getServerSideProps(ctx: GetServerSidePropsContext) {
+    const session = getSession(ctx.req, ctx.res);
+    const userData = await getUser(session.user.sub);
+    return { props: { userData } };
+  },
+});

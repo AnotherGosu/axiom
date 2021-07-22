@@ -12,12 +12,9 @@ import {
 import { HamburgerIcon } from "@chakra-ui/icons";
 import Nav from "./Nav";
 import Auth from "./Auth";
-import ProfileMenu from "./ProfileMenu";
-import useUser from "utils/auth/useUser";
 
 export default function NavDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const user = useUser();
 
   return (
     <>
@@ -34,9 +31,8 @@ export default function NavDrawer() {
           <DrawerContent>
             <DrawerCloseButton />
             <DrawerHeader></DrawerHeader>
-
             <DrawerBody as={VStack} spacing="50px" py="50px">
-              {user ? <ProfileMenu /> : <Auth direction="column-reverse" />}
+              <Auth />
               <Nav direction="column" onClose={onClose} />
             </DrawerBody>
           </DrawerContent>
