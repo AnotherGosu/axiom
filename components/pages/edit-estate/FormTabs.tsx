@@ -40,7 +40,7 @@ export default function FormTabs({ existingImages, existingPlan }: Props) {
   };
 
   return (
-    <Tabs variant="enclosed" index={tabIndex} onChange={setTabIndex}>
+    <Tabs w="100%" variant="enclosed" index={tabIndex} onChange={setTabIndex}>
       <TabList tabsRef={tabsRef} isTabListVisible={isTabListVisible} />
       <TabPanels
         SubmitButton={SubmitButton}

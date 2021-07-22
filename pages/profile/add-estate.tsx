@@ -1,32 +1,16 @@
-import { InferGetServerSidePropsType, GetServerSidePropsContext } from "next";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import PageLayout from "components/layouts/PageLayout";
 import Section from "components/common/Section";
 import AddEstateForm from "components/pages/add-estate/AddEstateForm";
-import { getLoginSession } from "utils/auth/session";
 
-type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
-
-export default function AddEstate({ issuer }: Props) {
+export default function AddEstate() {
   return (
     <PageLayout headTitle="Добавить">
       <Section heading="Добавить объект">
-        <AddEstateForm issuer={issuer} />
+        <AddEstateForm />
       </Section>
     </PageLayout>
   );
 }
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  const session = await getLoginSession(ctx.req);
-  if (!session)
-    return {
-      redirect: {
-        destination: "/sign-in",
-        permanent: false,
-      },
-    };
-
-  const { issuer } = session;
-
-  return { props: { issuer } };
-};
+export const getServerSideProps = withPageAuthRequired();

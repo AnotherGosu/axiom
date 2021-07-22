@@ -1,36 +1,39 @@
 import { client, authorizationHeader } from "../client";
-import {
-  GET_USER_BY_EMAIL,
-  GET_USER,
-  CREATE_USER,
-  EDIT_USER_PROFILE,
-} from "./queries";
+import { GET_USER, CREATE_USER, EDIT_USER_PROFILE } from "./queries";
 import type { User } from "utils/types/user";
 
-export async function createUser(userData: {
-  issuer: string;
-  name: string;
-  email: string;
-  phone: string;
-}) {
-  return client.request(CREATE_USER, userData, authorizationHeader);
+export async function createUser(user) {
+  const { email, sub } = user;
+
+  const existingUser = await getUser(sub);
+  if (existingUser) return;
+
+  const metadata = user["https://axiom.vercel.app/user_metadata"];
+  const { name: firstName, lastName, patronim, phone } = metadata;
+  const name = `${lastName} ${firstName} ${patronim}`;
+
+  const userData = {
+    email,
+    sub,
+    name,
+    phone,
+    contactName: name,
+    contactPhone: phone,
+  };
+
+  return client.request(CREATE_USER, { userData }, authorizationHeader);
 }
 
-export async function getUser(issuer: string) {
-  const { customUser } = await client.request(GET_USER, { issuer });
+export async function getUser(sub: string) {
+  const { customUser } = await client.request(GET_USER, { sub });
   return customUser as User;
 }
 
-export async function getUserByEmail(email: string) {
-  const { customUser } = await client.request(GET_USER_BY_EMAIL, { email });
-  return customUser;
-}
-
 export async function editUserProfile(data: User) {
-  const { issuer, ...rest } = data;
+  const { sub, ...rest } = data;
   return await client.request(
     EDIT_USER_PROFILE,
-    { issuer, data: rest },
+    { sub, data: rest },
     authorizationHeader
   );
 }

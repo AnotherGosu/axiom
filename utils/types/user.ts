@@ -1,5 +1,5 @@
 export interface User {
-  issuer: string;
+  sub: string;
   email: string;
   phone: string;
   name: string;

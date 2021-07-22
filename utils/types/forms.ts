@@ -11,14 +11,6 @@ export interface EditEstateForm extends Omit<Estate, "images" | "plan"> {
   plan?: File | { id: string; url: string };
 }
 
-export interface SignUpForm {
-  lastName: string;
-  name: string;
-  patronim: string;
-  email: string;
-  phone: string;
-}
-
 export interface SearchForm {
   priceFrom: number | string;
   priceTo: number | string;
