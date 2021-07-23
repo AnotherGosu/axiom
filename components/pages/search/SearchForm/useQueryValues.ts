@@ -15,17 +15,18 @@ export const defaultValues: SearchForm = {
   allFloorsFrom: "",
   builtYearFrom: "",
   ceilingHeightFrom: "",
-  rooms: [],
-  roomsType: [],
-  windowsType: [],
-  state: [],
-  plateType: [],
-  bathType: [],
-  dealType: [],
-  apartmentStatus: [],
-  materialType: [],
-  ceilingType: [],
-  parkingType: [],
+  rentType: "sale",
+  roomsIn: [],
+  roomsTypeIn: [],
+  windowsTypeIn: [],
+  stateIn: [],
+  plateTypeIn: [],
+  bathTypeIn: [],
+  dealTypeIn: [],
+  apartmentStatusIn: [],
+  materialTypeIn: [],
+  ceilingTypeIn: [],
+  parkingTypeIn: [],
   isBalcony: false,
   isRemodeled: false,
   isRoomsFurniture: false,
@@ -40,17 +41,21 @@ export function useQueryValues(reset: UseFormReset<any>) {
   useEffect(() => {
     const queryValues = Object.entries(query).reduce((values, field) => {
       const [key, value] = field;
-      //handle number inputs
+      //handle number input
       if (key.endsWith("From") || key.endsWith("To")) {
         return { ...values, [key]: Number(value) };
       }
-      //handle switches
+      //handle switch
       else if (key.startsWith("is")) {
         return { ...values, [key]: true };
       }
-      //handle checkboxMenus
-      else {
+      //handle checkboxMenu
+      else if (key.endsWith("In")) {
         return { ...values, [key]: value.toString().split(",") };
+      }
+      //handle select
+      else {
+        return { ...values, [key]: value };
       }
     }, defaultValues);
     reset(queryValues);

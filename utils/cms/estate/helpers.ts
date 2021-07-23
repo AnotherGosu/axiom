@@ -68,17 +68,21 @@ export function createFilters(filterQuery: {
         return { ...filters, [key]: Boolean(value) };
       }
     }
-    //handle checboxmenu
-    else {
+    //handle checboxMenu
+    else if (key.endsWith("In")) {
+      const filterName = key.replace("In", "_in");
       //ceilingType exception
-      if (key === "ceilingType") {
-        const filterName = `${key}_in`;
+      if (key === "ceilingTypeIn") {
         const selectedValues = value.toString().split(",");
         return { ...filters, [filterName]: [...selectedValues, ""] };
       } else {
-        const filterName = `${key}_in`;
         return { ...filters, [filterName]: value.toString().split(",") };
       }
+    }
+    //handle select
+    else {
+      const filterName = `${key}_contains`;
+      return { ...filters, [filterName]: value };
     }
   }, {});
 

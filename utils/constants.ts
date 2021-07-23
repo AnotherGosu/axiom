@@ -11,6 +11,7 @@ import {
   State,
   WindowsType,
   RentType,
+  RentTypeAsPurchase,
   EstateType,
   ApartmentStatus,
 } from "./localizations";
@@ -38,5 +39,8 @@ export const dealTypeOptions: Option[] = Object.entries(DealType);
 export const windowsTypeOptions: Option[] = Object.entries(WindowsType);
 
 export const rentTypeOptions: Option[] = Object.entries(RentType);
+
+export const rentTypeAsPurchaseOptions: Option[] =
+  Object.entries(RentTypeAsPurchase);
 
 export const estateTypeOptions: Option[] = Object.entries(EstateType);

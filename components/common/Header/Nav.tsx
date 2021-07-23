@@ -25,7 +25,7 @@ export default function Nav({ onClose, ...rest }: Props) {
 }
 
 const links = [
-  { title: "Поиск", href: "/search" },
+  { title: "Поиск", href: "/search?rentType=sale" },
   { title: "Агентства", href: "/agencies" },
   { title: "Агенты", href: "/agents" },
   { title: "Ипотека", href: "/calculators" },

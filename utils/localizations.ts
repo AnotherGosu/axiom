@@ -83,6 +83,12 @@ export enum RentType {
   shortPeriodRent = "Сдать посуточно",
 }
 
+export enum RentTypeAsPurchase {
+  sale = "Купить",
+  longPeriodRent = "Снять длительно",
+  shortPeriodRent = "Снять посуточно",
+}
+
 export enum EstateType {
   apartment = "Квартира",
   room = "Комната",
@@ -90,6 +96,6 @@ export enum EstateType {
   commercial = "Коммерческая недвижиомсть",
   land = "Земельный участок",
   dacha = "Дача",
-  garage = "Гараж / Машинно-место",
+  garage = "Гараж / Машино-место",
   newBuilding = "Новостройка",
 }

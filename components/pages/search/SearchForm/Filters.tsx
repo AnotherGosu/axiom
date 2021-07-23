@@ -43,7 +43,7 @@ export default function Filters() {
         />
         <YearInput id="builtYearFrom" label="Год постройки" leftChildren="От" />
         <NumberInput
-          id="ceilingHeight"
+          id="ceilingHeightFrom"
           label="Высота потолков"
           leftChildren="От"
           rightChildren="м"
@@ -70,41 +70,49 @@ export default function Filters() {
         spacingY="20px"
         mt="50px"
       >
-        <CheckboxMenu id="state" label="Состояние" options={stateOptions} />
+        <CheckboxMenu id="stateIn" label="Состояние" options={stateOptions} />
         <CheckboxMenu
-          id="roomsType"
+          id="roomsTypeIn"
           label="Тип комнат"
           options={roomsTypeOptions}
         />
-        <CheckboxMenu id="plateType" label="Плита" options={plateTypeOptions} />
         <CheckboxMenu
-          id="windowsType"
+          id="plateTypeIn"
+          label="Плита"
+          options={plateTypeOptions}
+        />
+        <CheckboxMenu
+          id="windowsTypeIn"
           label="Вид из окна"
           options={windowsTypeOptions}
         />
-        <CheckboxMenu id="bathType" label="Санузел" options={bathTypeOptions} />
         <CheckboxMenu
-          id="parkingType"
+          id="bathTypeIn"
+          label="Санузел"
+          options={bathTypeOptions}
+        />
+        <CheckboxMenu
+          id="parkingTypeIn"
           label="Парковка"
           options={parkingTypeOptions}
         />
         <CheckboxMenu
-          id="materialType"
+          id="materialTypeIn"
           label="Материал стен"
           options={materialTypeOptions}
         />
         <CheckboxMenu
-          id="ceilingType"
+          id="ceilingTypeIn"
           label="Перекрытия"
           options={ceilingTypeOptions}
         />
         <CheckboxMenu
-          id="apartmentStatus"
+          id="apartmentStatusIn"
           label="Статутс"
           options={apartmentStatusOptions}
         />
         <CheckboxMenu
-          id="dealType"
+          id="dealTypeIn"
           label="Тип сделки"
           options={dealTypeOptions}
         />

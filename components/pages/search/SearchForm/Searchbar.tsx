@@ -1,9 +1,10 @@
 import { VStack, Grid, GridItem, Button, Flex } from "@chakra-ui/react";
 import { ImFilter } from "react-icons/im";
+import Select from "components/inputs/Select";
 import CheckboxMenu from "components/inputs/CheckboxMenu";
 import NumberInput from "components/inputs/NumberInput";
 import { PriceInput, SquareInput } from "components/inputs/CustomNumberInputs";
-import { roomsOptions } from "utils/constants";
+import { roomsOptions, rentTypeAsPurchaseOptions } from "utils/constants";
 
 interface Props {
   onToggle: () => void;
@@ -13,13 +14,35 @@ export default function Searchbar({ onToggle }: Props) {
   return (
     <Grid
       gridTemplateAreas={{
-        base: `"price" "square" "floor" "rooms" "buttons"`,
-        md: `"rooms rooms" "price square" "floor buttons" "floor buttons"`,
-        lg: `"price square floor" "rooms buttons buttons"`,
+        base: `"options" "price" "square" "floor" "buttons"`,
+        md: `"options price" "square floor" "buttons buttons"`,
+        lg: `"options price price" "square floor buttons"`,
+        xl: `"options price square floor buttons"`,
+      }}
+      gridTemplateColumns={{
+        lg: "max-content 1fr 1fr",
+        xl: "max-content 2fr 2fr 2fr 1fr",
       }}
       gap="20px"
       alignItems="end"
     >
+      <GridItem gridArea="options">
+        <VStack spacing="10px" align="flex-start">
+          <CheckboxMenu
+            id="roomsIn"
+            label="Количество комнат"
+            options={roomsOptions}
+          />
+          <Select
+            id="rentType"
+            label="Покупка или аренда"
+            isHiddenLabel
+            isEmptyOption={false}
+            options={rentTypeAsPurchaseOptions}
+          />
+        </VStack>
+      </GridItem>
+
       <GridItem gridArea="price">
         <VStack spacing="10px" align="flex-start">
           <PriceInput id="priceFrom" label="Цена" leftChildren="От" />
@@ -66,20 +89,8 @@ export default function Searchbar({ onToggle }: Props) {
         </VStack>
       </GridItem>
 
-      <GridItem gridArea="rooms" h="100%">
-        <CheckboxMenu
-          id="rooms"
-          label="Количество комнат"
-          options={roomsOptions}
-        />
-      </GridItem>
-
       <GridItem gridArea="buttons">
-        <Flex
-          flexDir={{ base: "column", lg: "row" }}
-          gridColumnGap="20px"
-          gridRowGap="10px"
-        >
+        <Flex flexDir="column" gridColumnGap="20px" gridRowGap="10px">
           <Button
             variant="outline"
             w="100%"
