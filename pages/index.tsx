@@ -1,4 +1,4 @@
-import PageLayout from "components/layouts/PageLayout";
+import PageLayout from "components/layouts/WithHeaderAndFooter";
 import Section from "components/common/Section";
 import ActualEstatesList from "components/pages/main/ActualEstates";
 

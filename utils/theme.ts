@@ -1,6 +1,10 @@
 import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
+  fonts: {
+    heading: "Nunito",
+    body: "Nunito",
+  },
   components: {
     Container: {
       baseStyle: {

@@ -1,3 +1,5 @@
+import "@fontsource/nunito";
+
 import { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "utils/theme";

@@ -90,12 +90,12 @@ export enum RentTypeAsPurchase {
 }
 
 export enum EstateType {
-  apartment = "Квартира",
-  room = "Комната",
+  apartment = "Квартиру",
+  room = "Комнату",
   house = "Дом / Коттедж",
-  commercial = "Коммерческая недвижиомсть",
+  commercial = "Коммерческую недвижимость",
   land = "Земельный участок",
-  dacha = "Дача",
+  dacha = "Дачу",
   garage = "Гараж / Машино-место",
-  newBuilding = "Новостройка",
+  newBuilding = "Квартиру в новостройке",
 }

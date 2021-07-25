@@ -12,6 +12,8 @@ export interface EditEstateForm extends Omit<Estate, "images" | "plan"> {
 }
 
 export interface SearchForm {
+  estateType: string;
+  rentType: string;
   priceFrom: number | string;
   priceTo: number | string;
   commonSquareFrom: number | string;
@@ -23,7 +25,6 @@ export interface SearchForm {
   allFloorsFrom: number | string;
   builtYearFrom: number | string;
   ceilingHeightFrom: number | string;
-  rentType: string;
   roomsIn: string[];
   roomsTypeIn: string[];
   windowsTypeIn: string[];

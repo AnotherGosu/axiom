@@ -9,7 +9,7 @@ interface Props {
   children?: React.ReactNode;
 }
 
-export default function PageLayout({ headTitle, children }: Props) {
+export default function WithHeaderAndFooter({ headTitle, children }: Props) {
   return (
     <>
       <Head title={headTitle} />
@@ -17,7 +17,7 @@ export default function PageLayout({ headTitle, children }: Props) {
         <Header />
         <Flex
           flexDir="column"
-          p={["20px", null, "50px"]}
+          p={[5, null, 10]}
           gridRowGap={["30px", null, "50px"]}
         >
           {children}

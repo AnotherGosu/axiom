@@ -27,7 +27,11 @@ export default function SearchForm({ scrollToSearchResult }: Props) {
         filterQuery.append(key, value.toString());
       }
     });
-    push(`search/?${filterQuery.toString()}`, undefined, { shallow: true });
+
+    //update search results without page reload
+    push(`search/?${filterQuery.toString()}`, undefined, {
+      shallow: true,
+    });
     scrollToSearchResult();
   };
 

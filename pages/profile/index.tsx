@@ -1,4 +1,4 @@
-import PageLayout from "components/layouts/PageLayout";
+import WithHeader from "components/layouts/WithHeader";
 import ProfileForm from "components/pages/profile/ProfileForm";
 import { withPageAuthRequired, getSession } from "@auth0/nextjs-auth0";
 import { getUser } from "utils/cms/user/requests";
@@ -11,9 +11,9 @@ type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 export default function Profile({ userData }: Props) {
   return (
-    <PageLayout headTitle="Профиль">
+    <WithHeader headTitle="Профиль">
       <ProfileForm {...userData} />
-    </PageLayout>
+    </WithHeader>
   );
 }
 

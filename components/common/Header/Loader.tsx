@@ -7,7 +7,7 @@ interface Props {
 export default function Loader({ isLoading }: Props) {
   return (
     <Progress
-      size="xs"
+      height="2px"
       isIndeterminate
       colorScheme="purple"
       opacity={isLoading ? 1 : 0}

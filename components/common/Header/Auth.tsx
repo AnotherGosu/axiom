@@ -1,6 +1,6 @@
 import { Skeleton } from "@chakra-ui/skeleton";
 import ButtonLink from "../ButtonLink";
-import ProfileMenu from "./ProfileMenu";
+import AvatarMenu from "./AvatarMenu";
 import { useUser } from "@auth0/nextjs-auth0";
 
 export default function Auth() {
@@ -14,7 +14,7 @@ export default function Auth() {
   return (
     <Skeleton isLoaded={!isLoading}>
       {user ? (
-        <ProfileMenu />
+        <AvatarMenu />
       ) : (
         <ButtonLink href="/api/auth/login">Войти</ButtonLink>
       )}

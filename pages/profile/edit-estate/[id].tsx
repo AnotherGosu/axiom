@@ -1,5 +1,5 @@
 import { InferGetServerSidePropsType, GetServerSidePropsContext } from "next";
-import PageLayout from "components/layouts/PageLayout";
+import WithHeader from "components/layouts/WithHeader";
 import Section from "components/common/Section";
 import EditEstateForm from "components/pages/edit-estate/EditEstateForm";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
@@ -9,11 +9,11 @@ type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 export default function EditEstate({ estate }: Props) {
   return (
-    <PageLayout headTitle="Изменить">
+    <WithHeader headTitle="Изменить объект">
       <Section heading="Изменить объект">
         <EditEstateForm estate={estate} />
       </Section>
-    </PageLayout>
+    </WithHeader>
   );
 }
 

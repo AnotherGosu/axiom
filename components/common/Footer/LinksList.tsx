@@ -1,28 +1,19 @@
-import { Box, List, ListItem } from "@chakra-ui/react";
-import Link from "../Link";
+import { Stack, Link, Text } from "@chakra-ui/react";
+import NextLink from "next/link";
+import type { NavItem } from "utils/types/common";
 
-interface Props {
-  title: string;
-  links: Array<{ title: string; href: string }>;
-}
-
-const AccordionList: React.FC<Props> = ({ title, links }) => {
+export default function LinksList({ label, children }: NavItem) {
   return (
-    <Box>
-      <Link href="/" fontSize="lg" fontWeight="semibold" color="whiteAlpha.900">
-        {title}
-      </Link>
-      <List spacing="10px" mt="20px">
-        {links.map(({ title, href }) => (
-          <ListItem key={title}>
-            <Link href={href} title={title}>
-              {title}
-            </Link>
-          </ListItem>
+    <Stack align="flex-start">
+      <Text fontWeight={600} fontSize="lg" mb={2}>
+        {label}
+      </Text>
+      {children &&
+        children.map(({ label, href }) => (
+          <NextLink key={label} href={href} passHref>
+            <Link>{label}</Link>
+          </NextLink>
         ))}
-      </List>
-    </Box>
+    </Stack>
   );
-};
-
-export default AccordionList;
+}

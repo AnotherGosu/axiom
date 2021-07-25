@@ -4,6 +4,8 @@ import { UseFormReset } from "react-hook-form";
 import type { SearchForm } from "utils/types/forms";
 
 export const defaultValues: SearchForm = {
+  estateType: "",
+  rentType: "",
   priceFrom: "",
   priceTo: "",
   commonSquareFrom: "",
@@ -15,7 +17,6 @@ export const defaultValues: SearchForm = {
   allFloorsFrom: "",
   builtYearFrom: "",
   ceilingHeightFrom: "",
-  rentType: "sale",
   roomsIn: [],
   roomsTypeIn: [],
   windowsTypeIn: [],
@@ -39,6 +40,7 @@ export function useQueryValues(reset: UseFormReset<any>) {
   const { query } = useRouter();
 
   useEffect(() => {
+    //update form values based on query values
     const queryValues = Object.entries(query).reduce((values, field) => {
       const [key, value] = field;
       //handle number input

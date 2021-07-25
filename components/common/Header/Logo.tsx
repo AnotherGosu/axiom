@@ -1,16 +1,18 @@
-import { LinkBox, LinkOverlay, Text, HStack } from "@chakra-ui/react";
-import Image from "next/image";
-import NLink from "next/link";
+import { Link } from "@chakra-ui/react";
+import NextLink from "next/link";
 
 export default function Logo() {
   return (
-    <LinkBox as={HStack} spacing="10px">
-      <Image src="/logo.svg" width={55} height={55} />
-      <Text fontSize="3xl" fontWeight="bold">
-        <NLink href="/" passHref>
-          <LinkOverlay>Axiom</LinkOverlay>
-        </NLink>
-      </Text>
-    </LinkBox>
+    <NextLink href="/" passHref>
+      <Link
+        fontWeight={700}
+        fontSize="2xl"
+        color="purple.500"
+        verticalAlign="bottom"
+        _hover={{ textDecor: "none", color: "purple.600" }}
+      >
+        Axiom
+      </Link>
+    </NextLink>
   );
 }

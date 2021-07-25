@@ -28,6 +28,7 @@ export default function MyEstatesCardMenu({ id, mutate }: Props) {
         as={IconButton}
         aria-label="Опции"
         icon={<HamburgerIcon />}
+        size="sm"
         variant="outline"
         mt="20px"
       />

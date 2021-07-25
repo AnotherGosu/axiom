@@ -1,23 +1,26 @@
 import { Box } from "@chakra-ui/react";
-import PageLayout from "components/layouts/PageLayout";
+import PageLayout from "components/layouts/WithHeaderAndFooter";
 import Section from "components/common/Section";
 import SearchForm from "components/pages/search/SearchForm";
 import SearchResults from "components/pages/search/SearchResults";
 import { useRef } from "react";
 import ScrollIntoView from "utils/hooks/scrollIntoView";
+import { EstateType } from "utils/localizations";
 
 import { InferGetServerSidePropsType, GetServerSidePropsContext } from "next";
 import { getSearchedEstates } from "utils/cms/estate/requests";
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
-export default function Search({ estates }: Props) {
+export default function Search({ estates, estateType }: Props) {
   const searchResultsRef = useRef(null);
   const scrollToSearchResult = () => ScrollIntoView({ ref: searchResultsRef });
 
+  const searchHeading = EstateType[estateType.toString()].toLowerCase();
+
   return (
     <PageLayout headTitle="Поиск">
-      <Section heading="Поиск жилья">
+      <Section heading={`Найти ${searchHeading}`}>
         <SearchForm scrollToSearchResult={scrollToSearchResult} />
       </Section>
       <Section heading="Результаты поиска" isHiddenHeading>
@@ -34,8 +37,9 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const estates = await getSearchedEstates({
     query,
   });
+  const { estateType } = query;
 
   return {
-    props: { estates },
+    props: { estates, estateType },
   };
 };
