@@ -15,7 +15,6 @@
     "@dnd-kit/sortable": "^3.1.0",
     "@emotion/react": "^11.1.5",
     "@emotion/styled": "^11.3.0",
-    "@fontsource/nunito": "^4.5.0",
     "@types/formidable": "^1.2.3",
     "focus-visible": "^5.2.0",
     "form-data": "^4.0.0",
