@@ -1,5 +1,5 @@
 import { gql } from "graphql-request";
-import { client, estateHeader } from "./client";
+import { client } from "./client";
 import type { EditEstateFormServer } from "utils/types/forms";
 import uploadAsset from "./uploadAsset";
 import deleteAssets from "./deleteAssets";
@@ -58,7 +58,7 @@ export default async function updateEstate(formData: EditEstateFormServer) {
 
   data = { ...data, ...fields };
 
-  const res = client.request(UPDATE_ESTATE, { data, estateId }, estateHeader);
+  const res = client.request(UPDATE_ESTATE, { data, estateId });
   await deleteAssets(deleteAssetsIds);
   return res;
 }

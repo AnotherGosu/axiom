@@ -1,11 +1,11 @@
 import { gql } from "graphql-request";
-import { client, estateHeader } from "./client";
+import { client } from "./client";
 import deleteAssets from "./deleteAssets";
 
 export default async function deleteEstate(estateId: string) {
   const {
     deleteEstate: { images = [], plan },
-  } = await client.request(DELETE_ESTATE, { estateId }, estateHeader);
+  } = await client.request(DELETE_ESTATE, { estateId });
 
   const imagesIds = images.map((img) => img.id);
   const deleteAssetsIds = plan ? [...imagesIds, plan.id] : [...imagesIds];

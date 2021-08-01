@@ -1,5 +1,5 @@
 import { gql } from "graphql-request";
-import { client, estateHeader } from "./client";
+import { client } from "./client";
 import type { AddEstateFormServer } from "utils/types/forms";
 import uploadAsset from "./uploadAsset";
 
@@ -30,7 +30,7 @@ export default async function createEstate({
 
   const {
     createEstate: { id },
-  } = await client.request(CREATE_ESTATE, { data }, estateHeader);
+  } = await client.request(CREATE_ESTATE, { data });
 
   return id;
 }

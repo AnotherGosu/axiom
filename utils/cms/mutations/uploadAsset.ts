@@ -14,7 +14,7 @@ export default async function uploadAsset(file: FormidableFile) {
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${process.env.GRAPHCMS_ASSET_MUTATION_TOKEN}`,
+        Authorization: `Bearer ${process.env.GRAPHCMS_MUTATION_TOKEN}`,
       },
       body: form,
     }

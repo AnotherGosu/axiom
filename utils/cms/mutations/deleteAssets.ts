@@ -1,8 +1,8 @@
 import { gql } from "graphql-request";
-import { client, assetHeader } from "./client";
+import { client } from "./client";
 
 export default async function deleteAssets(ids: string[]) {
-  const res = await client.request(DELETE_ASSETS, { ids }, assetHeader);
+  const res = await client.request(DELETE_ASSETS, { ids });
   return res;
 }
 

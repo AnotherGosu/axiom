@@ -1,5 +1,5 @@
 import { gql } from "graphql-request";
-import { client, userHeader } from "./client";
+import { client } from "./client";
 import getCustomUserProfile from "../queries/getCustomUserProfile";
 
 export default async function createCustomUser(user) {
@@ -27,7 +27,7 @@ export default async function createCustomUser(user) {
     contactPhone: formatedPhone,
   };
 
-  return client.request(CREATE_USER, { userData }, userHeader);
+  return client.request(CREATE_USER, { userData });
 }
 
 export const CREATE_USER = gql`
