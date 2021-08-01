@@ -1,14 +1,29 @@
 import { Box } from "@chakra-ui/react";
-import { YMaps, Map as YMap, Placemark } from "react-yandex-maps";
-import type { EstateCard } from "utils/types/estate";
+import { YMaps, Map as YMap, Placemark, ZoomControl } from "react-yandex-maps";
+import type { EstateCard as EstateCardProps } from "utils/types/estate";
+import EstateCard from "components/common/EstateCard";
+import { useState, useRef } from "react";
 
 interface Props {
-  estates: EstateCard[];
+  estates: EstateCardProps[];
 }
 
 export default function Map({ estates }: Props) {
+  const [activeEstate, setActiveEstate] = useState<EstateCardProps>(null);
+
+  const onPlacemarkClick = (estate: EstateCardProps) => {
+    estate.id === activeEstate?.id
+      ? setActiveEstate(null)
+      : setActiveEstate(estate);
+  };
+
+  const mapRef = useRef(null);
+
   return (
-    <Box w="100%" height="600px">
+    <Box w="100%" height="800px" pos="relative" overflow="hidden">
+      <Box pos="absolute" top={2} left={2} zIndex={2}>
+        {activeEstate && <EstateCard {...activeEstate} />}
+      </Box>
       <YMaps
         query={{
           apikey: process.env.NEXT_PUBLIC_MAP_API_KEY,
@@ -23,26 +38,35 @@ export default function Map({ estates }: Props) {
           instanceRef={(ref) => {
             // @ts-expect-error
             ref?.behaviors.disable("scrollZoom");
+            mapRef.current = ref;
           }}
           defaultState={{
             center: [48.47, 135.07],
             zoom: 14,
-            controls: ["zoomControl", "fullscreenControl"],
           }}
-          modules={["control.ZoomControl", "control.FullscreenControl"]}
+          modules={["geoObject.addon.hint"]}
         >
-          {estates.map(({ location }) => (
-            <Placemark
-              key={`${location.latitude} ${location.longitude}`}
-              defaultGeometry={[location.latitude, location.longitude]}
-              defaultOptions={{
-                iconLayout: "default#image",
-                iconImageHref: "/placemark.svg",
-                iconImageSize: [50, 80],
-                iconImageOffset: [-25, -60],
-              }}
-            />
-          ))}
+          <ZoomControl
+            defaultOptions={{ position: { left: 10, bottom: 50 } }}
+          />
+          {estates.map((estate) => {
+            const { id, location, address, price } = estate;
+            const formatedPrice = new Intl.NumberFormat("ru-RU").format(price);
+            return (
+              <Placemark
+                key={id}
+                defaultGeometry={[location.latitude, location.longitude]}
+                defaultOptions={{
+                  preset: "islands#violetStretchyIcon",
+                }}
+                defaultProperties={{
+                  iconContent: `${formatedPrice} ₽`,
+                  hintContent: address,
+                }}
+                onClick={() => onPlacemarkClick(estate)}
+              />
+            );
+          })}
         </YMap>
       </YMaps>
     </Box>

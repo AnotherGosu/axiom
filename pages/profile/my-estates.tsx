@@ -3,7 +3,7 @@ import type {
   InferGetServerSidePropsType,
 } from "next";
 import { withPageAuthRequired, getSession } from "@auth0/nextjs-auth0";
-import { getMyEstates } from "utils/cms/estate/requests";
+import getMyEstates from "utils/cms/queries/getMyEstates";
 import WithHeader from "components/layouts/WithHeader";
 import Section from "components/common/Section";
 import MyEstatesSection from "components/pages/my-estates/MyEstates";

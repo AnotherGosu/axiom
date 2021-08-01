@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
-import { handleDeleteEstate } from "components/estateForm/helpers";
+import { deleteEstate } from "components/estateForm/helpers";
 
 interface Props {
   id: string;
@@ -18,7 +18,7 @@ export default function MyEstatesCardMenu({ id, mutate }: Props) {
   const { push } = useRouter();
 
   const onDelete = async () => {
-    await handleDeleteEstate(id);
+    await deleteEstate(id);
     mutate();
   };
 

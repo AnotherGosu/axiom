@@ -4,7 +4,7 @@ import CardContent from "./CardContent";
 import { EstateCard as EstateCardProps } from "utils/types/estate";
 
 interface Props extends EstateCardProps {
-  isLoading: boolean;
+  isLoading?: boolean;
   children?: React.ReactNode;
 }
 

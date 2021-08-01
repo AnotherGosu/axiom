@@ -11,7 +11,8 @@ import dynamic from "next/dynamic";
 const Map = dynamic(() => import("components/pages/estate/Map"), {
   ssr: false,
 });
-import { getEstate, getPaths } from "utils/cms/estate/requests";
+import getEstate from "utils/cms/queries/getEstate";
+import getPaths from "utils/cms/queries/getPaths";
 import { useRouter } from "next/router";
 
 import { InferGetStaticPropsType, GetStaticPropsContext } from "next";

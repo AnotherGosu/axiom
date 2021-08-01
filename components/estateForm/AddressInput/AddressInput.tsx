@@ -34,7 +34,7 @@ export default function AddressInput() {
     'ymaps[class*="search__suggest"]': {
       marginTop: "10px",
       borderRadius: "0.375rem",
-      fontFamily: "system-ui, sans-serif",
+      fontFamily: "Nunito",
       fontSize: "0.875rem",
       fontWeight: 400,
     },

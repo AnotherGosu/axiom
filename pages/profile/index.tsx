@@ -1,7 +1,7 @@
 import WithHeader from "components/layouts/WithHeader";
-import ProfileForm from "components/pages/profile/ProfileForm";
+import Profile from "components/pages/profile";
 import { withPageAuthRequired, getSession } from "@auth0/nextjs-auth0";
-import { getUser } from "utils/cms/user/requests";
+import getCustomUserProfile from "utils/cms/queries/getCustomUserProfile";
 import type {
   InferGetServerSidePropsType,
   GetServerSidePropsContext,
@@ -9,10 +9,10 @@ import type {
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
-export default function Profile({ userData }: Props) {
+export default function ProfilePage({ profile }: Props) {
   return (
     <WithHeader headTitle="Профиль">
-      <ProfileForm {...userData} />
+      <Profile initialData={profile} />
     </WithHeader>
   );
 }
@@ -20,7 +20,7 @@ export default function Profile({ userData }: Props) {
 export const getServerSideProps = withPageAuthRequired({
   async getServerSideProps(ctx: GetServerSidePropsContext) {
     const session = getSession(ctx.req, ctx.res);
-    const userData = await getUser(session.user.sub);
-    return { props: { userData } };
+    const profile = await getCustomUserProfile(session.user.sub);
+    return { props: { profile } };
   },
 });

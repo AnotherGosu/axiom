@@ -6,7 +6,7 @@ interface Props {
 
 export default function EmptyListAlert({ emptyListText }: Props) {
   return (
-    <Alert status="warning" colorScheme="purple" w="max-content">
+    <Alert status="warning" colorScheme="purple">
       <AlertIcon />
       {emptyListText}
     </Alert>

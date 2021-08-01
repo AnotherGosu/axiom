@@ -1,110 +1,69 @@
-import { createStandaloneToast, UseToastOptions } from "@chakra-ui/toast";
-import { addEstate, editEstate, deleteEstate } from "utils/cms/estate/requests";
-import Router from "next/router";
-import type { AddEstateForm, EditEstateForm } from "utils/types/forms";
-import { Estate } from "utils/types/estate";
+import useToastSubmit from "utils/hooks/useToastSubmit";
+import type {
+  AddEstateFormClient,
+  EditEstateFormClient,
+} from "utils/types/forms";
 
-const errorToast: UseToastOptions = {
-  isClosable: true,
-  duration: 5000,
-  status: "error",
-  title: "Возникла ошибка",
-};
+export async function addEstateFormSubmit(data: AddEstateFormClient) {
+  await useToastSubmit({
+    loadingTitle: "Добавляем объект...",
+    successTitle: "Объект успешно добавлен",
+    redirect: "/profile/my-estates",
+    callback: () => {
+      const { images, plan, ...fields } = data;
+      const form = new FormData();
 
-export async function handleAddEstate({
-  data,
-  sub,
-}: {
-  data: AddEstateForm;
-  sub: string;
-}) {
-  const toast = createStandaloneToast();
-  toast({
-    isClosable: false,
-    duration: null,
-    status: "info",
-    title: "Добавляем объект...",
+      form.append("fields", JSON.stringify(fields));
+      images.forEach((image) => form.append("images", image, image.name));
+      if (plan) form.append("plan", plan, plan.name);
+
+      return fetch("/api/cms/estate", {
+        method: "POST",
+        body: form,
+      });
+    },
   });
-
-  try {
-    await addEstate({ data, sub });
-
-    toast.closeAll();
-    toast({
-      isClosable: true,
-      duration: 5000,
-      status: "success",
-      title: "Объект успешно добавлен",
-    });
-    Router.push("/profile/my-estates");
-  } catch (err) {
-    console.error(err);
-    toast.closeAll();
-    toast(errorToast);
-  }
 }
 
-export async function handleEditEstate({
-  data,
-  existingImages,
-  existingPlan,
-}: {
-  data: EditEstateForm;
-  existingImages: Estate["images"];
-  existingPlan: Estate["plan"];
-}) {
-  const toast = createStandaloneToast();
-  toast({
-    isClosable: false,
-    duration: null,
-    status: "info",
-    title: "Добавляем изменения в объект...",
+export async function editEstateFormSubmit(data: EditEstateFormClient) {
+  await useToastSubmit({
+    loadingTitle: "Добавляем изменения в объект...",
+    successTitle: "Объект успешно изменен",
+    redirect: "/profile/my-estates",
+    callback: () => {
+      const { images, plan, ...fields } = data;
+      const orderedImages = [];
+      const form = new FormData();
+
+      images.forEach((img) => {
+        if (img instanceof File) {
+          orderedImages.push({ name: img.name });
+          form.append("images", img, img.name);
+        } else {
+          orderedImages.push({ id: img.id });
+        }
+      });
+      form.append("orderedImages", JSON.stringify(orderedImages));
+      if (plan instanceof File) form.append("plan", plan, plan.name);
+      form.append("fields", JSON.stringify({ ...fields, orderedImages }));
+
+      return fetch("/api/cms/estate", { method: "PATCH", body: form });
+    },
   });
-
-  try {
-    await editEstate({
-      data,
-      existingImages,
-      existingPlan,
-    });
-
-    toast.closeAll();
-    toast({
-      isClosable: true,
-      duration: 5000,
-      status: "success",
-      title: "Объект успешно изменен",
-    });
-    Router.push("/profile/my-estates");
-  } catch (err) {
-    console.error(err);
-    toast.closeAll();
-    toast(errorToast);
-  }
 }
 
-export async function handleDeleteEstate(estateId: string) {
-  const toast = createStandaloneToast();
-  toast({
-    isClosable: false,
-    duration: null,
-    status: "info",
-    title: "Удаляем объект...",
+export async function deleteEstate(estateId: string) {
+  await useToastSubmit({
+    loadingTitle: "Удаляем объект...",
+    successTitle: "Объект успешно удален",
+    callback: () => {
+      const form = new FormData();
+      form.append("estateId", estateId);
+
+      return fetch("/api/cms/estate", {
+        method: "DELETE",
+        body: form,
+      });
+    },
   });
-
-  try {
-    await deleteEstate(estateId);
-
-    toast.closeAll();
-    toast({
-      isClosable: true,
-      duration: 5000,
-      status: "success",
-      title: "Объект успешно удален",
-    });
-  } catch (err) {
-    console.error(err);
-    toast.closeAll();
-    toast(errorToast);
-  }
 }

@@ -61,7 +61,6 @@ export default function Filters() {
         <Switch id="isServiceElevator" label="Грузовой лифт" />
         <Switch id="isRoomsFurniture" label="Мебель в комнатах" />
         <Switch id="isKitchenFurniture" label="Кухонный гарнитур" />
-        <Switch id="isRemodeled" label="Перепланировка" />
       </SimpleGrid>
 
       <SimpleGrid

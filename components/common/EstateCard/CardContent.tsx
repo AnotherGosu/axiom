@@ -15,7 +15,7 @@ export default function CardContent({
   children,
 }: Props) {
   return (
-    <Box p="20px">
+    <Box p="20px" bg="white">
       <Heading as="h3" size="md" isTruncated mb="10px">
         {`${title}, ${commonSquare} м`}
         <sup>2</sup>

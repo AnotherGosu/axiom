@@ -9,7 +9,7 @@ export default function Contacts() {
         <TextInput id="contactName" label="Обращение" />
       </WrapItem>
       <WrapItem>
-        <PhoneInput id="contactPhone" label="Телефон" />
+        <PhoneInput id="contactPhone" label="Контактный телефон" />
       </WrapItem>
     </Wrap>
   );

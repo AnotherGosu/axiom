@@ -53,14 +53,14 @@ export default function FormControl({
     <ChakraFormControl
       id={id}
       label={label}
-      isInvalid={invalid && !field.value}
+      isInvalid={invalid && field.value}
       isRequired={!!rules?.required}
       {...rest}
     >
       {!isHiddenLabel && <FormLabel>{label}</FormLabel>}
       {children(field)}
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
-      {error?.message && <FormErrorMessage>{error.message}</FormErrorMessage>}
+      {error?.message && <FormErrorMessage>{error?.message}</FormErrorMessage>}
     </ChakraFormControl>
   );
 }

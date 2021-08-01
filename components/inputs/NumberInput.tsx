@@ -27,7 +27,7 @@ export default function NumberInput({
   ...rest
 }: Props) {
   return (
-    <FormControl {...rest}>
+    <FormControl defaultValue={null} {...rest}>
       {({ onChange, ...field }) => (
         <InputGroup>
           {leftChildren && (
@@ -45,6 +45,7 @@ export default function NumberInput({
             thousandSeparator={thousandSeparator && " "}
             allowEmptyFormatting
             decimalScale={isInteger ? 0 : 2}
+            allowedDecimalSeparators={[",", "."]}
             allowNegative={false}
             customInput={Input}
             borderLeftRadius={leftChildren && "none"}

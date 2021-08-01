@@ -32,7 +32,7 @@ export default function MobileNav({ navItems }: Props) {
 const NavItemCollapse = ({ label, children }: NavItem) => {
   const { isOpen, onToggle } = useDisclosure();
   return (
-    <Stack spacing={4} onClick={children && onToggle} cursor="pointer">
+    <Stack spacing={4} onClick={onToggle} cursor="pointer">
       <Flex justify="space-between" align="center">
         <Text fontWeight={600} color="gray.600">
           {label}
@@ -41,8 +41,8 @@ const NavItemCollapse = ({ label, children }: NavItem) => {
           as={ChevronDownIcon}
           transition="all .25s ease-in-out"
           transform={isOpen ? "rotate(180deg)" : ""}
-          w={6}
-          h={6}
+          w={5}
+          h={5}
         />
       </Flex>
       <Collapse in={isOpen} animateOpacity style={{ marginTop: "0!important" }}>

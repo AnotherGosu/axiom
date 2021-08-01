@@ -3,7 +3,7 @@ import Section from "components/common/Section";
 import ActualEstatesList from "components/pages/main/ActualEstates";
 
 import { InferGetStaticPropsType, GetStaticPropsContext } from "next";
-import { getActualEstates } from "utils/cms/estate/requests";
+import getActualEstates from "utils/cms/queries/getActualEstates";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 

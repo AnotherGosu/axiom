@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 const Map = dynamic(() => import("../Map"), { ssr: false });
 import type { EstateCard } from "utils/types/estate";
 import useSWR from "swr";
-import { getSearchedEstates } from "utils/cms/estate/requests";
+import getSearchedEstates from "utils/cms/queries/getSearchedEstates";
 import { useRouter } from "next/router";
 import { useState } from "react";
 

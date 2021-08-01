@@ -20,7 +20,7 @@ export default function useFormTabs() {
 
   const switchToErrorTab = (errors) => {
     const errorFields = Object.keys(errors);
-    if (errorFields.includes("address")) {
+    if (errorFields.includes("address") || errorFields.includes("builtYear")) {
       setTabIndex(0);
     } else if (
       errorFields.some((field) =>

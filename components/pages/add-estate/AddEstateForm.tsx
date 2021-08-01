@@ -1,12 +1,12 @@
 import { VStack } from "@chakra-ui/react";
 import { useForm, FormProvider } from "react-hook-form";
 import FormTabs from "./FormTabs";
-import type { AddEstateForm as AddEstateFormData } from "utils/types/forms";
+import type { AddEstateFormClient} from "utils/types/forms";
 import EstateTypeRadio from "components/estateForm/EstateTypeRadio";
 import RentTypeRadio from "components/estateForm/RentTypeRadio";
 
 export default function AddEstateForm() {
-  const form = useForm<AddEstateFormData>({
+  const form = useForm<AddEstateFormClient>({
     defaultValues: {
       location: { latitude: 48.47, longitude: 135.07 },
     },

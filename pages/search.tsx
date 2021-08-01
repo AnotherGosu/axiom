@@ -8,7 +8,7 @@ import ScrollIntoView from "utils/hooks/scrollIntoView";
 import { EstateType } from "utils/localizations";
 
 import { InferGetServerSidePropsType, GetServerSidePropsContext } from "next";
-import { getSearchedEstates } from "utils/cms/estate/requests";
+import getSearchedEstates from "utils/cms/queries/getSearchedEstates";
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 

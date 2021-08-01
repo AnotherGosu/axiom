@@ -66,7 +66,6 @@ export const ESTATE_APARTMENT = gql`
     windowsType
     state
     apartmentStatus
-
     bathType
     isRemodeled
     isRoomsFurniture

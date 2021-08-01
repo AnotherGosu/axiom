@@ -45,12 +45,10 @@ const NavItemDropdown = ({ label, children }: NavItem) => (
         </Text>
       </PopoverTrigger>
 
-      <PopoverContent border={0} boxShadow="xl" p={4} rounded="xl">
-        <Stack>
-          {children.map((child) => (
-            <NavSubItem key={child.label} {...child} />
-          ))}
-        </Stack>
+      <PopoverContent as={Stack} border={0} boxShadow="xl" p={4} rounded="xl">
+        {children.map((child) => (
+          <NavSubItem key={child.label} {...child} />
+        ))}
       </PopoverContent>
     </Popover>
   </Box>

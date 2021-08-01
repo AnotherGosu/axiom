@@ -4,7 +4,7 @@ import MyEstatesList from "./MyEstatesList";
 import { EstateCard } from "utils/types/estate";
 import { useState } from "react";
 import useSWR from "swr";
-import { getMyEstates } from "utils/cms/estate/requests";
+import getMyEstates from "utils/cms/queries/getMyEstates";
 import { useUser } from "@auth0/nextjs-auth0";
 
 interface Props {

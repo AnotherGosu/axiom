@@ -18,7 +18,7 @@ export default function ApartmentInputs() {
       },
     },
     { id: "allFloors", label: "Всего этажей" },
-    { id: "balconies", label: "Количесво балконов" },
+    { id: "balconies", label: "Количество балконов" },
     { id: "loggias", label: "Количество лоджий" },
   ];
 
