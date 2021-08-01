@@ -79,6 +79,7 @@ export const getStaticProps = async (ctx: GetStaticPropsContext) => {
   const estate = await getEstate(id.toString());
   return {
     props: { estate },
+    revalidate: 10,
   };
 };
 
