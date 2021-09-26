@@ -33,7 +33,9 @@ export default function EstateCard({
         noOfLines={4}
         spacing="4"
       >
-        <CardContent {...rest}>{children}</CardContent>
+        <CardContent id={id} images={images} {...rest}>
+          {children}
+        </CardContent>
       </SkeletonText>
     </Box>
   );
