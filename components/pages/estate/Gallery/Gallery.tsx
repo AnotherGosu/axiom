@@ -2,10 +2,12 @@ import { Box, IconButton } from "@chakra-ui/react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import Image from "next/image";
 import ImagesPreviews from "./ImagesPreviews";
-import { StructuredEstate } from "utils/types/estate";
 import { useState } from "react";
 
-type Props = Pick<StructuredEstate, "title" | "images">;
+interface Props {
+  title: string;
+  images: Array<{ id: string; url: string }>;
+}
 
 export default function Gallery({ title, images }: Props) {
   const [currentImageIndex, setCurrentImageindex] = useState(0);

@@ -1,8 +1,9 @@
 import { Wrap, WrapItem, Box } from "@chakra-ui/react";
 import Image from "next/image";
-import { StructuredEstate } from "utils/types/estate";
 
-interface Props extends Pick<StructuredEstate, "images" | "title"> {
+interface Props {
+  title: string;
+  images: Array<{ id: string; url: string }>;
   currentImageIndex: number;
   setCurrentImageIndex: React.Dispatch<React.SetStateAction<number>>;
 }
