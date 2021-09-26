@@ -1,7 +1,7 @@
 import useToastSubmit from "utils/hooks/useToastSubmit";
-import type { customUserProfileClient } from "utils/types/forms";
+import type { ClientProfileClient } from "utils/types/forms";
 
-export async function updateProfile(data: customUserProfileClient) {
+export async function updateProfile(data: ClientProfileClient) {
   await useToastSubmit({
     loadingTitle: "Обновляем данные профиля...",
     successTitle: "Данные профиля успешно обновлены",

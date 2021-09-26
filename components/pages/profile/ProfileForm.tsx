@@ -2,13 +2,13 @@ import { VStack, Button, Skeleton } from "@chakra-ui/react";
 import Section from "components/common/Section";
 import Accaunt from "components/pages/profile/Account";
 import Contacts from "components/pages/profile/Contacts";
-import type { customUserProfile } from "utils/types/clienent";
+import type { ClientProfile } from "utils/types/client";
 import { useForm, FormProvider } from "react-hook-form";
 import { updateProfile } from "./helpers";
 
 interface Props {
   isValidating: boolean;
-  defaultValues: customUserProfile;
+  defaultValues: ClientProfile;
   mutate: any;
 }
 
@@ -17,7 +17,7 @@ export default function ProfileForm({
   mutate,
   isValidating,
 }: Props) {
-  const form = useForm<customUserProfile>({ defaultValues });
+  const form = useForm<ClientProfile>({ defaultValues });
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty },
