@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import { useForm, FormProvider } from "react-hook-form";
 import FormTabs from "./FormTabs";
 import type { Estate } from "utils/types/estate";
-import type { EditEstateFormClient } from "utils/types/forms";
+import type { UpdateEstateFormClient } from "utils/types/forms";
 
 interface Props {
   estate: Estate;
@@ -10,7 +10,7 @@ interface Props {
 
 export default function UpdateEstateForm({ estate }: Props) {
   const { images, plan } = estate;
-  const form = useForm<EditEstateFormClient>({
+  const form = useForm<UpdateEstateFormClient>({
     defaultValues: { ...estate, existingImages: images, existingPlan: plan },
   });
 
