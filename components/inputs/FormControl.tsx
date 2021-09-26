@@ -60,7 +60,7 @@ export default function FormControl({
       {!isHiddenLabel && <FormLabel>{label}</FormLabel>}
       {children(field)}
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
-      {error?.message && <FormErrorMessage>{error?.message}</FormErrorMessage>}
+      <FormErrorMessage>{error?.message}</FormErrorMessage>
     </ChakraFormControl>
   );
 }

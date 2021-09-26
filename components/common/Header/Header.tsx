@@ -10,7 +10,7 @@ import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
 import Auth from "./Auth";
 import Logo from "./Logo";
-import { navItems } from "utils/constants";
+import { headerNavItems } from "utils/constants/nav";
 import usePageLoading from "utils/hooks/usePageLoading";
 import Loader from "./Loader";
 
@@ -48,7 +48,7 @@ export default function WithSubnavigation() {
           <Logo />
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
-            <DesktopNav navItems={navItems} />
+            <DesktopNav navItems={headerNavItems} />
           </Flex>
         </Flex>
 
@@ -58,7 +58,7 @@ export default function WithSubnavigation() {
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
-        <MobileNav navItems={navItems} />
+        <MobileNav navItems={headerNavItems} />
       </Collapse>
       <Loader isLoading={isPageLoading} />
     </Box>

@@ -2,7 +2,7 @@ import { Tabs, Button } from "@chakra-ui/react";
 import TabList from "components/estateForm/TabList";
 import TabPanels from "components/estateForm/TabPanels";
 import { useFormContext } from "react-hook-form";
-import { addEstateFormSubmit } from "components/estateForm/helpers";
+import { updateEstateFormSubmit } from "components/estateForm/helpers";
 import useFormTabs from "components/estateForm/useFormTabs";
 
 export default function FormTabs() {
@@ -21,10 +21,10 @@ export default function FormTabs() {
   const SubmitButton = () => {
     return (
       <Button
-        onClick={handleSubmit(addEstateFormSubmit, switchToErrorTab)}
+        onClick={handleSubmit(updateEstateFormSubmit, switchToErrorTab)}
         isLoading={formState.isSubmitting}
       >
-        Добавить объект
+        Обновить
       </Button>
     );
   };

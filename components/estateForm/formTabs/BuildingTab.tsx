@@ -9,7 +9,7 @@ import {
   parkingTypeOptions,
   plateTypeOptions,
   ceilingTypeOptions,
-} from "utils/constants";
+} from "utils/constants/options";
 
 export default function BuildingTab() {
   return (

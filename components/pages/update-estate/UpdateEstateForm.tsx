@@ -8,7 +8,7 @@ interface Props {
   estate: Estate;
 }
 
-export default function EditEstateForm({ estate }: Props) {
+export default function UpdateEstateForm({ estate }: Props) {
   const { images, plan } = estate;
   const form = useForm<EditEstateFormClient>({
     defaultValues: { ...estate, existingImages: images, existingPlan: plan },

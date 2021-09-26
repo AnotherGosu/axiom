@@ -1,28 +1,23 @@
 import { gql } from "graphql-request";
-import {
-  ESTATE_COMMON_FIELDS,
-  ESTATE_APARTMENT,
-  ESTATE_BUILDING,
-} from "./fragments";
-import { client } from "./client";
+import { ESTATE_COMMON, ESTATE_APARTMENT, ESTATE_BUILDING } from "./fragments";
+import { fetcher } from "./fetcher";
 import { structureEstate } from "./helpers";
 
 export default async function getEstate(estateId: string) {
-  const { commonFields, apartment, building } = await client.request(
-    GET_ESTATE,
-    {
-      estateId,
-    }
-  );
-  const estate = { ...commonFields, apartment, building };
+  const estate = await fetcher.request(GET_ESTATE, {
+    estateId,
+  });
 
   return structureEstate(estate);
 }
 
 const GET_ESTATE = gql`
   query GetEstate($estateId: ID!) {
-    commonFields: estate(where: { id: $estateId }) {
-      ...EstateCommonFields
+    estate(where: { id: $estateId }) {
+      ...EstateCommon
+    }
+    common: estate(where: { id: $estateId }) {
+      ...EstateCommon
     }
     apartment: estate(where: { id: $estateId }) {
       ...EstateApartment
@@ -31,7 +26,7 @@ const GET_ESTATE = gql`
       ...EstateBuilding
     }
   }
-  ${ESTATE_COMMON_FIELDS}
+  ${ESTATE_COMMON}
   ${ESTATE_APARTMENT}
   ${ESTATE_BUILDING}
 `;

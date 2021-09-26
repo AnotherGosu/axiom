@@ -1,8 +1,8 @@
 import { gql } from "graphql-request";
-import { client } from "./client";
+import { fetcher } from "./fetcher";
 
 export default async function getPaths() {
-  const { estates } = await client.request(GET_PATHS);
+  const { estates } = await fetcher.request(GET_PATHS);
   return estates.map(({ id }) => ({ params: { id } }));
 }
 

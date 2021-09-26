@@ -35,7 +35,7 @@ export default function MyEstatesCardMenu({ id, mutate }: Props) {
       <MenuList>
         <MenuItem
           icon={<EditIcon />}
-          onClick={() => push(`/profile/edit-estate/${id}`)}
+          onClick={() => push(`/profile/update-estate/${id}`)}
         >
           Изменить
         </MenuItem>

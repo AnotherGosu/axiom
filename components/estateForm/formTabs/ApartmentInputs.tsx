@@ -1,12 +1,44 @@
 import { Wrap, WrapItem } from "@chakra-ui/react";
 import NumberInput from "components/inputs/NumberInput";
+import { SquareInput } from "components/inputs/CustomNumberInputs";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
-export default function ApartmentInputs() {
+export default function SquareInputs() {
   const { getValues, formState, clearErrors } = useFormContext();
 
   const inputs = [
+    {
+      id: "commonSquare",
+      label: "Общая площадь",
+      rules: {
+        required: "Это обязательное поле",
+        min: {
+          value: getValues("livingSquare") + getValues("kitchenSquare"),
+          message: "Значение меньше суммы площадей",
+        },
+      },
+    },
+    {
+      id: "livingSquare",
+      label: "Жилая площадь",
+      rules: {
+        max: {
+          value: getValues("commonSquare"),
+          message: "Значение больше общей площади",
+        },
+      },
+    },
+    {
+      id: "kitchenSquare",
+      label: "Площадь кухни",
+      rules: {
+        max: {
+          value: getValues("livingSquare"),
+          message: "Значение больше жилой площади",
+        },
+      },
+    },
     {
       id: "floor",
       label: "Этаж",
@@ -18,14 +50,17 @@ export default function ApartmentInputs() {
       },
     },
     { id: "allFloors", label: "Всего этажей" },
-    { id: "balconies", label: "Количество балконов" },
-    { id: "loggias", label: "Количество лоджий" },
   ];
 
   useEffect(() => {
-    if (formState.errors.floor) {
+    if (
+      formState.errors.commonSquare ||
+      formState.errors.livingSquare ||
+      formState.errors.kitchenSquare ||
+      formState.errors.floor
+    ) {
       const timer = setTimeout(() => {
-        clearErrors("floor");
+        clearErrors(["commonSquare", "livingSquare", "kitchenSquare", "floor"]);
       }, 1500);
       return () => clearTimeout(timer);
     }
@@ -35,7 +70,11 @@ export default function ApartmentInputs() {
     <Wrap spacing="20px">
       {inputs.map((props) => (
         <WrapItem key={props.id}>
-          <NumberInput isInteger {...props} />
+          {props.id.includes("Square") ? (
+            <SquareInput {...props} />
+          ) : (
+            <NumberInput {...props} />
+          )}
         </WrapItem>
       ))}
     </Wrap>

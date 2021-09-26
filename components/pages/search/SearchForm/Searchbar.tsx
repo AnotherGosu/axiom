@@ -4,7 +4,10 @@ import Select from "components/inputs/Select";
 import CheckboxMenu from "components/inputs/CheckboxMenu";
 import NumberInput from "components/inputs/NumberInput";
 import { PriceInput, SquareInput } from "components/inputs/CustomNumberInputs";
-import { roomsOptions, rentTypeAsPurchaseOptions } from "utils/constants";
+import {
+  roomsOptions,
+  transactionPurchaseTypeOptions,
+} from "utils/constants/options";
 
 interface Props {
   onToggle: () => void;
@@ -34,11 +37,11 @@ export default function Searchbar({ onToggle }: Props) {
             options={roomsOptions}
           />
           <Select
-            id="rentType"
+            id="transactionType"
             label="Покупка или аренда"
             isHiddenLabel
             isEmptyOption={false}
-            options={rentTypeAsPurchaseOptions}
+            options={transactionPurchaseTypeOptions}
           />
         </VStack>
       </GridItem>

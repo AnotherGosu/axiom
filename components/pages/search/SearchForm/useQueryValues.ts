@@ -3,9 +3,9 @@ import { useRouter } from "next/router";
 import { UseFormReset } from "react-hook-form";
 import type { SearchForm } from "utils/types/forms";
 
-export const defaultValues: SearchForm = {
-  estateType: "",
-  rentType: "",
+export const defaultValues = {
+  estateType: null,
+  transactionType: null,
   priceFrom: "",
   priceTo: "",
   commonSquareFrom: "",

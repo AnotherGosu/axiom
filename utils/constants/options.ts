@@ -1,6 +1,7 @@
-import { Option, NavItem } from "./types/common";
+import { Option } from "../types/common";
 import {
   Rooms,
+  Balconies,
   BathType,
   DealType,
   MaterialType,
@@ -10,13 +11,15 @@ import {
   RoomsType,
   State,
   WindowsType,
-  RentType,
-  RentTypeAsPurchase,
+  TransactionType,
+  TransactionPurchaseType,
   EstateType,
   ApartmentStatus,
-} from "./localizations";
+} from "../localizations";
 
 export const roomsOptions: Option[] = Object.entries(Rooms);
+
+export const balconiesOptions: Option[] = Object.entries(Balconies);
 
 export const materialTypeOptions: Option[] = Object.entries(MaterialType);
 
@@ -38,34 +41,10 @@ export const dealTypeOptions: Option[] = Object.entries(DealType);
 
 export const windowsTypeOptions: Option[] = Object.entries(WindowsType);
 
-export const rentTypeOptions: Option[] = Object.entries(RentType);
+export const transactionTypeOptions: Option[] = Object.entries(TransactionType);
 
-export const rentTypeAsPurchaseOptions: Option[] =
-  Object.entries(RentTypeAsPurchase);
+export const transactionPurchaseTypeOptions: Option[] = Object.entries(
+  TransactionPurchaseType
+);
 
 export const estateTypeOptions: Option[] = Object.entries(EstateType);
-
-export const navItems: NavItem[] = [
-  {
-    label: "Купить",
-    children: Object.entries(EstateType).map(([value, label]) => ({
-      label,
-      href: `/search?estateType=${value}&rentType=sale`,
-    })),
-  },
-  {
-    label: "Снять",
-    children: Object.entries(EstateType).map(([value, label]) => ({
-      label,
-      href: `/search?estateType=${value}&rentType=longPeriodRent`,
-    })),
-  },
-  {
-    label: "Агенты",
-    href: "/",
-  },
-  {
-    label: "Ипотека",
-    href: "/",
-  },
-];

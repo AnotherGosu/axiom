@@ -1,10 +1,9 @@
 import { Box, Skeleton } from "@chakra-ui/react";
 import { YMaps, Map as YMap, Placemark } from "react-yandex-maps";
-import type { StructuredEstate } from "utils/types/estate";
 import { useState } from "react";
 
 interface Props {
-  location: StructuredEstate["location"];
+  location: { latitude: number; longitude: number };
 }
 
 export default function Map({ location }: Props) {

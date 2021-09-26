@@ -1,8 +1,7 @@
 import { gql } from "graphql-request";
 import { ESTATE_CARD } from "./fragments";
-import { client } from "./client";
-import { createFilters, structureEstate } from "./helpers";
-import type { EstateCard } from "utils/types/estate";
+import { fetcher } from "./fetcher";
+import { createFilters, structureEstateCard } from "./helpers";
 
 export default async function getSearchedEstates({
   query,
@@ -12,12 +11,11 @@ export default async function getSearchedEstates({
   orderBy?: string;
 }) {
   const filters = createFilters(query);
-  const { estates } = await client.request(GET_SEARCHED_ESTATES, {
+  const { estates } = await fetcher.request(GET_SEARCHED_ESTATES, {
     filters,
     orderBy,
   });
-  const estateCards = estates.map((estate) => structureEstate(estate));
-  return estateCards as EstateCard[];
+  return estates.map((estate) => structureEstateCard(estate));
 }
 
 const GET_SEARCHED_ESTATES = gql`

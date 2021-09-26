@@ -13,11 +13,11 @@ export default function ControlBar({ orderBy, setOrderBy }: Props) {
     <Flex gridGap="20px" mb="30px" flexWrap="wrap">
       <OrderByMenu orderBy={orderBy} setOrderBy={setOrderBy} />
       <IconButtonLink
-        href="/profile/add-estate"
-        aria-label="Добавить новый объект"
+        href="/profile/create-estate"
+        aria-label="Создать новый объект"
         leftIcon={<AddIcon />}
       >
-        Добавить
+        Создать
       </IconButtonLink>
     </Flex>
   );

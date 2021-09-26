@@ -3,7 +3,7 @@ import type { File as FormidableFile } from "formidable";
 import { parseMultipartForm } from "utils/middleware";
 import nc from "next-connect";
 import { getSession } from "@auth0/nextjs-auth0";
-import updateCustomUserProfile from "utils/cms/mutations/updateCustomUserProfile";
+import updateClientProfile from "utils/cms/mutations/updateClientProfile";
 
 interface ExtendedRequest extends NextApiRequest {
   files: { image: FormidableFile };
@@ -23,9 +23,9 @@ handler.patch(async (req, res) => {
 
     const data = { ...fields, sub };
 
-    await updateCustomUserProfile(data);
+    await updateClientProfile(data);
 
-    res.status(200).send("A custom user entry has been updated");
+    res.status(200).send("A client entry has been updated");
   } catch (err) {
     res.status(500).send({ err: err.message });
   }

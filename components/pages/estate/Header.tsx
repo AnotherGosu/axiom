@@ -1,10 +1,11 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
-import type { StructuredEstate } from "utils/types/estate";
 import Location from "components/common/Location";
 import PublicationDate from "components/common/PublicationDate";
 
-interface Props
-  extends Pick<StructuredEstate, "title" | "address" | "createdAt"> {
+interface Props {
+  title: string;
+  address: string;
+  createdAt: string;
   commonSquare: number;
 }
 

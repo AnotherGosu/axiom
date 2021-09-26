@@ -2,7 +2,7 @@ import { VStack, Button, Skeleton } from "@chakra-ui/react";
 import Section from "components/common/Section";
 import Accaunt from "components/pages/profile/Account";
 import Contacts from "components/pages/profile/Contacts";
-import type { customUserProfile } from "utils/types/customUser";
+import type { customUserProfile } from "utils/types/clienent";
 import { useForm, FormProvider } from "react-hook-form";
 import { updateProfile } from "./helpers";
 

@@ -14,7 +14,7 @@ import {
   dealTypeOptions,
   apartmentStatusOptions,
   ceilingTypeOptions,
-} from "utils/constants";
+} from "utils/constants/options";
 
 export default function Filters() {
   return (
@@ -56,7 +56,7 @@ export default function Filters() {
         spacingY="20px"
         mt="50px"
       >
-        <Switch id="isBalcony" label="Балкон / Лоджия" />
+        <Switch id="isBalcony" label="Балкон/лоджия" />
         <Switch id="isElevator" label="Лифт" />
         <Switch id="isServiceElevator" label="Грузовой лифт" />
         <Switch id="isRoomsFurniture" label="Мебель в комнатах" />

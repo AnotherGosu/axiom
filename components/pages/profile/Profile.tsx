@@ -1,11 +1,11 @@
 import useSWR from "swr";
-import getCustomUserProfile from "utils/cms/queries/getCustomUserProfile";
-import type { customUserProfile } from "utils/types/customUser";
+import getCustomUserProfile from "utils/cms/queries/getClientProfile";
+import type { ClientProfile } from "utils/types/client";
 import { useUser } from "@auth0/nextjs-auth0";
 import ProfileForm from "./ProfileForm";
 
 interface Props {
-  initialData: customUserProfile;
+  initialData: ClientProfile;
 }
 
 const fetcher = async (key: string, sub: string) => {

@@ -13,10 +13,10 @@ export default function Select({
   ...rest
 }: Props) {
   return (
-    <FormControl defaultValue="" {...rest}>
+    <FormControl defaultValue={null} {...rest}>
       {(field) => (
         <ChakraSelect {...field}>
-          {isEmptyOption && <option value=""></option>}
+          {isEmptyOption && <option value={null}></option>}
           {options.map(([value, title]) => (
             <option key={value} value={value}>
               {title}

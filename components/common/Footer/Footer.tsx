@@ -1,5 +1,5 @@
-import { Box, Container, SimpleGrid, Stack } from "@chakra-ui/react";
-import { navItems } from "utils/constants";
+import { Box, SimpleGrid } from "@chakra-ui/react";
+import { footerNavItems } from "utils/constants/nav";
 import LinksList from "./LinksList";
 import Logo from "./Logo";
 
@@ -12,7 +12,7 @@ export default function LargeWithLogoCentered() {
         py={10}
         px={[5, null, 10]}
       >
-        {navItems.map((navItem) => (
+        {footerNavItems.map((navItem) => (
           <LinksList key={navItem.label} {...navItem} />
         ))}
       </SimpleGrid>

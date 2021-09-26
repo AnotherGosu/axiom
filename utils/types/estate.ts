@@ -1,77 +1,91 @@
-export interface CommonFields {
-  id?: string;
-  createdAt?: string;
-  images?: Array<{ id: string; url: string }>;
-  plan?: { id: string; url: string };
-  videoUrl?: string;
-  description?: string;
-  address?: string;
-  location?: { latitude: number; longitude: number };
-  price?: number;
-  dealType?: string;
-  rentType?: string;
-  estateType?: string;
-  agencyServicePrice?: number;
+export interface Common {
+  id: string;
+  createdAt: string;
+  images: Array<{ id: string; url: string }>;
+  plan: { id: string; url: string };
+  videoUrl: string;
+  description: string;
+  address: string;
+  location: { latitude: number; longitude: number };
+  price: number;
+  dealType: "free" | "assignment" | "alternative";
+  transactionType: "sale" | "longRent" | "shortRent";
+  estateType:
+    | "apartment"
+    | "room"
+    | "house"
+    | "commercial"
+    | "land"
+    | "dacha"
+    | "garage"
+    | "newly";
+  agencyServicePrice: number;
 }
 
 export interface Apartment {
-  rooms?: string;
-  commonSquare?: number;
-  livingSquare?: number;
-  kitchenSquare?: number;
-  floor?: number;
-  allFloors?: number;
-  balconies?: number;
-  loggias?: number;
-  roomsType?: string;
-  windowsType?: string;
-  state?: string;
-  apartmentStatus?: string;
-  bathType?: string;
-  isRemodeled?: boolean;
-  isRoomsFurniture?: boolean;
-  isKitchenFurniture?: boolean;
+  rooms: "studio" | "one" | "two" | "three" | "four" | "five" | "six";
+  commonSquare: number;
+  livingSquare: number;
+  kitchenSquare: number;
+  floor: number;
+  allFloors: number;
+  balconies: number;
+  roomsType: "passing" | "separated" | "combined";
+  windowsType: "street" | "yard" | "sides";
+  state: "poor" | "renovated" | "good" | "excellent";
+  apartmentStatus: "flat" | "share" | "apartment";
+  bathType: "separated" | "combined" | "multiple";
+  isRemodeled: boolean;
+  isRoomsFurniture: boolean;
+  isKitchenFurniture: boolean;
 }
 
 export interface Building {
-  builtYear?: number;
-  buildingType?: string;
-  materialType?: string;
-  ceilingType?: string;
-  ceilingHeight?: number;
-  plateType?: string;
-  parkingType?: string;
-  isElevator?: boolean;
-  isServiceElevator?: boolean;
+  builtYear: number;
+  materialType: "brick" | "monolith" | "panel" | "wood" | "mixed";
+  ceilingType: "wood" | "reinforced";
+  ceilingHeight: number;
+  plateType: "gas" | "electric";
+  parkingType: "open" | "closed" | "underground";
+  isElevator: boolean;
+  isServiceElevator: boolean;
 }
 
 export interface Tags {
-  isBargaining?: boolean;
-  isMortgage?: boolean;
+  isBargaining: boolean;
+  isMortgage: boolean;
 }
 
-export type Estate = CommonFields & Apartment & Building & Tags;
-
-export interface StructuredEstate extends CommonFields, Tags {
-  title?: string;
-  apartment?: Apartment;
-  building?: Building;
+export interface Creator {
+  contactName: string;
+  contactPhone: string;
 }
+
+export interface Estate extends Common, Apartment, Building, Tags {
+  creator: Creator;
+}
+
+export type StructuredEstate = {
+  title: string;
+  common: Common & { title: string };
+  apartment: Apartment;
+  building: Building;
+  tags: Tags;
+  creator: Creator;
+};
 
 export interface EstateCard
   extends Pick<
-    Estate,
-    | "id"
-    | "createdAt"
-    | "images"
-    | "location"
-    | "estateType"
-    | "price"
-    | "address"
-    | "rooms"
-    | "commonSquare"
-    | "isBargaining"
-    | "isMortgage"
-  > {
-  title?: string;
+      Common,
+      | "id"
+      | "createdAt"
+      | "images"
+      | "location"
+      | "estateType"
+      | "price"
+      | "address"
+    >,
+    Pick<Apartment, "rooms" | "commonSquare">,
+    Tags {
+  title: string;
 }

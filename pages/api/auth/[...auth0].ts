@@ -1,9 +1,9 @@
 import { handleAuth, handleCallback } from "@auth0/nextjs-auth0";
-import createCustomUser from "utils/cms/mutations/createCustomUser";
+import createClient from "utils/cms/mutations/createClient";
 
 const afterCallback = async (req, res, session, state) => {
   try {
-    await createCustomUser(session.user);
+    await createClient(session.user);
   } catch (err) {
     console.log(err);
   }

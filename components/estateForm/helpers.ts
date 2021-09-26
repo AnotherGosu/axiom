@@ -1,10 +1,10 @@
 import useToastSubmit from "utils/hooks/useToastSubmit";
 import type {
-  AddEstateFormClient,
-  EditEstateFormClient,
+  CreateEstateFormClient,
+  UpdateEstateFormClient,
 } from "utils/types/forms";
 
-export async function addEstateFormSubmit(data: AddEstateFormClient) {
+export async function createEstateFormSubmit(data: CreateEstateFormClient) {
   await useToastSubmit({
     loadingTitle: "Добавляем объект...",
     successTitle: "Объект успешно добавлен",
@@ -25,10 +25,10 @@ export async function addEstateFormSubmit(data: AddEstateFormClient) {
   });
 }
 
-export async function editEstateFormSubmit(data: EditEstateFormClient) {
+export async function updateEstateFormSubmit(data: UpdateEstateFormClient) {
   await useToastSubmit({
-    loadingTitle: "Добавляем изменения в объект...",
-    successTitle: "Объект успешно изменен",
+    loadingTitle: "Обновляем объект...",
+    successTitle: "Объект успешно обновлен",
     redirect: "/profile/my-estates",
     callback: () => {
       const { images, plan, ...fields } = data;

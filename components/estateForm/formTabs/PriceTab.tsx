@@ -2,7 +2,7 @@ import { Wrap, WrapItem } from "@chakra-ui/react";
 import { PriceInput } from "components/inputs/CustomNumberInputs";
 import Switch from "components/inputs/Switch";
 import Select from "components/inputs/Select";
-import { dealTypeOptions } from "utils/constants";
+import { dealTypeOptions } from "utils/constants/options";
 
 export default function PriceTab() {
   return (

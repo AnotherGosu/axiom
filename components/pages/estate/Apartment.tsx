@@ -8,6 +8,7 @@ import {
   WindowsType,
   BathType,
   ApartmentStatus,
+  Balconies,
 } from "utils/localizations";
 
 export default function ApartmentSummary({
@@ -18,7 +19,6 @@ export default function ApartmentSummary({
   floor,
   allFloors,
   balconies,
-  loggias,
   state,
   apartmentStatus,
   roomsType,
@@ -43,11 +43,10 @@ export default function ApartmentSummary({
         <SquareItem title="Жилая площадь" square={livingSquare} />
         <SquareItem title="Кухня" square={kitchenSquare} />
         <TextItem title="Санузел" text={BathType[bathType]} />
-        <TextItem title="Балкон" text={balconies} />
+        <TextItem title="Балкон/лоджия" text={Balconies[balconies]} />
       </VStack>
 
       <VStack maxW="325px">
-        <TextItem title="Лоджия" text={loggias} />
         <TextItem title="Состояние" text={State[state]} />
         <TextItem title="Тип комнат" text={RoomsType[roomsType]} />
         <TextItem title="Вид из окна" text={WindowsType[windowsType]} />

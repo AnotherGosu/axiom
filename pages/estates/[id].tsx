@@ -3,6 +3,7 @@ import EstateLayout from "components/layouts/EstateLayout";
 import Section from "components/common/Section";
 import Header from "components/pages/estate/Header";
 import Gallery from "components/pages/estate/Gallery";
+import Creator from "components/pages/estate/Creator";
 import Apartment from "components/pages/estate/Apartment";
 import Building from "components/pages/estate/Building";
 import Description from "components/pages/estate/Description";
@@ -26,6 +27,8 @@ export default function EstatePage({ estate }: Props) {
     return <PageFallback />;
   }
 
+  const { common, apartment, building, creator } = estate;
+
   const {
     title,
     address,
@@ -35,10 +38,7 @@ export default function EstatePage({ estate }: Props) {
     location,
     description,
     videoUrl,
-    apartment,
-    building,
-    ...rest
-  } = estate;
+  } = common;
 
   return (
     <EstateLayout headTitle={title}>
@@ -53,6 +53,9 @@ export default function EstatePage({ estate }: Props) {
       <Section heading="Галерея" isHiddenHeading>
         <Gallery title={title} images={plan ? [...images, plan] : images} />
       </Section>
+      {/* <Section heading="Создатель объявления" isHiddenHeading>
+        <Creator {...creator} />
+      </Section> */}
       <Section heading="Описание дома">
         <Building {...building} />
       </Section>

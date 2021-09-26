@@ -8,9 +8,17 @@ export enum Rooms {
   six = "6+",
 }
 
+export enum Balconies {
+  one = "1",
+  two = "2",
+  three = "3",
+  four = "4",
+  five = "5",
+}
+
 export enum DealType {
   free = "Свободная продажа",
-  assignemt = "Переуступка",
+  assignment = "Переуступка",
   alternative = "Альтернативная",
 }
 
@@ -29,12 +37,12 @@ export enum RoomsType {
 export enum WindowsType {
   street = "На улицу",
   yard = "Во двор",
-  bothSides = "В обе стороны",
+  sides = "В обе стороны",
 }
 
 export enum State {
-  redecorationRequired = "Требуется ремонт",
-  redecorated = "Косметический ремонт",
+  poor = "Требуется ремонт",
+  renovated = "Косметический ремонт",
   good = "Хорошее",
   excellent = "Отличное",
 }
@@ -53,7 +61,7 @@ export enum MaterialType {
   brick = "Кирпич",
   monolith = "Монолит",
   panel = "Панель",
-  brickMonolith = "Кирпич-монолит",
+  mixed = "Кирпич-монолит",
   wood = "Дерево",
 }
 
@@ -65,28 +73,20 @@ export enum ApartmentStatus {
 
 export enum ParkingType {
   open = "Открытая",
-  restricted = "Закрытая",
+  closed = "Закрытая",
   underground = "Подземная",
 }
 
-export enum UrbAreas {
-  railroad = "Железнодорожный",
-  industrial = "Индустриальный",
-  kirovskiy = "Кировский",
-  redfleet = "Краснофлотский",
-  central = "Центральный",
-}
-
-export enum RentType {
+export enum TransactionType {
   sale = "Продать",
-  longPeriodRent = "Сдать длительно",
-  shortPeriodRent = "Сдать посуточно",
+  longRent = "Сдать длительно",
+  shortRent = "Сдать посуточно",
 }
 
-export enum RentTypeAsPurchase {
+export enum TransactionPurchaseType {
   sale = "Купить",
-  longPeriodRent = "Снять длительно",
-  shortPeriodRent = "Снять посуточно",
+  longRent = "Снять длительно",
+  shortRent = "Снять посуточно",
 }
 
 export enum EstateType {
@@ -97,5 +97,13 @@ export enum EstateType {
   land = "Земельный участок",
   dacha = "Дачу",
   garage = "Гараж / Машино-место",
-  newBuilding = "Квартиру в новостройке",
+  newly = "Квартиру в новостройке",
+}
+
+export enum UrbAreas {
+  railroad = "Железнодорожный",
+  industrial = "Индустриальный",
+  kirovskiy = "Кировский",
+  redfleet = "Краснофлотский",
+  central = "Центральный",
 }

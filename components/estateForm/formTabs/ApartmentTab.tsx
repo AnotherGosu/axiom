@@ -1,7 +1,6 @@
 import { Wrap, WrapItem } from "@chakra-ui/react";
 import Select from "components/inputs/Select";
 import Switch from "components/inputs/Switch";
-import SquareInputs from "./SquareInputs";
 import ApartmentInputs from "./ApartmentInputs";
 import {
   bathTypeOptions,
@@ -9,14 +8,13 @@ import {
   windowsTypeOptions,
   roomsTypeOptions,
   roomsOptions,
+  balconiesOptions,
   apartmentStatusOptions,
-} from "utils/constants";
+} from "utils/constants/options";
 
 export default function ApartmentTab() {
   return (
     <>
-      <SquareInputs />
-
       <ApartmentInputs />
 
       <Wrap spacing="20px">
@@ -44,6 +42,11 @@ const selects = [
     label: "Количество комнат",
     options: roomsOptions,
     rules: { required: "Это обязательное поле" },
+  },
+  {
+    id: "balconies",
+    label: "Балконов/лоджий",
+    options: balconiesOptions,
   },
   { id: "apartmentStatus", label: "Статус", options: apartmentStatusOptions },
   { id: "roomsType", label: "Тип комнат", options: roomsTypeOptions },

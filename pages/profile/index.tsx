@@ -1,7 +1,7 @@
 import WithHeader from "components/layouts/WithHeader";
 import Profile from "components/pages/profile";
 import { withPageAuthRequired, getSession } from "@auth0/nextjs-auth0";
-import getCustomUserProfile from "utils/cms/queries/getCustomUserProfile";
+import getCustomUserProfile from "utils/cms/queries/getClientProfile";
 import type {
   InferGetServerSidePropsType,
   GetServerSidePropsContext,

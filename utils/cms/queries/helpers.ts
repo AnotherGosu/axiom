@@ -1,14 +1,38 @@
 import { EstateType, Rooms } from "utils/localizations";
-import type { Estate, StructuredEstate } from "utils/types/estate";
+import type { Estate, StructuredEstate, EstateCard } from "utils/types/estate";
 
-export function structureEstate(estate: Estate): StructuredEstate {
-  const { images, rooms, estateType } = estate;
+export function structureEstate(estate): StructuredEstate {
+  const {
+    common: { images, estateType },
+    apartment: { rooms },
+  } = estate;
 
-  const title = getEstateTitle({ rooms, estateType });
+  return {
+    ...estate,
+    common: {
+      ...estate.common,
+      title: getEstateTitle({ rooms, estateType }),
+      images: setDefaultImage(images),
+    },
+  };
+}
 
-  if (!images.length) images.push({ id: "defaultLogoImage", url: "/logo.svg" });
+export function structureEstateCard(estate): EstateCard {
+  const { images, estateType, rooms } = estate;
 
-  return { ...estate, title };
+  return {
+    ...estate,
+    images: setDefaultImage(images),
+    title: getEstateTitle({ estateType, rooms }),
+  };
+}
+
+function setDefaultImage(images: any[]) {
+  if (!images.length) {
+    return [{ id: "defaultLogoImage", url: "/logo.svg" }, ...images];
+  } else {
+    return images;
+  }
 }
 
 function getEstateTitle({
@@ -63,7 +87,7 @@ export function createFilters(filterQuery: {
     else if (key.startsWith("is")) {
       //balconies / loggias exception
       if (key === "isBalcony") {
-        return { ...filters, OR: [{ balconies_gte: 1 }, { loggias_gte: 1 }] };
+        return { ...filters, balconies_not: null };
       } else {
         return { ...filters, [key]: Boolean(value) };
       }
@@ -81,8 +105,7 @@ export function createFilters(filterQuery: {
     }
     //handle select
     else {
-      const filterName = `${key}_contains`;
-      return { ...filters, [filterName]: value };
+      return { ...filters, [key]: value };
     }
   }, {});
 

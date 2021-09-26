@@ -1,27 +1,27 @@
 import type { Estate } from "./estate";
-import type { customUserProfile } from "./customUser";
+import type { ClientProfile } from "./client";
 import type { File as FormidableFile } from "formidable";
 
-export interface AddEstateFormClient
+export interface CreateEstateFormClient
   extends Omit<Estate, "images" | "plan" | "id" | "createdAt"> {
   images: File[];
   plan: File;
 }
-export interface AddEstateFormServer
-  extends Omit<AddEstateFormClient, "images" | "plan"> {
+export interface CreateEstateFormServer
+  extends Omit<CreateEstateFormClient, "images" | "plan"> {
   images: FormidableFile[];
   plan: FormidableFile;
 }
 
-export interface EditEstateFormClient
+export interface UpdateEstateFormClient
   extends Omit<Estate, "images" | "plan" | "createdAt"> {
   images: File[] | Array<{ id: string; url: string }>;
   plan: File | { id: string; url: string };
   existingImages: Array<{ id: string; url: string }>;
   existingPlan: { id: string; url: string };
 }
-export interface EditEstateFormServer
-  extends Omit<EditEstateFormClient, "images" | "plan"> {
+export interface UpdateEstateFormServer
+  extends Omit<UpdateEstateFormClient, "images" | "plan"> {
   images: FormidableFile[];
   plan: FormidableFile;
   orderedImages: Array<{ id?: string; name?: string }>;
@@ -60,7 +60,7 @@ export interface SearchForm {
   isBalcony: boolean;
 }
 
-export type customUserProfileClient = customUserProfile;
-export interface customUserProfileServer extends customUserProfileClient {
+export type ClientProfileClient = ClientProfile;
+export interface ClientProfileServer extends ClientProfileClient {
   sub: string;
 }

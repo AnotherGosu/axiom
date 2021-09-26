@@ -1,13 +1,13 @@
 import { gql } from "graphql-request";
-import { client } from "./client";
-import type { AddEstateFormServer } from "utils/types/forms";
+import { fetcher } from "./fetcher";
+import type { CreateEstateFormServer } from "utils/types/forms";
 import uploadAsset from "./uploadAsset";
 
 export default async function createEstate({
   formData,
   sub,
 }: {
-  formData: AddEstateFormServer;
+  formData: CreateEstateFormServer;
   sub: string;
 }) {
   const { images, plan, ...fields } = formData;
@@ -26,11 +26,11 @@ export default async function createEstate({
     data = { ...data, plan: { connect: { id: uploadedPlanId } } };
   }
 
-  data = { ...data, ...fields, customUser: { connect: { sub } } };
+  data = { ...data, ...fields, creator: { connect: { sub } } };
 
   const {
     createEstate: { id },
-  } = await client.request(CREATE_ESTATE, { data });
+  } = await fetcher.request(CREATE_ESTATE, { data });
 
   return id;
 }

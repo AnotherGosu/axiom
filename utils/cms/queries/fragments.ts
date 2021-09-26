@@ -22,8 +22,8 @@ export const ESTATE_CARD = gql`
   }
 `;
 
-export const ESTATE_COMMON_FIELDS = gql`
-  fragment EstateCommonFields on Estate {
+export const ESTATE_COMMON = gql`
+  fragment EstateCommon on Estate {
     id
     createdAt
     estateType
@@ -47,7 +47,7 @@ export const ESTATE_COMMON_FIELDS = gql`
       latitude
     }
     dealType
-    rentType
+    transactionType
     agencyServicePrice
   }
 `;
@@ -61,7 +61,6 @@ export const ESTATE_APARTMENT = gql`
     floor
     allFloors
     balconies
-    loggias
     roomsType
     windowsType
     state
@@ -85,3 +84,12 @@ export const ESTATE_BUILDING = gql`
     isServiceElevator
   }
 `;
+
+// export const ESTATE_CREATOR = gql`
+//   fragment EstateCreator on Estate {
+//     customUser {
+//       contactPhone
+//       contactName
+//     }
+//   }
+// `;
