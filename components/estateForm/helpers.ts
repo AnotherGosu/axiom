@@ -6,8 +6,8 @@ import type {
 
 export async function createEstateFormSubmit(data: CreateEstateFormClient) {
   await useToastSubmit({
-    loadingTitle: "Добавляем объект...",
-    successTitle: "Объект успешно добавлен",
+    loadingTitle: "Создаем объект...",
+    successTitle: "Объект успешно создан",
     redirect: "/profile/my-estates",
     callback: () => {
       const { images, plan, ...fields } = data;

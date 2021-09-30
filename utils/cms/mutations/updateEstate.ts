@@ -48,7 +48,7 @@ export default async function updateEstate(formData: UpdateEstateFormServer) {
   if (plan) {
     const uploadedPlanId = await uploadAsset(plan);
     data = { ...data, plan: { connect: { id: uploadedPlanId } } };
-    //delete existing plan in case it exists O_O
+    //delete existing plan
     existingPlan && deleteAssetsIds.push(existingPlan.id);
   }
   //user removed existing plan

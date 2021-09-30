@@ -17,13 +17,17 @@ export default async function createEstate({
     const uploadedImagesIds = await Promise.all(
       images.map((image) => uploadAsset(image))
     );
-    const imagesConnect = uploadedImagesIds.map((id) => ({ id }));
+    const imagesConnect = uploadedImagesIds
+      .filter((id) => id !== null)
+      .map((id) => ({ id }));
     data = { ...data, images: { connect: imagesConnect } };
   }
 
   if (plan) {
     const uploadedPlanId = await uploadAsset(plan);
-    data = { ...data, plan: { connect: { id: uploadedPlanId } } };
+    if (uploadedPlanId !== null) {
+      data = { ...data, plan: { connect: { id: uploadedPlanId } } };
+    }
   }
 
   data = { ...data, ...fields, creator: { connect: { sub } } };

@@ -36,7 +36,8 @@ handler.post(async (req, res) => {
 
     res.status(200).send("A new estate entry has been createad");
   } catch (err) {
-    res.status(500).send({ err: err.message });
+    console.log(err);
+    res.status(500).send({ err });
   }
 });
 

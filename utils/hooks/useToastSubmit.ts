@@ -32,8 +32,6 @@ export default async function useToastSubmit({
     });
     redirect && Router.push(redirect);
   } else {
-    const { err } = await res.json();
-    console.error(err);
     toast({
       isClosable: true,
       duration: 5000,
