@@ -24,7 +24,7 @@ export enum DealType {
 
 export enum BathType {
   separated = "Раздельный",
-  combined = "Совмещённый",
+  combined = "Совмещенный",
   multiple = "Больше одного",
 }
 
@@ -58,11 +58,11 @@ export enum CeilingType {
 }
 
 export enum MaterialType {
+  wood = "Дерево",
+  panel = "Панель",
   brick = "Кирпич",
   monolith = "Монолит",
-  panel = "Панель",
   mixed = "Кирпич-монолит",
-  wood = "Дерево",
 }
 
 export enum ApartmentStatus {
@@ -90,13 +90,24 @@ export enum TransactionPurchaseType {
 }
 
 export enum EstateType {
+  apartment = "Квартира",
+  room = "Комната",
+  house = "Дом/коттедж",
+  commercial = "Коммерческая недвижимость",
+  land = "Земельный участок",
+  dacha = "Дача",
+  garage = "Гараж/машино-место",
+  newly = "Квартира в новостройке",
+}
+
+export enum EstateTypeSearched {
   apartment = "Квартиру",
   room = "Комнату",
-  house = "Дом / Коттедж",
+  house = "Дом/коттедж",
   commercial = "Коммерческую недвижимость",
   land = "Земельный участок",
   dacha = "Дачу",
-  garage = "Гараж / Машино-место",
+  garage = "Гараж/машино-место",
   newly = "Квартиру в новостройке",
 }
 

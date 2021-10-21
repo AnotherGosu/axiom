@@ -11,7 +11,7 @@ export default function SearchResultsList({ estates, isValidating }: Props) {
   return (
     <EstateCardsList
       listLength={estates?.length}
-      emptyListText="Не удалось найти объекты, отвечающие заданным параметрам поиска."
+      emptyListText="Попробуйте изменить параметры поиска."
     >
       {estates.map((estate) => (
         <EstateCard key={estate.id} isLoading={isValidating} {...estate} />

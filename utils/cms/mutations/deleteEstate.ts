@@ -1,27 +1,17 @@
-import { gql } from "graphql-request";
-import { fetcher } from "./fetcher";
-import deleteAssets from "./deleteAssets";
+import { bucket } from "./bucket";
+import { deleteMediaFolder } from "./mediaFolder";
+import { deleteMedia } from "./media";
 
 export default async function deleteEstate(estateId: string) {
-  const {
-    deleteEstate: { images = [], plan },
-  } = await fetcher.request(DELETE_ESTATE, { estateId });
-
-  const imagesIds = images.map((img) => img.id);
-  const deleteAssetsIds = plan ? [...imagesIds, plan.id] : [...imagesIds];
-
-  await deleteAssets(deleteAssetsIds);
-}
-
-const DELETE_ESTATE = gql`
-  mutation DeleteEstate($estateId: ID!) {
-    deleteEstate(where: { id: $estateId }) {
-      images {
-        id
-      }
-      plan {
-        id
-      }
-    }
+  try {
+    const { media: estateMedias } = await bucket.getMedia({
+      query: { folder: estateId },
+      props: "id",
+    });
+    await Promise.all(estateMedias.map((media) => deleteMedia(media.id)));
+    await deleteMediaFolder(estateId);
+    await bucket.deleteObject({ id: estateId });
+  } catch (err) {
+    console.log(`deleteEstate error: ${err.message}`);
   }
-`;
+}

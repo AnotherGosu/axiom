@@ -1,18 +1,16 @@
-import formidable from "formidable";
+import multer from "multer";
+import nc from "next-connect";
+import type { NextApiRequest, NextApiResponse } from "next";
 
-const form = formidable({ multiples: true });
+export const upload = multer({ storage: multer.memoryStorage() });
 
-export async function parseMultipartForm(req, res, next) {
-  const contentType = req.headers["content-type"];
-  if (contentType && contentType.indexOf("multipart/form-data") !== -1) {
-    form.parse(req, (err, fields, files) => {
-      if (!err) {
-        req.body = fields;
-        req.files = files;
-      }
-      next();
-    });
-  } else {
-    next();
-  }
-}
+export const apiRoute = nc({
+  onError(error, req: NextApiRequest, res: NextApiResponse) {
+    res
+      .status(501)
+      .json({ error: `Sorry something Happened! ${error.message}` });
+  },
+  onNoMatch(req: NextApiRequest, res: NextApiResponse) {
+    res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
+  },
+});

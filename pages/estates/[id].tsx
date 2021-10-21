@@ -27,31 +27,60 @@ export default function EstatePage({ estate }: Props) {
     return <PageFallback />;
   }
 
-  const { common, apartment, building, creator } = estate;
-
   const {
     title,
+    commonSquare,
     address,
-    createdAt,
+    created_at,
     images,
     plan,
-    location,
     description,
     videoUrl,
-  } = common;
+    location,
+    ...rest
+  } = estate;
+
+  const building = {
+    builtYear: rest.builtYear,
+    materialType: rest.materialType,
+    ceilingType: rest.ceilingType,
+    ceilingHeight: rest.ceilingHeight,
+    plateType: rest.plateType,
+    parkingType: rest.parkingType,
+    isElevator: rest.isElevator,
+    isServiceElevator: rest.isServiceElevator,
+  };
+
+  const apartment = {
+    rooms: rest.rooms,
+    commonSquare,
+    livingSquare: rest.livingSquare,
+    kitchenSquare: rest.kitchenSquare,
+    floor: rest.floor,
+    allFloors: rest.allFloors,
+    balconies: rest.balconies,
+    state: rest.state,
+    apartmentStatus: rest.apartmentStatus,
+    roomsType: rest.roomsType,
+    windowsType: rest.windowsType,
+    bathType: rest.bathType,
+    isKitchenFurniture: rest.isKitchenFurniture,
+    isRoomsFurniture: rest.isRoomsFurniture,
+    isRemodeled: rest.isRemodeled,
+  };
 
   return (
     <EstateLayout headTitle={title}>
       <Section heading="Заголовок" isHiddenHeading>
         <Header
           title={title}
-          commonSquare={apartment.commonSquare}
+          commonSquare={commonSquare}
           address={address}
-          createdAt={createdAt}
+          createdAt={created_at}
         />
       </Section>
       <Section heading="Галерея" isHiddenHeading>
-        <Gallery title={title} images={plan ? [...images, plan] : images} />
+        <Gallery title={title} images={images} />
       </Section>
       {/* <Section heading="Создатель объявления" isHiddenHeading>
         <Creator {...creator} />
@@ -80,6 +109,7 @@ export default function EstatePage({ estate }: Props) {
 export const getStaticProps = async (ctx: GetStaticPropsContext) => {
   const { id } = ctx.params;
   const estate = await getEstate(id.toString());
+
   return {
     props: { estate },
     revalidate: 10,

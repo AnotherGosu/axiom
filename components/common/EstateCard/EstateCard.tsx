@@ -24,7 +24,7 @@ export default function EstateCard({
       overflow="hidden"
     >
       <Skeleton speed={1.2} isLoaded={!isLoading}>
-        <ImageLink id={id} url={images[0].url} title={rest.title} />
+        <ImageLink id={id} url={images[0]} title={rest.title} />
       </Skeleton>
       <SkeletonText
         speed={1.2}

@@ -1,13 +1,13 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import WithHeader from "components/layouts/WithHeader";
 import Section from "components/common/Section";
-import CretateEstateForm from "components/pages/create-estate/CreateEstateForm";
+import AddEstateForm from "components/pages/add-estate/AddEstateForm";
 
-export default function CreateEstate() {
+export default function AddEstate() {
   return (
-    <WithHeader headTitle="Создать объект">
-      <Section heading="Создать объект">
-        <CretateEstateForm />
+    <WithHeader headTitle="Добавить объект">
+      <Section heading="Добавить объект">
+        <AddEstateForm />
       </Section>
     </WithHeader>
   );

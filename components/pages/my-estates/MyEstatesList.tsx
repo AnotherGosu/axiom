@@ -17,7 +17,7 @@ export default function MyEstatesList({
   return (
     <EstateCardsList
       listLength={estates?.length}
-      emptyListText="У Вас нет добавленных объектов."
+      emptyListText="Добавьте новый объект или попробуйте обновить страницу"
     >
       {estates.map((estate) => (
         <EstateCard key={estate.id} isLoading={isValidating} {...estate}>

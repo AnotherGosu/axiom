@@ -9,11 +9,11 @@ import {
 import { UpDownIcon } from "@chakra-ui/icons";
 
 interface Props {
-  orderBy: string;
-  setOrderBy: React.Dispatch<React.SetStateAction<string>>;
+  sort: string;
+  setSort: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function OrderByMenu({ orderBy, setOrderBy }: Props) {
+export default function SortMenu({ sort, setSort }: Props) {
   return (
     <Menu>
       {({ onClose }) => (
@@ -28,9 +28,9 @@ export default function OrderByMenu({ orderBy, setOrderBy }: Props) {
                   <MenuItemOption
                     key={value}
                     value={value}
-                    isChecked={value === orderBy}
+                    isChecked={value === sort}
                     onClick={() => {
-                      setOrderBy(value);
+                      setSort(value);
                       onClose();
                     }}
                   >
@@ -50,22 +50,22 @@ const menuGroups = [
   {
     title: "Дата",
     items: [
-      { value: "createdAt_DESC", label: "Сначала новые" },
-      { value: "createdAt_ASC", label: "Сначала старые" },
+      { value: "created_at_dec", label: "Сначала новые" },
+      { value: "created_at_asc", label: "Сначала старые" },
     ],
   },
-  {
-    title: "Цена",
-    items: [
-      { value: "price_ASC", label: "По возрастанию" },
-      { value: "price_DESC", label: "По убыванию" },
-    ],
-  },
-  {
-    title: "Площадь",
-    items: [
-      { value: "commonSquare_ASC", label: "По возрастанию" },
-      { value: "commonSquare_DESC", label: "По убыванию" },
-    ],
-  },
+  // {
+  //   title: "Цена",
+  //   items: [
+  //     { value: "price_ASC", label: "По возрастанию" },
+  //     { value: "price_DESC", label: "По убыванию" },
+  //   ],
+  // },
+  // {
+  //   title: "Площадь",
+  //   items: [
+  //     { value: "commonSquare_ASC", label: "По возрастанию" },
+  //     { value: "commonSquare_DESC", label: "По убыванию" },
+  //   ],
+  // },
 ];

@@ -1,13 +1,10 @@
 import useToastSubmit from "utils/hooks/useToastSubmit";
-import type {
-  CreateEstateFormClient,
-  UpdateEstateFormClient,
-} from "utils/types/forms";
+import type { AddEstateForm, EditEstateForm } from "utils/types/forms";
 
-export async function createEstateFormSubmit(data: CreateEstateFormClient) {
+export async function addEstateFormSubmit(data: AddEstateForm) {
   await useToastSubmit({
-    loadingTitle: "Создаем объект...",
-    successTitle: "Объект успешно создан",
+    loadingTitle: "Добавляем объект...",
+    successTitle: "Объект успешно добавлен",
     redirect: "/profile/my-estates",
     callback: () => {
       const { images, plan, ...fields } = data;
@@ -25,27 +22,37 @@ export async function createEstateFormSubmit(data: CreateEstateFormClient) {
   });
 }
 
-export async function updateEstateFormSubmit(data: UpdateEstateFormClient) {
+export async function editEstateFormSubmit(data: EditEstateForm) {
   await useToastSubmit({
-    loadingTitle: "Обновляем объект...",
-    successTitle: "Объект успешно обновлен",
+    loadingTitle: "Изменяем объект...",
+    successTitle: "Объект успешно изменен",
     redirect: "/profile/my-estates",
     callback: () => {
       const { images, plan, ...fields } = data;
-      const orderedImages = [];
       const form = new FormData();
 
-      images.forEach((img) => {
-        if (img instanceof File) {
-          orderedImages.push({ name: img.name });
-          form.append("images", img, img.name);
+      const orderedImages = [];
+
+      images.forEach((image) => {
+        if (image instanceof File) {
+          //new uplaoded image (file)
+          orderedImages.push(image.name);
+          form.append("images", image, image.name);
         } else {
-          orderedImages.push({ id: img.id });
+          //old kept image (url string)
+          orderedImages.push(image);
         }
       });
-      form.append("orderedImages", JSON.stringify(orderedImages));
-      if (plan instanceof File) form.append("plan", plan, plan.name);
-      form.append("fields", JSON.stringify({ ...fields, orderedImages }));
+
+      if (plan instanceof File) {
+        form.append("plan", plan, plan.name);
+        form.append("fields", JSON.stringify({ ...fields, orderedImages }));
+      } else {
+        form.append(
+          "fields",
+          JSON.stringify({ ...fields, orderedImages, planUrl: plan })
+        );
+      }
 
       return fetch("/api/cms/estate", { method: "PATCH", body: form });
     },

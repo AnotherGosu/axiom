@@ -1,15 +1,8 @@
 import { gql } from "@apollo/client";
 import { fetcher } from "./fetcher";
-import type { Client } from "utils/types/client";
 
-export default async function getClientProfile(sub: string) {
+export default async function getClientId(sub: string) {
   const query = { type: "clients", "metadata.sub": sub };
-
-  const fields = ["name", "email", "phone", "contactName", "contactPhone"].map(
-    (prop) => `metadata.${prop}`
-  );
-
-  const props = [...fields, "id"].join(",");
 
   try {
     const {
@@ -17,36 +10,32 @@ export default async function getClientProfile(sub: string) {
         getObjects: { objects },
       },
     } = await fetcher.query({
-      query: GET_CLIENT_PROFILE,
+      query: GET_CLIENT_ID,
       variables: {
         bucketSlug: process.env.NEXT_PUBLIC_COSMIC_BUCKET_SLUG,
         readKey: process.env.NEXT_PUBLIC_COSMIC_READ_KEY,
         query,
-        props,
       },
     });
-    const { id, metadata } = objects[0];
-    return { id, ...metadata } as Client;
+    return objects[0].id;
   } catch (err) {
-    console.log(`getClientProfile error: ${err.message}`);
+    console.log(`getClientId error: ${err.message}`);
   }
 }
 
-const GET_CLIENT_PROFILE = gql`
+const GET_CLIENT_ID = gql`
   query GetClientProfile(
     $bucketSlug: String!
     $readKey: String!
     $query: JSON
-    $props: String
   ) {
     getObjects(
       bucket_slug: $bucketSlug
       read_key: $readKey
-      input: { query: $query, props: $props }
+      input: { query: $query, props: "id" }
     ) {
       objects {
         id
-        metadata
       }
     }
   }

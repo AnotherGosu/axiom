@@ -5,7 +5,7 @@ import SearchForm from "components/pages/search/SearchForm";
 import SearchResults from "components/pages/search/SearchResults";
 import { useRef } from "react";
 import ScrollIntoView from "utils/hooks/scrollIntoView";
-import { EstateType } from "utils/localizations";
+import { EstateTypeSearched } from "utils/localizations";
 
 import { InferGetServerSidePropsType, GetServerSidePropsContext } from "next";
 import getSearchedEstates from "utils/cms/queries/getSearchedEstates";
@@ -16,7 +16,7 @@ export default function Search({ estates, estateType }: Props) {
   const searchResultsRef = useRef(null);
   const scrollToSearchResult = () => ScrollIntoView({ ref: searchResultsRef });
 
-  const searchHeading = EstateType[estateType.toString()].toLowerCase();
+  const searchHeading = EstateTypeSearched[estateType.toString()].toLowerCase();
 
   return (
     <PageLayout headTitle="Поиск">
@@ -37,9 +37,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const estates = await getSearchedEstates({
     query,
   });
-  const { estateType } = query;
 
   return {
-    props: { estates, estateType },
+    props: { estates, estateType: query.estateType },
   };
 };

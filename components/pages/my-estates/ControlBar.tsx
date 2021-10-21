@@ -1,23 +1,23 @@
 import { Flex } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
-import OrderByMenu from "components/common/OrderByMenu";
+import SortMenu from "components/common/SortMenu";
 import IconButtonLink from "components/common/ButtonLink";
 
 interface Props {
-  orderBy: string;
-  setOrderBy: React.Dispatch<React.SetStateAction<string>>;
+  sort: string;
+  setSort: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function ControlBar({ orderBy, setOrderBy }: Props) {
+export default function ControlBar({ sort, setSort }: Props) {
   return (
     <Flex gridGap="20px" mb="30px" flexWrap="wrap">
-      <OrderByMenu orderBy={orderBy} setOrderBy={setOrderBy} />
+      <SortMenu sort={sort} setSort={setSort} />
       <IconButtonLink
-        href="/profile/create-estate"
-        aria-label="Создать новый объект"
+        href="/profile/add-estate"
+        aria-label="Добавить новый объект"
         leftIcon={<AddIcon />}
       >
-        Создать
+        Добавить
       </IconButtonLink>
     </Flex>
   );

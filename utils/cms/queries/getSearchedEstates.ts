@@ -1,31 +1,19 @@
-import { gql } from "graphql-request";
-import { ESTATE_CARD } from "./fragments";
-import { fetcher } from "./fetcher";
-import { createFilters, structureEstateCard } from "./helpers";
+import { createFilters } from "./helpers";
+import getEstatesCards from "./getEstatesCards";
 
 export default async function getSearchedEstates({
   query,
-  orderBy = "createdAt_DESC",
+  sort = "created_at_dec",
 }: {
   query: { [key: string]: string | string[] };
-  orderBy?: string;
+  sort?: "created_at_asc" | "created_at_dec";
 }) {
-  const filters = createFilters(query);
-  const { estates } = await fetcher.request(GET_SEARCHED_ESTATES, {
-    filters,
-    orderBy,
-  });
-  return estates.map((estate) => structureEstateCard(estate));
-}
-
-const GET_SEARCHED_ESTATES = gql`
-  query GetSearchedEstates(
-    $filters: EstateWhereInput
-    $orderBy: EstateOrderByInput
-  ) {
-    estates(where: $filters, orderBy: $orderBy) {
-      ...EstateCard
-    }
+  try {
+    const filter = createFilters(query);
+    console.log(filter);
+    return await getEstatesCards({ filter, sort });
+  } catch (err) {
+    console.log(`getSearchedEstates error: ${err.message}`);
+    return [];
   }
-  ${ESTATE_CARD}
-`;
+}

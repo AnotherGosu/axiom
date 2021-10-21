@@ -1,15 +1,15 @@
 import useSWR from "swr";
-import getCustomUserProfile from "utils/cms/queries/getClientProfile";
-import type { ClientProfile } from "utils/types/client";
+import getClientProfile from "utils/cms/queries/getClientProfile";
+import type { ClientProfileForm } from "utils/types/forms";
 import { useUser } from "@auth0/nextjs-auth0";
 import ProfileForm from "./ProfileForm";
 
 interface Props {
-  initialData: ClientProfile;
+  initialData: ClientProfileForm;
 }
 
 const fetcher = async (key: string, sub: string) => {
-  return await getCustomUserProfile(sub);
+  return await getClientProfile(sub);
 };
 
 export default function Profile({ initialData }: Props) {
@@ -18,16 +18,16 @@ export default function Profile({ initialData }: Props) {
   } = useUser();
 
   const {
-    data: userProfile,
+    data: clientProfile,
     isValidating,
     mutate,
-  } = useSWR(["customUserProfile", sub], fetcher, {
+  } = useSWR(["clientProfile", sub], fetcher, {
     initialData,
   });
 
   return (
     <ProfileForm
-      defaultValues={userProfile}
+      defaultValues={clientProfile}
       mutate={mutate}
       isValidating={isValidating}
     />
