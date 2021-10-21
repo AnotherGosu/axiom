@@ -1,13 +1,15 @@
 import { gql } from "@apollo/client";
 import { fetcher } from "./fetcher";
-import { structureEstateObject } from "./helpers";
+import { getMediaList } from "../mutations/media";
 
 export default async function getEstate(estateId: string) {
   try {
     const {
-      data: { getObject },
+      data: {
+        getObject: { id, metadata },
+      },
     } = await fetcher.query({
-      query: GET_ESTATE,
+      query: GET_ESTATE_TO_EDIT,
       variables: {
         bucketSlug: process.env.NEXT_PUBLIC_COSMIC_BUCKET_SLUG,
         readKey: process.env.NEXT_PUBLIC_COSMIC_READ_KEY,
@@ -15,21 +17,35 @@ export default async function getEstate(estateId: string) {
       },
     });
 
-    return structureEstateObject(getObject);
+    const mediaList = await getMediaList(id);
+    const {
+      creator: { id: clientId },
+      images = [],
+      plan,
+      ...fields
+    } = metadata;
+
+    return {
+      ...fields,
+      id,
+      clientId,
+      images: images.map((image) => image?.image?.url),
+      plan: plan?.url || null,
+      mediaList,
+    };
   } catch (err) {
-    console.log(`getEstate error: ${err.message}`);
+    console.log(`getEstateToEdit error: ${err.message}`);
   }
 }
 
-const GET_ESTATE = gql`
+const GET_ESTATE_TO_EDIT = gql`
   query GetEstate($bucketSlug: String!, $readKey: String!, $estateId: ID!) {
     getObject(
       bucket_slug: $bucketSlug
       read_key: $readKey
       object_id: $estateId
     ) {
-      title
-      created_at
+      id
       metadata
     }
   }

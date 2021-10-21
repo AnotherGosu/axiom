@@ -1,8 +1,6 @@
 export interface Common {
-  id: string;
-  createdAt: string;
-  images: Array<{ id: string; url: string }>;
-  plan: { id: string; url: string };
+  images: string[];
+  plan: string;
   videoUrl: string;
   description: string;
   address: string;
@@ -61,31 +59,17 @@ export interface Creator {
   contactPhone: string;
 }
 
-export interface Estate extends Common, Apartment, Building, Tags {
-  creator: Creator;
+export interface SystemFields {
+  id?: string;
+  created_at?: string;
+  title?: string;
+  creator?: Creator;
 }
 
-export type StructuredEstate = {
-  title: string;
-  common: Common & { title: string };
-  apartment: Apartment;
-  building: Building;
-  tags: Tags;
-  creator: Creator;
-};
+export type Estate = Common & Apartment & Building & Tags & SystemFields;
 
-export interface EstateCard
-  extends Pick<
-      Common,
-      | "id"
-      | "createdAt"
-      | "images"
-      | "location"
-      | "estateType"
-      | "price"
-      | "address"
-    >,
-    Pick<Apartment, "rooms" | "commonSquare">,
-    Tags {
-  title: string;
-}
+export type EstateCard = Pick<
+  Estate,
+  "id" | "images" | "price" | "address" | "commonSquare" | "title" | "location"
+> &
+  Tags;

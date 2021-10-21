@@ -1,70 +1,67 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import type { File as FormidableFile } from "formidable";
-import { parseMultipartForm } from "utils/middleware";
-import nc from "next-connect";
+import { NextApiRequest, NextApiResponse } from "next";
+import { apiRoute, upload } from "utils/middleware";
 import { getSession } from "@auth0/nextjs-auth0";
-import createEstate from "utils/cms/mutations/createEstate";
-import updateEstate from "utils/cms/mutations/updateEstate";
+import addEstate from "utils/cms/mutations/addEstate";
+import editEstate from "utils/cms/mutations/editEstate";
 import deleteEstate from "utils/cms/mutations/deleteEstate";
 
-interface ExtendedRequest extends NextApiRequest {
-  files: { images: FormidableFile | FormidableFile[]; plan: FormidableFile };
+interface MulterRequest extends NextApiRequest {
+  files: { images: File[]; plan: File[] };
+  body: any;
 }
 
-const handler = nc<ExtendedRequest, NextApiResponse>();
-handler.use(parseMultipartForm);
+apiRoute.use(
+  upload.fields([{ name: "images" }, { name: "plan", maxCount: 1 }])
+);
 
-handler.post(async (req, res) => {
+apiRoute.post(async (req: MulterRequest, res: NextApiResponse) => {
   try {
     const {
-      files: { images = [], plan },
+      files: { images = [], plan = [] },
       body,
     } = req;
     const fields = JSON.parse(body.fields);
-    const formData = {
-      ...fields,
-      //a single image or an array of images
-      images: images instanceof Array ? images : [images],
-      plan,
-    };
 
     const {
       user: { sub },
     } = getSession(req, res);
 
-    await createEstate({ formData, sub });
+    const form = { images, plan: plan[0] || null, ...fields };
 
-    res.status(200).send("A new estate entry has been createad");
+    await addEstate({
+      sub,
+      form,
+    });
+
+    res.status(200).send("A new estate entry has been added");
   } catch (err) {
-    console.log(err);
     res.status(500).send({ err });
   }
 });
 
-handler.patch(async (req, res) => {
+apiRoute.patch(async (req: MulterRequest, res: NextApiResponse) => {
   try {
     const {
-      files: { images, plan },
+      files: { images = [], plan = [] },
       body,
     } = req;
     const fields = JSON.parse(body.fields);
 
-    const formData = {
+    const form = {
+      images,
+      plan: plan[0] || null,
       ...fields,
-      //convert single image to an array
-      images: images instanceof Array ? images : [images],
-      plan,
     };
 
-    await updateEstate(formData);
+    await editEstate(form);
 
     res.status(200).send("An estate entry has been updated");
   } catch (err) {
-    res.status(500).send({ err: err.message });
+    res.status(500).send({ err });
   }
 });
 
-handler.delete(async (req, res) => {
+apiRoute.delete(async (req: MulterRequest, res: NextApiResponse) => {
   try {
     const {
       body: { estateId },
@@ -74,11 +71,11 @@ handler.delete(async (req, res) => {
 
     res.status(200).send("An estate entry has been deleted");
   } catch (err) {
-    res.status(500).send({ err: err.message });
+    res.status(500).send({ err });
   }
 });
 
-export default handler;
+export default apiRoute;
 
 export const config = {
   api: {

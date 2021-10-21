@@ -1,29 +1,25 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { File as FormidableFile } from "formidable";
-import { parseMultipartForm } from "utils/middleware";
-import nc from "next-connect";
+import { apiRoute, upload } from "utils/middleware";
 import { getSession } from "@auth0/nextjs-auth0";
-import updateClientProfile from "utils/cms/mutations/updateClientProfile";
+import editClientProfile from "utils/cms/mutations/editClientProfile";
 
-interface ExtendedRequest extends NextApiRequest {
-  files: { image: FormidableFile };
+interface MulterRequest extends NextApiRequest {
+  file: File;
+  body: any;
 }
 
-const handler = nc<ExtendedRequest, NextApiResponse>();
-handler.use(parseMultipartForm);
+apiRoute.use(upload.single("avatar"));
 
-handler.patch(async (req, res) => {
+apiRoute.patch(async (req: MulterRequest, res: NextApiResponse) => {
   try {
-    const { body } = req;
+    const { file, body } = req;
     const fields = JSON.parse(body.fields);
 
     const {
       user: { sub },
     } = getSession(req, res);
 
-    const data = { ...fields, sub };
-
-    await updateClientProfile(data);
+    await editClientProfile({ sub, ...fields });
 
     res.status(200).send("A client entry has been updated");
   } catch (err) {
@@ -31,7 +27,7 @@ handler.patch(async (req, res) => {
   }
 });
 
-export default handler;
+export default apiRoute;
 
 export const config = {
   api: {

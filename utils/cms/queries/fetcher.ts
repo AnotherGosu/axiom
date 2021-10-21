@@ -1,5 +1,6 @@
-import { GraphQLClient } from "graphql-request";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
 
-export const fetcher = new GraphQLClient(
-  process.env.NEXT_PUBLIC_GRAPHCMS_API_URL
-);
+export const fetcher = new ApolloClient({
+  uri: process.env.NEXT_PUBLIC_COSMIC_API_URL,
+  cache: new InMemoryCache(),
+});

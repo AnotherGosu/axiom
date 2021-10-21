@@ -4,20 +4,23 @@ import MyEstatesList from "./MyEstatesList";
 import { EstateCard } from "utils/types/estate";
 import { useState } from "react";
 import useSWR from "swr";
-import getMyEstates from "utils/cms/queries/getMyEstates";
+import getClientEstates from "utils/cms/queries/getClientEstates";
 import { useUser } from "@auth0/nextjs-auth0";
 
 interface Props {
   initialEstates: EstateCard[];
 }
 
-const fetcher = async (key: string, sub: string, orderBy: string) => {
-  const estates = await getMyEstates({ sub, orderBy });
+const fetcher = async (key: string, sub: string, sort: any) => {
+  const estates = await getClientEstates({
+    sub,
+    sort,
+  });
   return estates;
 };
 
 export default function MyEstates({ initialEstates }: Props) {
-  const [orderBy, setOrderBy] = useState("createdAt_DESC");
+  const [sort, setSort] = useState("created_at_dec");
   const {
     user: { sub },
   } = useUser();
@@ -27,14 +30,14 @@ export default function MyEstates({ initialEstates }: Props) {
     error,
     isValidating,
     mutate,
-  } = useSWR(["myEstates", sub, orderBy], fetcher, {
+  } = useSWR(["myEstates", sub, sort], fetcher, {
     initialData: initialEstates,
   });
   if (error) console.log(error);
 
   return (
     <Box>
-      <ControlBar orderBy={orderBy} setOrderBy={setOrderBy} />
+      <ControlBar sort={sort} setSort={setSort} />
       <MyEstatesList
         estates={estates}
         isValidating={isValidating}

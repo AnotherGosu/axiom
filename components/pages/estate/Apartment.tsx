@@ -26,6 +26,7 @@ export default function ApartmentSummary({
   bathType,
   isKitchenFurniture,
   isRoomsFurniture,
+  isRemodeled,
 }: Apartment) {
   return (
     <SimpleGrid columns={[1, 1, 2]} spacingX="50px">
@@ -53,6 +54,7 @@ export default function ApartmentSummary({
         <TextItem title="Статус" text={ApartmentStatus[apartmentStatus]} />
         <BooleanItem title="Мебель в комнатах" value={isRoomsFurniture} />
         <BooleanItem title="Кухонный гарнитур" value={isKitchenFurniture} />
+        <BooleanItem title="Перепланировка" value={isRemodeled} />
       </VStack>
     </SimpleGrid>
   );

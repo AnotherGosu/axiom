@@ -6,7 +6,7 @@ import { useState } from "react";
 
 interface Props {
   title: string;
-  images: Array<{ id: string; url: string }>;
+  images: string[];
 }
 
 export default function Gallery({ title, images }: Props) {
@@ -38,7 +38,7 @@ export default function Gallery({ title, images }: Props) {
           zIndex={10}
         />
         <Image
-          src={images[currentImageIndex].url}
+          src={images[currentImageIndex]}
           alt={title}
           width={700}
           height={400}

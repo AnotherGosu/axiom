@@ -3,7 +3,7 @@ import Image from "next/image";
 
 interface Props {
   title: string;
-  images: Array<{ id: string; url: string }>;
+  images: string[];
   currentImageIndex: number;
   setCurrentImageIndex: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -16,8 +16,8 @@ export default function ImagesPreviews({
 }: Props) {
   return (
     <Wrap spacing="10px" mt="10px">
-      {images.map(({ id, url }, idx) => (
-        <WrapItem key={id}>
+      {images.map((url, idx) => (
+        <WrapItem key={url}>
           <Box
             boxSize="60px"
             borderRadius="md"

@@ -12,9 +12,9 @@ import { useState } from "react";
 const fetcher = async (
   key: string,
   query: { [key: string]: string | string[] },
-  orderBy: string
+  sort: any
 ) => {
-  const estates = await getSearchedEstates({ query, orderBy });
+  const estates = await getSearchedEstates({ query, sort });
   return estates;
 };
 
@@ -23,7 +23,7 @@ interface Props {
 }
 
 export default function SearchResults({ initialEstates }: Props) {
-  const [orderBy, setOrderBy] = useState("createdAt_DESC");
+  const [sort, setSort] = useState("created_at_dec");
   const [isMapView, setIsMapView] = useState(false);
 
   const { query } = useRouter();
@@ -31,7 +31,7 @@ export default function SearchResults({ initialEstates }: Props) {
     data: estates,
     error,
     isValidating,
-  } = useSWR(["searchEstates", query, orderBy], fetcher, {
+  } = useSWR(["searchEstates", query, sort], fetcher, {
     initialData: initialEstates,
   });
   if (error) console.log(error);
@@ -39,8 +39,8 @@ export default function SearchResults({ initialEstates }: Props) {
   return (
     <Box>
       <ControlBar
-        orderBy={orderBy}
-        setOrderBy={setOrderBy}
+        sort={sort}
+        setSort={setSort}
         isMapView={isMapView}
         setIsMapView={setIsMapView}
       />

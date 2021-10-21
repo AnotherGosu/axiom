@@ -56,7 +56,7 @@ const ImageDropZone = ({ onChange, value }) => {
           <Box
             w="100%"
             h="100%"
-            bgImage={`url("${value.url}")`}
+            bgImage={`url("${value?.url || value}")`}
             bgPosition="center"
             bgRepeat="no-repeat"
             bgSize="contain"

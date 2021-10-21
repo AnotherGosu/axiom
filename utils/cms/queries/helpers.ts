@@ -1,60 +1,32 @@
-import { EstateType, Rooms } from "utils/localizations";
-import type { Estate, StructuredEstate, EstateCard } from "utils/types/estate";
+import type { Estate } from "utils/types/estate";
 
-export function structureEstate(estate): StructuredEstate {
+export function structureEstateObject(object): Estate {
   const {
-    common: { images, estateType },
-    apartment: { rooms },
-  } = estate;
+    metadata: { images, plan, ...metafields },
+    ...rest
+  } = object;
 
   return {
-    ...estate,
-    common: {
-      ...estate.common,
-      title: getEstateTitle({ rooms, estateType }),
-      images: setDefaultImage(images),
-    },
+    ...metafields,
+    ...rest,
+    images: structureImages({ images, plan }),
   };
 }
 
-export function structureEstateCard(estate): EstateCard {
-  const { images, estateType, rooms } = estate;
-
-  return {
-    ...estate,
-    images: setDefaultImage(images),
-    title: getEstateTitle({ estateType, rooms }),
-  };
-}
-
-function setDefaultImage(images: any[]) {
-  if (!images.length) {
-    return [{ id: "defaultLogoImage", url: "/logo.svg" }, ...images];
-  } else {
-    return images;
-  }
-}
-
-function getEstateTitle({
-  rooms,
-  estateType,
+function structureImages({
+  images = [],
+  plan,
 }: {
-  rooms: string;
-  estateType: string;
+  images: Array<{ image: { url: string } }>;
+  plan: { url: string };
 }) {
-  switch (estateType) {
-    case "apartment": {
-      if (rooms === "studio") {
-        return Rooms["studio"];
-      } else if (rooms === "six") {
-        return "6-комнатная квартира";
-      } else {
-        return `${Rooms[rooms]}-комнатная квартира`;
-      }
-    }
-    default: {
-      return EstateType[estateType];
-    }
+  const urls = images.map((image) => image.image.url);
+  const estateImages = plan?.url ? [...urls, plan.url] : urls;
+
+  if (!estateImages.length) {
+    return ["/logo.svg"];
+  } else {
+    return estateImages;
   }
 }
 
@@ -69,10 +41,53 @@ export function createFilters(filterQuery: {
     return {};
   }
 
-  const filterQueryEntries = Object.entries(filterQuery);
+  const fields = Object.entries(filterQuery);
 
-  const filters = filterQueryEntries.reduce((filters, entry) => {
-    const [key, value] = entry;
+  const filtersTest = fields.map((field) => {
+    const [key, value] = field;
+    let filterName = `metadata.${key}`;
+
+    //handle number input (left border)
+    if (key.endsWith("From")) {
+      filterName = filterName.replace("From", "");
+      return { [filterName]: { $gte: Number(value) } };
+    }
+    //handle number input (right border)
+    else if (key.endsWith("To")) {
+      filterName = filterName.replace("To", "");
+      return { [filterName]: { $lte: Number(value) } };
+    }
+    //handle switch
+    else if (key.startsWith("is")) {
+      //balconies exception
+      if (key === "isBalcony") {
+        filterName = "metadata.balconies";
+        return { [filterName]: { $ne: "" } };
+      } else {
+        return { [filterName]: Boolean(value) };
+      }
+    }
+    //handle checboxMenu
+    else if (key.endsWith("In")) {
+      filterName = filterName.replace("In", "");
+      const arrayValue = value.toString().split(",");
+      if (key === "ceilingTypeIn") {
+        //ceilingType exception
+        return { [filterName]: { $in: [...arrayValue, ""] } };
+      } else {
+        return { [filterName]: { $in: arrayValue } };
+      }
+    }
+    //handle select
+    else {
+      return { [filterName]: value };
+    }
+  });
+
+  return { $and: filtersTest };
+
+  const filters = fields.reduce((filters, field) => {
+    const [key, value] = field;
     //handle number input (left border)
     if (key.endsWith("From")) {
       const filterName = key.replace("From", "_gte");

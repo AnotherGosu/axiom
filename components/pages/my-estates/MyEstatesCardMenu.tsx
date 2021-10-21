@@ -19,7 +19,7 @@ export default function MyEstatesCardMenu({ id, mutate }: Props) {
 
   const onDelete = async () => {
     await deleteEstate(id);
-    mutate();
+    mutate((estates) => estates.filter((estate) => estate.id !== id));
   };
 
   return (
@@ -35,7 +35,7 @@ export default function MyEstatesCardMenu({ id, mutate }: Props) {
       <MenuList>
         <MenuItem
           icon={<EditIcon />}
-          onClick={() => push(`/profile/update-estate/${id}`)}
+          onClick={() => push(`/profile/edit-estate/${id}`)}
         >
           Изменить
         </MenuItem>

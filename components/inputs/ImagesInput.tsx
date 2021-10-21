@@ -31,27 +31,37 @@ const ImagesDropZone = ({ value: files, onChange: setFiles }) => {
     });
 
   const handleDelete = (deletedUrl: string) => {
-    setFiles(files.filter((file) => file.url !== deletedUrl));
+    setFiles(
+      files.filter((file: { url: string } | string) => {
+        const fileUrl = typeof file === "string" ? file : file.url;
+        return fileUrl !== deletedUrl;
+      })
+    );
     setUrls(urls.filter((url) => url !== deletedUrl));
   };
 
-  const setFormState = (items: string[]) => {
-    const reorderedFiles = items.map((url) =>
-      files.find((file) => file.url === url)
+  const setFormState = (reorderedUrls: string[]) => {
+    const reorderedFiles = reorderedUrls.map((reorderedUrl) =>
+      files.find((file: { url: string } | string) => {
+        const fileUrl = typeof file === "string" ? file : file.url;
+        return reorderedUrl === fileUrl;
+      })
     );
     setFiles(reorderedFiles);
   };
 
   useEffect(
     () => () => {
-      files.forEach((file) => URL.revokeObjectURL(file.url));
+      files.forEach((file: { url: string } | string) => {
+        const fileUrl = typeof file === "string" ? file : file.url;
+        URL.revokeObjectURL(fileUrl);
+      });
     },
     [files]
   );
 
   useEffect(() => {
-    const defaultUrls = files.map((file) => file.url);
-    setUrls(defaultUrls);
+    setUrls(files);
   }, []);
 
   return (

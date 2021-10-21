@@ -3,7 +3,7 @@ import Section from "components/common/Section";
 import ActualEstatesList from "components/pages/main/ActualEstates";
 
 import { InferGetStaticPropsType, GetStaticPropsContext } from "next";
-import getActualEstates from "utils/cms/queries/getActualEstates";
+import getEstatesCards from "utils/cms/queries/getEstatesCards";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
@@ -18,7 +18,7 @@ export default function Main({ estates }: Props) {
 }
 
 export const getStaticProps = async (ctx: GetStaticPropsContext) => {
-  const estates = await getActualEstates();
+  const estates = await getEstatesCards({});
 
   return {
     props: { estates },
