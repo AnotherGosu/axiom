@@ -11,7 +11,7 @@ Axiom is an estate-related service that helps customers to find their ideal acco
 - Styling:
   - [Chakra UI](https://chakra-ui.com/)
 - CMS:
-  - [GraphCMS](https://graphcms.com/docs)
+  - [Cosmic](https://www.cosmicjs.com/)
 - Authorization:
   - [Auth0](https://auth0.com/)
 - Misc:
