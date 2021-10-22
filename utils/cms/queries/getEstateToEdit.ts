@@ -19,7 +19,7 @@ export default async function getEstate(estateId: string) {
 
     const mediaList = await getMediaList(id);
     const {
-      creator: { id: clientId },
+      creator: { id: userId },
       images = [],
       plan,
       ...fields
@@ -28,7 +28,7 @@ export default async function getEstate(estateId: string) {
     return {
       ...fields,
       id,
-      clientId,
+      userId,
       images: images.map((image) => image?.image?.url),
       plan: plan?.url || null,
       mediaList,

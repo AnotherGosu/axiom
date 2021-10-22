@@ -1,14 +1,14 @@
 import { VStack, Button, Skeleton } from "@chakra-ui/react";
 import Section from "components/common/Section";
-import ClientData from "components/pages/profile/ClientData";
+import UserData from "components/pages/profile/UserData";
 import ContactData from "components/pages/profile/ContactData";
-import type { ClientProfileForm } from "utils/types/forms";
+import type { User } from "utils/types/user";
 import { useForm, FormProvider } from "react-hook-form";
-import { edtClientProfileSubmit } from "./helpers";
+import { editUserSubmit } from "./helpers";
 
 interface Props {
   isValidating: boolean;
-  defaultValues: ClientProfileForm;
+  defaultValues: User;
   mutate: any;
 }
 
@@ -17,14 +17,14 @@ export default function ProfileForm({
   mutate,
   isValidating,
 }: Props) {
-  const form = useForm<ClientProfileForm>({ defaultValues });
+  const form = useForm<User>({ defaultValues });
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty },
   } = form;
 
   const onSubmit = async (data) => {
-    await edtClientProfileSubmit(data);
+    await editUserSubmit(data);
     mutate();
   };
 
@@ -38,7 +38,7 @@ export default function ProfileForm({
       >
         <Section heading="Профиль">
           <Skeleton isLoaded={!isValidating}>
-            <ClientData />
+            <UserData />
           </Skeleton>
         </Section>
         <Section heading="Контактные данные">

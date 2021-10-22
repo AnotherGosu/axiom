@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 import { fetcher } from "./fetcher";
 
-export default async function getClientId(sub: string) {
-  const query = { type: "clients", "metadata.sub": sub };
+export default async function getUserId(sub: string) {
+  const query = { type: "users", "metadata.sub": sub };
 
   try {
     const {
@@ -10,7 +10,7 @@ export default async function getClientId(sub: string) {
         getObjects: { objects },
       },
     } = await fetcher.query({
-      query: GET_CLIENT_ID,
+      query: GET_USER_ID,
       variables: {
         bucketSlug: process.env.NEXT_PUBLIC_COSMIC_BUCKET_SLUG,
         readKey: process.env.NEXT_PUBLIC_COSMIC_READ_KEY,
@@ -23,7 +23,7 @@ export default async function getClientId(sub: string) {
   }
 }
 
-const GET_CLIENT_ID = gql`
+const GET_USER_ID = gql`
   query GetClientProfile(
     $bucketSlug: String!
     $readKey: String!

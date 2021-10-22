@@ -1,18 +1,14 @@
 import WithHeader from "components/layouts/WithHeader";
 import Profile from "components/pages/profile";
 import { withPageAuthRequired, getSession } from "@auth0/nextjs-auth0";
-import getCustomUserProfile from "utils/cms/queries/getClientProfile";
-import type {
-  InferGetServerSidePropsType,
-  GetServerSidePropsContext,
-} from "next";
+import getUser from "utils/cms/queries/getUser";
+import type { GetServerSidePropsContext } from "next";
+import type { User } from "utils/types/user";
 
-type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
-
-export default function ProfilePage({ profile }: Props) {
+export default function ProfilePage({ userData }: { userData: User }) {
   return (
     <WithHeader headTitle="Профиль">
-      <Profile initialData={profile} />
+      <Profile initialData={userData} />
     </WithHeader>
   );
 }
@@ -20,7 +16,7 @@ export default function ProfilePage({ profile }: Props) {
 export const getServerSideProps = withPageAuthRequired({
   async getServerSideProps(ctx: GetServerSidePropsContext) {
     const session = getSession(ctx.req, ctx.res);
-    const profile = await getCustomUserProfile(session.user.sub);
-    return { props: { profile } };
+    const user = await getUser(session.user.sub);
+    return { props: { userData: user } };
   },
 });

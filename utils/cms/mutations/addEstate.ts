@@ -1,6 +1,6 @@
 import { addMedia } from "./media";
 import { createEstateMetafields, createEstateTitle } from "./helpers";
-import getClientProfile from "../queries/getClientProfile";
+import getUser from "../queries/getUser";
 import { bucket } from "./bucket";
 import { addMediaFolder } from "./mediaFolder";
 import { AddEstateForm } from "utils/types/forms";
@@ -24,7 +24,7 @@ export default async function addEstate({
     });
 
     await addMediaFolder(estateId);
-    const { id: clientId } = await getClientProfile(sub);
+    const { id: userId } = await getUser(sub);
 
     const { images, plan, ...fields } = form;
 
@@ -45,7 +45,7 @@ export default async function addEstate({
     });
 
     const metafields = createEstateMetafields({
-      clientId,
+      userId,
       images: imagesMedia,
       plan: planMedia,
       fields,

@@ -1,10 +1,10 @@
 import { bucket } from "./bucket";
 import { createMetafield } from "./helpers";
-import type { ClientProfileForm } from "utils/types/forms";
+import type { User } from "utils/types/user";
 
-export default async function editClientProfile(form: ClientProfileForm) {
+export default async function editUser(form: User) {
   try {
-    const { id, ...fields } = form;
+    const { id, created_at, ...fields } = form;
     const metafields = Object.entries(fields).map((field) =>
       createMetafield(field)
     );
@@ -14,6 +14,6 @@ export default async function editClientProfile(form: ClientProfileForm) {
       metafields,
     });
   } catch (err) {
-    console.log(`editClientProfile error: ${err.message}`);
+    console.log(`editUser error: ${err.message}`);
   }
 }

@@ -3,7 +3,7 @@ import type {
   InferGetServerSidePropsType,
 } from "next";
 import { withPageAuthRequired, getSession } from "@auth0/nextjs-auth0";
-import getClientEstates from "utils/cms/queries/getClientEstates";
+import getUserEstates from "utils/cms/queries/getUserEstates";
 import WithHeader from "components/layouts/WithHeader";
 import Section from "components/common/Section";
 import MyEstatesSection from "components/pages/my-estates/MyEstates";
@@ -24,7 +24,7 @@ export const getServerSideProps = withPageAuthRequired({
   async getServerSideProps(ctx: GetServerSidePropsContext) {
     const session = getSession(ctx.req, ctx.res);
     const sub = session.user.sub;
-    const estates = await getClientEstates({ sub });
+    const estates = await getUserEstates({ sub });
     return { props: { estates } };
   },
 });

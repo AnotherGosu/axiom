@@ -1,14 +1,14 @@
 import getEstatesCards from "./getEstatesCards";
-import getClientId from "./getClientId";
+import getUserId from "./getUserId";
 
-export default async function getClientEstates({
+export default async function getUserEstates({
   sub,
   sort,
 }: {
   sub: string;
   sort?: "created_at_asc" | "created_at_dec";
 }) {
-  const clientId = await getClientId(sub);
-  const filter = { "metadata.creator.id": clientId };
+  const userId = await getUserId(sub);
+  const filter = { "metadata.creator.id": userId };
   return await getEstatesCards({ filter, sort });
 }

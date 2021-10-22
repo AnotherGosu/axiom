@@ -4,7 +4,7 @@ import MyEstatesList from "./MyEstatesList";
 import { EstateCard } from "utils/types/estate";
 import { useState } from "react";
 import useSWR from "swr";
-import getClientEstates from "utils/cms/queries/getClientEstates";
+import getUserEstates from "utils/cms/queries/getUserEstates";
 import { useUser } from "@auth0/nextjs-auth0";
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const fetcher = async (key: string, sub: string, sort: any) => {
-  const estates = await getClientEstates({
+  const estates = await getUserEstates({
     sub,
     sort,
   });

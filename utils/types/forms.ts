@@ -1,6 +1,5 @@
 import type { Estate } from "./estate";
 import type { Media } from "./common";
-import type { Client } from "./client";
 
 export interface AddEstateForm extends Omit<Estate, "images" | "plan"> {
   images: File[];
@@ -8,13 +7,11 @@ export interface AddEstateForm extends Omit<Estate, "images" | "plan"> {
 }
 
 export interface EditEstateForm extends AddEstateForm {
-  clientId: string;
+  userId: string;
   orderedImages: string[];
   mediaList: Media[];
   planUrl?: string;
 }
-
-export type ClientProfileForm = Omit<Client, "sub" | "created_at">;
 
 export interface SearchForm {
   estateType: string;

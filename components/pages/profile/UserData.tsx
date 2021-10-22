@@ -2,7 +2,7 @@ import { Wrap, WrapItem } from "@chakra-ui/react";
 import TextInput from "components/inputs/TextInput";
 import { PhoneInput } from "components/inputs/CustomNumberInputs";
 
-export default function ClientData() {
+export default function UserData() {
   return (
     <Wrap spacing="20px">
       <WrapItem>

@@ -26,12 +26,12 @@ export function createEstateTitle({
 }
 
 export function createEstateMetafields({
-  clientId,
+  userId,
   images,
   plan,
   fields,
 }: {
-  clientId: string;
+  userId: string;
   images: Media[];
   plan: Media;
   fields: Omit<AddEstateForm, "images" | "plan">;
@@ -72,8 +72,8 @@ export function createEstateMetafields({
     type: "object",
     title: "creator",
     key: "creator",
-    object_type: "clients",
-    value: clientId,
+    object_type: "users",
+    value: userId,
   };
 
   const commonMetafields = Object.entries(fields).map((field) =>

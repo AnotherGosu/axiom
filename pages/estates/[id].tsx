@@ -1,15 +1,15 @@
 import PageFallback from "components/common/PageFallback";
 import EstateLayout from "components/layouts/EstateLayout";
 import Section from "components/common/Section";
-import Header from "components/pages/estate/Header";
-import Gallery from "components/pages/estate/Gallery";
-import Creator from "components/pages/estate/Creator";
-import Apartment from "components/pages/estate/Apartment";
-import Building from "components/pages/estate/Building";
-import Description from "components/pages/estate/Description";
-import YouTubeEmbed from "components/pages/estate/YouTubeEmbed";
+import Header from "components/pages/estates/Header";
+import Gallery from "components/pages/estates/Gallery";
+import Creator from "components/pages/estates/Creator";
+import Apartment from "components/pages/estates/Apartment";
+import Building from "components/pages/estates/Building";
+import Description from "components/pages/estates/Description";
+import YouTubeEmbed from "components/pages/estates/YouTubeEmbed";
 import dynamic from "next/dynamic";
-const Map = dynamic(() => import("components/pages/estate/Map"), {
+const Map = dynamic(() => import("components/pages/estates/Map"), {
   ssr: false,
 });
 import getEstate from "utils/cms/queries/getEstate";
@@ -94,9 +94,12 @@ export default function EstatePage({ estate }: Props) {
       <Section heading="Расположение">
         <Map location={location} />
       </Section>
-      <Section heading="Комментарий продавца">
-        <Description description={description} />
-      </Section>
+      {description && (
+        <Section heading="Комментарий продавца">
+          <Description description={description} />
+        </Section>
+      )}
+
       {videoUrl && (
         <Section heading="Видео обзор">
           <YouTubeEmbed videoUrl={videoUrl} />

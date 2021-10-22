@@ -6,7 +6,7 @@ import { createEstateMetafields, createEstateTitle } from "./helpers";
 export default async function editEstate(form: EditEstateForm) {
   try {
     const {
-      clientId,
+      userId,
       id: estateId,
       images,
       plan,
@@ -15,8 +15,6 @@ export default async function editEstate(form: EditEstateForm) {
       planUrl,
       ...fields
     } = form;
-
-    console.log(form);
 
     const planIndex = mediaList
       .map(({ metadata }) => metadata.type)
@@ -58,7 +56,7 @@ export default async function editEstate(form: EditEstateForm) {
     }
 
     const metafields = createEstateMetafields({
-      clientId,
+      userId,
       images: imagesMedia,
       plan: planMedia,
       fields,

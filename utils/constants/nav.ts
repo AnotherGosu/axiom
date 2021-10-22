@@ -1,17 +1,17 @@
 import { NavItem } from "../types/common";
-import { EstateType } from "../localizations";
+import { EstateTypeSearched } from "../localizations";
 
 export const footerNavItems: NavItem[] = [
   {
     label: "Купить",
-    children: Object.entries(EstateType).map(([value, label]) => ({
+    children: Object.entries(EstateTypeSearched).map(([value, label]) => ({
       label,
       href: `/search?estateType=${value}&transactionType=sale`,
     })),
   },
   {
     label: "Снять",
-    children: Object.entries(EstateType).map(([value, label]) => ({
+    children: Object.entries(EstateTypeSearched).map(([value, label]) => ({
       label,
       href: `/search?estateType=${value}&transactionType=longPeriodRent`,
     })),
@@ -34,14 +34,14 @@ export const footerNavItems: NavItem[] = [
 export const headerNavItems: NavItem[] = [
   {
     label: "Купить",
-    children: Object.entries(EstateType).map(([value, label]) => ({
+    children: Object.entries(EstateTypeSearched).map(([value, label]) => ({
       label,
       href: `/search?estateType=${value}&transactionType=sale`,
     })),
   },
   {
     label: "Снять",
-    children: Object.entries(EstateType).map(([value, label]) => ({
+    children: Object.entries(EstateTypeSearched).map(([value, label]) => ({
       label,
       href: `/search?estateType=${value}&transactionType=longPeriodRent`,
     })),

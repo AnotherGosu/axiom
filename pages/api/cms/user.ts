@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { apiRoute, upload } from "utils/middleware";
 import { getSession } from "@auth0/nextjs-auth0";
-import editClientProfile from "utils/cms/mutations/editClientProfile";
+import editUser from "utils/cms/mutations/editUser";
 
 interface MulterRequest extends NextApiRequest {
   file: File;
@@ -19,9 +19,9 @@ apiRoute.patch(async (req: MulterRequest, res: NextApiResponse) => {
       user: { sub },
     } = getSession(req, res);
 
-    await editClientProfile({ sub, ...fields });
+    await editUser({ sub, ...fields });
 
-    res.status(200).send("A client entry has been updated");
+    res.status(200).send("A user entry has been updated");
   } catch (err) {
     res.status(500).send({ err: err.message });
   }

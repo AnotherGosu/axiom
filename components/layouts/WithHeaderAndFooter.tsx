@@ -16,6 +16,7 @@ export default function WithHeaderAndFooter({ headTitle, children }: Props) {
       <Flex flexDir="column" minH="100vh">
         <Header />
         <Flex
+          flexGrow={1}
           flexDir="column"
           p={[5, null, 10]}
           gridRowGap={["30px", null, "50px"]}

@@ -19,7 +19,7 @@ export default function MyEstatesCardMenu({ id, mutate }: Props) {
 
   const onDelete = async () => {
     await deleteEstate(id);
-    mutate((estates) => estates.filter((estate) => estate.id !== id));
+    mutate();
   };
 
   return (
